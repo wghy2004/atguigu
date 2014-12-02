@@ -2,10 +2,12 @@ package com.atguigu.sys.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,6 @@ import com.atguigu.frame.core.dao.impl.BaseServiceImpl;
 import com.atguigu.sys.dao.SysCategoryDao;
 import com.atguigu.sys.domain.SysCategory;
 import com.atguigu.sys.service.SysCategoryService;
-import com.mysql.jdbc.jdbc2.optional.SuspendableXAConnection;
 
 @Service
 public class SysCategoryServiceImpl extends BaseServiceImpl<SysCategory>
@@ -22,6 +23,8 @@ public class SysCategoryServiceImpl extends BaseServiceImpl<SysCategory>
 
 	@Autowired
 	private SysCategoryDao sysCategoryDao;
+
+	private List<SysCategory> list;
 
 	@Override
 	protected BaseDao<SysCategory> getBaseDao() {
@@ -35,16 +38,16 @@ public class SysCategoryServiceImpl extends BaseServiceImpl<SysCategory>
 	 * @param sysCategory
 	 * @return
 	 */
-	public List<SysCategory> getChild(List<SysCategory> list,
-			SysCategory sysCategory) {
+	public List<SysCategory> getChild(SysCategory sysCategory) {
 
 		SysCategory tmp = null;
 
 		List<SysCategory> childs = new ArrayList<SysCategory>();
 
-		for (int i = 0, len = list.size(); i < len; i++) {
-			tmp = list.get(i);
-			if (sysCategory.getPath().equals(tmp.getPath() + tmp.getId() + "|")) {
+		for (int i = 0, len = this.list.size(); i < len; i++) {
+			tmp = this.list.get(i);
+			if (tmp.getPath().equals(
+					sysCategory.getPath() + sysCategory.getId() + "|")) {
 				childs.add(tmp);
 			}
 		}
@@ -58,12 +61,12 @@ public class SysCategoryServiceImpl extends BaseServiceImpl<SysCategory>
 	 * @param list
 	 * @return
 	 */
-	public List<SysCategory> getRoot(List<SysCategory> list) {
+	public List<SysCategory> getRoot() {
 		SysCategory tmp = null;
 
 		List<SysCategory> root = new ArrayList<SysCategory>();
 
-		for (int i = 0, len = list.size(); i < len; i++) {
+		for (int i = 0, len = this.list.size(); i < len; i++) {
 			tmp = list.get(i);
 			if (tmp.getParentId() == 0) {
 				root.add(tmp);
@@ -73,19 +76,42 @@ public class SysCategoryServiceImpl extends BaseServiceImpl<SysCategory>
 		return root;
 	}
 
-	public JSONObject toChildTreeJson(List<SysCategory> list,
-			SysCategory sysCategory, JSONObject treeJson) {
+	public boolean hasChild(SysCategory sysCategory) {
 
 		SysCategory tmp = null;
 
-		List<SysCategory> childs = this.getChild(list, sysCategory);
+		List<SysCategory> childs = new ArrayList<SysCategory>();
+
+		for (int i = 0, len = this.list.size(); i < len; i++) {
+
+			if (tmp.getPath().equals(
+					sysCategory.getPath() + sysCategory.getId() + "|")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public JSONObject toChildTreeJson(SysCategory sysCategory) {
+
+		JSONObject treeJson = new JSONObject();
 
 		treeJson.put("id", sysCategory.getId());
 		treeJson.put("name", sysCategory.getName());
-		treeJson.put("children", childs);
+		treeJson.put("weight", sysCategory.getWeight());
+		treeJson.put("code", sysCategory.getCode());
+		treeJson.put("parentId", sysCategory.getParentId());
 
-		for (int i = 0, len = childs.size(); i < len; i++) {
-			this.toChildTreeJson(list, childs.get(i), treeJson);
+		if (hasChild(sysCategory)) {
+
+			List<SysCategory> childs = this.getChild(sysCategory);
+
+			for (int i = 0, len = childs.size(); i < len; i++) {
+
+				toChildTreeJson(childs.get(i));
+
+			}
 		}
 
 		return treeJson;
@@ -94,16 +120,30 @@ public class SysCategoryServiceImpl extends BaseServiceImpl<SysCategory>
 
 	@Override
 	public JSONArray toTreeJson(List<SysCategory> list) {
-		System.out.println("dddddddddddddddddddddddddddddddddddddddddddd");
+
+		this.list = list;
 
 		JSONArray ja = new JSONArray();
 
 		JSONObject treeJson = new JSONObject();
 
-		List<SysCategory> root = this.getRoot(list);
+		JSONObject treeJsonTmp = null;
 
+		List<SysCategory> root = this.getRoot();
+
+		SysCategory rootCategory = null;
 		for (int i = 0, len = root.size(); i < len; i++) {
-			ja.add(this.toChildTreeJson(list, root.get(i), treeJson));
+			treeJsonTmp = new JSONObject();
+			rootCategory = root.get(i);
+			treeJsonTmp.put("id", rootCategory.getId());
+			treeJsonTmp.put("name", rootCategory.getName());
+			treeJsonTmp.put("weight", rootCategory.getWeight());
+			treeJsonTmp.put("code", rootCategory.getCode());
+			treeJsonTmp.put("parentId", rootCategory.getParentId());
+
+			treeJsonTmp.put("children", toChildTreeJson(root.get(i)));
+
+			ja.add(treeJsonTmp);
 		}
 		return ja;
 	}

@@ -19,14 +19,6 @@ import com.atguigu.sys.domain.SysCategory;
  */
 public interface SysCategoryService extends BaseService<SysCategory> {
 
-	public List<SysCategory> getRoot(List<SysCategory> list);
-
-	public List<SysCategory> getChild(List<SysCategory> list,
-			SysCategory sysCategory);
-
-	public JSONObject toChildTreeJson(List<SysCategory> list,
-			SysCategory sysCategory, JSONObject treeJson);
-
 	/**
 	 * 转换成easyui tree
 	 * 

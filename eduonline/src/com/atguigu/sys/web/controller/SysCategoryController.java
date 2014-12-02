@@ -90,17 +90,17 @@ public class SysCategoryController extends
 		// [{"0":"7","id":"7","1":"1","parentId":"1","2":"Printers","name":"Printers","3":null,"quantity":null,"4":null,"price":null,"state":"closed","total":0}]
 		System.out.println(page.getContent());
 		System.out.println(this.sysCategoryService.getClass().getMethods());
-		
-		Method [] ms = this.sysCategoryService.getClass().getMethods();
-		
-		for(int i = 0;i<ms.length;i++){
+
+		Method[] ms = this.sysCategoryService.getClass().getMethods();
+
+		for (int i = 0; i < ms.length; i++) {
 			System.out.println(ms[i].getName());
 		}
 
-		JSONArray ja = this.sysCategoryService.toTreeJson(null);
+		JSONArray ja = this.sysCategoryService.toTreeJson(page.getContent());
 
 		System.out.println(ja);
-		
+
 		return ja;
 	}
 

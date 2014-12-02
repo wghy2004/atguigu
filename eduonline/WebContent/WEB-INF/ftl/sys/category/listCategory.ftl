@@ -23,13 +23,12 @@
 				</span>
 			</div>
 			<#-- 结果列表 -->
-			<table id="dg"  class="easyui-treegrid" style="width:100%;height:250px;border:1px solid #ccc;" data-options="url:'${base}/sys/category/list?groupId=1&parentId=0&format=json',fitColumns:'true',idField: 'id',treeField: 'name'">
+			<table id="dg"  class="easyui-treegrid" style="width:100%;height:250px;border:1px solid #ccc;" data-options="url:'${base}/sys/category/list?groupId=1&format=json',fitColumns:'true',idField: 'id',treeField: 'name'">
 				<thead>
 					<tr>
 						<th data-options="field:'id',width:5">ID</th>
 						<th data-options="field:'name',width:25">名称</th>
 						<th data-options="field:'code',width:10">代码</th>
-						<th data-options="field:'path',width:10">路径</th>
 						<th data-options="field:'weight',width:20"
 							formatter="formatGoodscount">排序</th>
 						<th data-options="field:'add',width:10,align:'center'"
@@ -129,7 +128,7 @@
 		}
 		$(function(){
 			$('#dg').treegrid({
-					url: '${base}/sys/category/list?groupId=1&parentId=0&format=json',
+					url: '${base}/sys/category/list?groupId=1&format=json',
 	                method: 'get',
 	                fit:true,
 	                idField: 'id',
@@ -137,7 +136,7 @@
 	                toolbar:'#tb',
 				    onBeforeLoad:function(row,param){
 						if(row){
-							$(this).treegrid('options').url='${base}/sys/category/list?parentId='+row.id+'&format=json';
+							$(this).treegrid('options').url='${base}/sys/category/list?format=json';
 						}
 					},
 					onLoadSuccess:function(row, data){

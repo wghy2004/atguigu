@@ -31,7 +31,7 @@ public class MethodLogAspectJ {
 		System.out.println("after........");
 	}
 
-	@Around("methodLogPointcut()")
+	//@Around("methodLogPointcut()")
 	public Object methodLogHold(ProceedingJoinPoint joinPoint) throws Throwable {
 		System.out.println("aop start ");
 		String methodRemark = getMthodRemark(joinPoint);
