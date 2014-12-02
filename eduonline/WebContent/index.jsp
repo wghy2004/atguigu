@@ -2,6 +2,6 @@
 <html>
 <body>
 <h2>Hello World!</h2>
-<h2><a href="sys/dictionary?sort=dicOrder">查看字典信息11</a></h2>
+<h2><a href="sys/dictionary?sort=dicOrder">查看字典信息ww11</a></h2>
 </body>
 </html>
