@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.sys.domain.SysCategory">
+	<resultMap id="BaseResultMap" type="sysCategory">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="icon" property="icon" jdbcType="VARCHAR" />
+		<result column="path" property="path" jdbcType="VARCHAR" />
+		<result column="weight" property="weight" jdbcType="INTEGER" />
+		<result column="groupId" property="groupId" jdbcType="INTEGER" />
+		<result column="parentId" property="parentId" jdbcType="INTEGER" />
+	</resultMap>
+
+	<resultMap id="AllResultMap" type="sysCategoryVo" extends="BaseResultMap">
+		<!-- 关联分组类型 -->
+		<association property="sysCategoryGroup" column="groupId"
+			javaType="com.atguigu.sys.domain.SysCategoryGroup" resultMap="groupResultMap">
+		</association>
+	</resultMap>
+
+	<resultMap id="groupResultMap" type="com.atguigu.sys.domain.SysCategoryGroup">
+		<id column="groupId" property="id" jdbcType="INTEGER" />
+		<result column="gcode" property="code" jdbcType="VARCHAR" />
+		<result column="gname" property="name" jdbcType="VARCHAR" />
+		<result column="depth" property="depth" jdbcType="TINYINT" />
+	</resultMap>
+
+	<resultMap id="ResultMapWithBLOBs" type="com.atguigu.sys.domain.vo.SysCategoryVo"
+		extends="BaseResultMap">
+		<result column="description" property="description" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, code, name, icon, path, weight, groupId, parentId
+	</sql>
+	<sql id="Blob_Column_List">
+		description
+	</sql>
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim prefixOverrides="and">
+				<if test="id != null"> and id = #{id}</if>
+				<if test="code!=null"> and code = #{code}</if>
+				<if test="name!=null"> and name = #{name}</if>
+				<if test="groupId!=null"> and groupId = #{groupId}</if>
+			</trim>
+		</where>
+	</sql>
+
+	<sql id="Base_Where_Clause1">
+		<where>
+			<trim prefixOverrides="and">
+				<if test="id != null"> and c.id = #{id}</if>
+				<if test="code != null"> and c.code = #{code}</if>
+				<if test="name != null"> and c.name = #{name}</if>
+				<if test="groupId != null"> and c.groupId = #{groupId}</if>
+				<if test="parentId != null"> and c.parentId = #{parentId}</if>
+			</trim>
+		</where>
+	</sql>
+
+	<!-- 查询总数 -->
+	<select id="selectCount" resultType="java.lang.Long"
+		parameterType="java.util.Map">
+		select count(id)
+		from category
+		<include refid="Base_Where_Clause" />
+	</select>
+
+	<!-- 查询 -->
+	<select id="select" resultMap="AllResultMap" parameterType="java.util.Map">
+		select
+		c.*,cg.name as gname , cg.code as gcode
+		from category c
+		left join category_group cg on c.groupId=cg.id
+		<include refid="Base_Where_Clause1" />
+	</select>
+
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		c.*,cg.name as gname , cg.code as gcode
+		from category c
+		left join category_group cg on c.groupId=cg.id
+		where c.id =
+		#{_parameter,jdbcType=INTEGER}
+	</select>
+
+	<select id="select1" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		*
+		from category
+		<include refid="Base_Where_Clause" />
+	</select>
+
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from
+		category
+		where
+		id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.atguigu.sys.domain.SysCategory">
+		insert into category (id,
+		code, name,
+		icon, path, weight,
+		groupId, parentId, description
+		)
+		values
+		(#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{icon,jdbcType=VARCHAR},
+		#{path,jdbcType=VARCHAR}, #{weight,jdbcType=INTEGER},
+		#{groupId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER},
+		#{description,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.atguigu.sys.domain.SysCategory">
+		insert into category
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="icon != null">
+				icon,
+			</if>
+			<if test="path != null">
+				path,
+			</if>
+			<if test="weight != null">
+				weight,
+			</if>
+			<if test="groupId != null">
+				groupId,
+			</if>
+			<if test="parentId != null">
+				parentId,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				#{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="path != null">
+				#{path,jdbcType=VARCHAR},
+			</if>
+			<if test="weight != null">
+				#{weight,jdbcType=INTEGER},
+			</if>
+			<if test="groupId != null">
+				#{groupId,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByIdSelective" parameterType="com.atguigu.sys.domain.SysCategory">
+		update category
+		<set>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				icon = #{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="path != null">
+				path = #{path,jdbcType=VARCHAR},
+			</if>
+			<if test="weight != null">
+				weight = #{weight,jdbcType=INTEGER},
+			</if>
+			<if test="groupId != null">
+				groupId = #{groupId,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null">
+				parentId = #{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByIdWithBLOBs" parameterType="com.atguigu.sys.domain.SysCategory">
+		update
+		category
+		set code = #{code,jdbcType=VARCHAR},
+		name =
+		#{name,jdbcType=VARCHAR},
+		icon = #{icon,jdbcType=VARCHAR},
+		path =
+		#{path,jdbcType=VARCHAR},
+		weight
+		= #{weight,jdbcType=INTEGER},
+		groupId =
+		#{groupId,jdbcType=INTEGER},
+		parentId = #{parentId,jdbcType=INTEGER},
+		description =
+		#{description,jdbcType=LONGVARCHAR}
+		where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateById" parameterType="com.atguigu.sys.domain.SysCategory">
+		update category
+		set code =
+		#{code,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		icon =
+		#{icon,jdbcType=VARCHAR},
+		path = #{path,jdbcType=VARCHAR},
+		weight =
+		#{weight,jdbcType=INTEGER},
+		groupId =
+		#{groupId,jdbcType=INTEGER},
+		parentId = #{parentId,jdbcType=INTEGER}
+		where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+</mapper>
