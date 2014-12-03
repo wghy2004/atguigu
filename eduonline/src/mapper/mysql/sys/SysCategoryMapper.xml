@@ -50,11 +50,11 @@
 	<sql id="Base_Where_Clause1">
 		<where>
 			<trim prefixOverrides="and">
-				<if test="id != null"> and c.id = #{id}</if>
-				<if test="code != null"> and c.code = #{code}</if>
-				<if test="name != null"> and c.name = #{name}</if>
-				<if test="groupId != null"> and c.groupId = #{groupId}</if>
-				<if test="parentId != null"> and c.parentId = #{parentId}</if>
+				<if test="id != null"> and id = #{id}</if>
+				<if test="code != null"> and code = #{code}</if>
+				<if test="name != null"> and name = #{name}</if>
+				<if test="groupId != null"> and groupId = #{groupId}</if>
+				<if test="parentId != null"> and parentId = #{parentId}</if>
 			</trim>
 		</where>
 	</sql>
@@ -70,19 +70,18 @@
 	<!-- 查询 -->
 	<select id="select" resultMap="AllResultMap" parameterType="java.util.Map">
 		select
-		c.*,cg.name as gname , cg.code as gcode
-		from category c
-		left join category_group cg on c.groupId=cg.id
-		<include refid="Base_Where_Clause1" />
+		<include refid="Base_Column_List" />
+		from 
+		category
+		<include refid="Base_Where_Clause" />
 	</select>
 
-	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
-		c.*,cg.name as gname , cg.code as gcode
-		from category c
-		left join category_group cg on c.groupId=cg.id
-		where c.id =
-		#{_parameter,jdbcType=INTEGER}
+		<include refid="Base_Column_List" />
+		from 
+		category
+		where id =  #{id}
 	</select>
 
 	<select id="select1" resultMap="BaseResultMap" parameterType="java.util.Map">

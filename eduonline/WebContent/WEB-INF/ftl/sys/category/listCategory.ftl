@@ -53,27 +53,30 @@
 		if (!id) {
 			map["href"] = "${base}/sys/category/add";
 			map["formId"] = "#addForm";
-			map["url"] = "cat!saveAdd.do?ajax=yes";
+			map["method"] = "post";
+			map["url"] = "${base}/sys/category";
 			map["title"] = "添加分类";
 			map["loadshow"] = "正在添加......";
 		} else {
 			if (obj == 1) {
 				map["href"] = "${base}/sys/category/edit/" + id;
-				map["formId"] = "#addchildrenForm";
-				map["url"] = "cat!saveAdd.do?ajax=yes";
+				map["formId"] = "#editForm";
+				map["method"] = "put";
+				map["url"] = "${base}/sys/category";
 				map["title"] = "添加子列表";
 				map["loadshow"] = "正在添加......";
 			} else {
 				map["href"] = "${base}/sys/category/edit/" + id;
 				map["formId"] = "#editForm";
-				map["url"] = "cat!saveEdit.do?ajax=yes";
+				map["method"] = "put";
+				map["url"] = "${base}/sys/category";
 				map["title"] = "修改分类";
 				map["loadshow"] = "正在修改......";
 			}
 
 		}
 		map["divDialog"] = "#divdia";
-		map["gridreload"] = "#catdata";
+		map["gridreload"] = "#dg";
 		addDialog(map);
 	}
 	function addDialog(map) {
@@ -103,6 +106,43 @@
 			} ]
 		});
 	}
+	
+	function submitForm(map,savebtn) {
+		var formflag = $(map["formId"]).form().form('validate');
+		if (formflag) {
+			$.Loading.show("正在保存请稍后...");
+			savebtn.linkbutton("disable");	
+			$(map["formId"]).ajaxSubmit({
+				url : map["url"],
+				type : map["method"],
+				dataType : 'json',
+				success : function(result) {
+					if (result.status == 'OK') {
+						$(map["divDialog"]).dialog('close');
+						$(map["gridreload"]).treegrid('reload');
+						$.Loading.success('成功添加'+result.message.name+'!');
+					}
+					if (result.status == 'ERROR') {
+						$.Loading.error(result.message);
+					}
+					savebtn.linkbutton("enable");
+				},
+				error : function(e) {
+					$.Loading.error("出现错误 ，请重试");
+					savebtn.linkbutton("enable");
+				}
+			});
+		}else{
+			savebtn.linkbutton("enable");
+			$.Loading.hide();
+		}
+	}
+
+	function clearForm(map) {
+		$(map["formId"]).form('clear');
+	}
+	
+	
 		
 		function formatAdd(value, row, index) {
 			var val = "<a href='javascript:void(0);' class='add' onclick='append(" + row.id
@@ -132,19 +172,7 @@
 	                method: 'get',
 	                fit:true,
 	                idField: 'id',
-	                treeField: 'name',
-	                toolbar:'#tb',
-				    onBeforeLoad:function(row,param){
-						if(row){
-							$(this).treegrid('options').url='${base}/sys/category/list?format=json';
-						}
-					},
-					onLoadSuccess:function(row, data){
-						for(var i=0, len = data.length; i<len; i++){
-							data[i].groupName = data[i].sysCategoryGroup.name;
-						}
-						console.log(row,data);
-					}
+	                treeField: 'name'
 			});
 						
 			$('#group').combobox({

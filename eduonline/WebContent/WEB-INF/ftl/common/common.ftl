@@ -21,6 +21,9 @@
 
 <#-- JS脚本定义 -->
 <script type="text/javascript" src="${base}/resources/js/jquery/1.11.0/jquery-1.11.0.min.js"></script>
+<script src="${base}/resources/js/jquery.blockUI.js"></script>
+<script src="${base}/resources/js/jquery.loading.js"></script>
+<script src="${base}/resources/js/jquery.form.js"></script>
 <script type="text/javascript" src="${base}/resources/js/bootstrap.min.js"></script>
 <script src="${base}/resources/js/unicorn.js"></script>
 

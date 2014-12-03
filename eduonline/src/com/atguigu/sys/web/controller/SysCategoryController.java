@@ -1,6 +1,5 @@
 package com.atguigu.sys.web.controller;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.atguigu.frame.core.dao.BaseService;
 import com.atguigu.frame.core.web.controller.BaseControllerImpl;
+import com.atguigu.frame.core.web.domain.Result;
 import com.atguigu.sys.domain.SysCategory;
 import com.atguigu.sys.domain.SysCategoryGroup;
 import com.atguigu.sys.domain.vo.SysCategoryVo;
@@ -87,82 +87,27 @@ public class SysCategoryController extends
 			@PageableDefault Pageable pageable) {
 		Page<SysCategory> page = sysCategoryService.queryPageList(query,
 				pageable);
-		// [{"0":"7","id":"7","1":"1","parentId":"1","2":"Printers","name":"Printers","3":null,"quantity":null,"4":null,"price":null,"state":"closed","total":0}]
-		System.out.println(page.getContent());
-		System.out.println(this.sysCategoryService.getClass().getMethods());
 
-		Method[] ms = this.sysCategoryService.getClass().getMethods();
-
-		for (int i = 0; i < ms.length; i++) {
-			System.out.println(ms[i].getName());
-		}
-
-		JSONArray ja = this.sysCategoryService.toTreeJson(page.getContent());
+		JSONArray ja = this.sysCategoryService.toTreeJson(page.getContent(), 0);
 
 		System.out.println(ja);
 
 		return ja;
 	}
 
-	@Override
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public ModelAndView editView(@PathVariable("id") long id) {
-		System.out.println("sss--------------");
+	@RequestMapping(value = "/combotree", method = RequestMethod.GET)
+	@ResponseBody
+	public JSONArray selectCombotree(SysCategory query,
+			@PageableDefault Pageable pageable) {
+		Page<SysCategory> page = sysCategoryService.queryPageList(query,
+				pageable);
 
-		SysCategory category = getBaseService().queryById(id);
+		JSONArray ja = this.sysCategoryService
+				.toCombotree(page.getContent(), 0);
 
-		SysCategory pcategory = getBaseService().queryById(
-				(long) category.getParentId());
-
-		if (pcategory == null) {
-			pcategory = new SysCategory();
-			pcategory.setName("根节点");
-		}
-
-		SysCategoryVo categoryVo = (SysCategoryVo) category;
-
-		categoryVo.setParentName(pcategory.getName());
-
-		List<SysCategoryGroup> list = sysCategoryGroupService.queryAll();
-
-		Map<String, Object> map = new HashedMap();
-
-		map.put("category", categoryVo);
-
-		map.put("groups", list);
-
-		map.put("rootCategorys", selectListByMap(0));
-
-		return new ModelAndView(path.getEditViewPath(), "model", map);
-
+		return ja;
 	}
-
-	@Override
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView addOne(SysCategory sysCategory) {
-
-		SysCategory parent = sysCategoryService.queryById((long) sysCategory
-				.getParentId());
-
-		sysCategory.setPath(parent.getPath() + parent.getId() + "|");
-
-		getBaseService().insert(sysCategory);
-
-		return new ModelAndView(path.getRedirectListPath());
-	}
-
-	@Override
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public ModelAndView addView() {
-
-		List<SysCategoryGroup> list = sysCategoryGroupService.queryAll();
-
-		Map<String, Object> map = new HashedMap();
-
-		map.put("groups", list);
-
-		return new ModelAndView(path.getAddViewPath(), "model", map);
-	}
+	
 
 	@RequestMapping(value = "/child/{parentId}", method = RequestMethod.GET)
 	@ResponseBody

@@ -3,10 +3,13 @@ package com.atguigu.frame.core.dao;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONArray;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.atguigu.frame.core.dao.domain.Identifiable;
+import com.atguigu.sys.domain.SysCategory;
 
 /**
  * 基础的Service接口
@@ -165,4 +168,5 @@ public interface BaseService<T extends Identifiable> {
 	 * @return Map containing key pair data. 
 	 */
 	public <K, V extends T> Map<K, V> queryMap(T query, String mapKey, Pageable pageable);
+
 }

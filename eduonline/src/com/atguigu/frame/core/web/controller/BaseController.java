@@ -73,7 +73,7 @@ public interface BaseController<T extends Identifiable, Q extends T> {
 	 * @param entity 要添加的实体
 	 * @return ModelAndView
 	 */
-	public ModelAndView addOne(T entity);
+	public Result addOne(T entity);
 
 	/**
 	 * 跳转到添加页面为insertXXX页面<br>示例Bean对象:SysDictionay->生成路径：/sys/dictionary

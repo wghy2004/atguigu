@@ -23,8 +23,18 @@ public interface SysCategoryService extends BaseService<SysCategory> {
 	 * 转换成easyui tree
 	 * 
 	 * @param list
+	 * @param id
 	 * @return
 	 */
-	public JSONArray toTreeJson(List<SysCategory> list);
+	public JSONArray toTreeJson(List<SysCategory> list, long id);
+
+	/**
+	 * 转换成easyui combotree
+	 * 
+	 * @param list
+	 * @param id
+	 * @return
+	 */
+	public JSONArray toCombotree(List<SysCategory> list, long id);
 
 }

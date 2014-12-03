@@ -1,6 +1,7 @@
+<#assign base=request.contextPath />
 <div class="main" style="background-color: white;">
 	<div class="easyui-panel" style="border-style: none;">
-		<form  method="post" action="${base}/sys/category" class="validate">
+		<form  method="post" action="${base}/sys/category/add" class="validate" id="addForm">
 			<table>
 					<tbody><tr>
 						<th>分类名称</th>
@@ -12,19 +13,20 @@
 					<tr>
 						<th>上级分类</th>
 						<td>
-							<input style="width: 300px;" class="easyui-combotree combo" name="parentId"   id="parentId" data-options="url:'${base}/sys/category/child/0?format=json',method:'get',required:false,height:28" >
+							<input name="parentId" id="parentId">
+							<input type="hidden" name="path" id="path">
 						</td>
 					</tr>
 					<tr>
 						<th>代码</th>
 						<td>
-							<input type="text" class="input_text" name="code"  value="" id="dicValue" >
+							<input type="text" class="input_text" name="code"  value="" id="code" >
 						</td>
 					</tr>
 					<tr>
 						<th>排序</th>
 						<td>
-							<input type="text" class="input_text" name="weight"  value="" id="diccategory" >
+							<input type="text" class="input_text" name="weight"  value="" id="weight" >
 						</td>
 					</tr>
 				</tbody>
@@ -34,5 +36,14 @@
 </div>
 <script type="text/javascript">
 	$(function() {
+		$('#parentId').combotree({
+			url:'${base}/sys/category/combotree?format=json',
+			method:'get',
+			required:false,
+			height:28,
+			onSelect : function(rec){
+			  $('#path').val(rec.path+rec.id+'|');
+			}
+		});
 	});
 </script>
