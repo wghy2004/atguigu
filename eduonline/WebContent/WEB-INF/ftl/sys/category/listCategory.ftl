@@ -59,11 +59,11 @@
 			map["loadshow"] = "正在添加......";
 		} else {
 			if (obj == 1) {
-				map["href"] = "${base}/sys/category/edit/" + id;
-				map["formId"] = "#editForm";
+				map["href"] = "${base}/sys/category/add/"+id;
+				map["formId"] = "#addForm";
 				map["method"] = "post";
 				map["url"] = "${base}/sys/category";
-				map["title"] = "添加子列表";
+				map["title"] = "添加子分类";
 				map["loadshow"] = "正在添加......";
 			} else {
 				map["href"] = "${base}/sys/category/edit/" + id;
@@ -83,8 +83,8 @@
 		$(map["divDialog"]).show();
 		$(map["divDialog"]).dialog({
 			title : map["title"],
-			width : 520,
-			height : 380,
+			width : 420,
+			height : 280,
 			closed : false,
 			cache : false,
 			href : map["href"],
@@ -120,7 +120,7 @@
 					if (result.status == 'OK') {
 						$(map["divDialog"]).dialog('close');
 						$(map["gridreload"]).treegrid('reload');
-						$.Loading.success('成功添加'+result.message.name+'!');
+						$.Loading.success(map["title"]+':'+result.message.name+'!');
 					}
 					if (result.status == 'ERROR') {
 						$.Loading.error(result.message);
@@ -182,15 +182,9 @@
 		
 		$(window).resize(function(){
 			$('#dg').treegrid('resize',{
-				width  : $('.container').width() ,
+				width  : $('.container').width()-20 ,
 				height : $('.container').height()
 			});
-		});
-					
-		//编辑
-		$('#btnEdit').on('click',function(){
-			var row = $('#dg').treegrid('getSelected');
-			console.log(row)
 		});
 		
 	});	

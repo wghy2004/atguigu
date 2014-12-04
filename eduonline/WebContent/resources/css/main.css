@@ -5762,7 +5762,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 
 .panel input {
-	border: 1px solid #d7d7d7;
+	/*border: 1px solid #d7d7d7;*/
 	background-color: #fff;
 	-webkit-box-shadow:0;
 	-moz-box-shadow: 0;
@@ -5777,5 +5777,6 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	font-size: 12px;
 	height: 20px;
 	line-height: 20px;
-	padding: 0;
+	padding-top: 0;
+	padding-bottom: 0;
 }

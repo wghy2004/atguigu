@@ -13,7 +13,7 @@
 					<tr>
 						<th>上级分类</th>
 						<td>
-							<input name="parentId" id="parentId">
+							<input name="parentId" id="parentId" <#if category>value="${category.id}"<#else>value="0"</#if>>
 							<input type="hidden" name="path" id="path">
 						</td>
 					</tr>
@@ -26,7 +26,7 @@
 					<tr>
 						<th>排序</th>
 						<td>
-							<input type="text" class="input_text" name="weight"  value="" id="weight" >
+							<input type="text" class="input_text" name="weight"  value="0" id="weight" >
 						</td>
 					</tr>
 				</tbody>
@@ -40,7 +40,9 @@
 			url:'${base}/sys/category/combotree?format=json',
 			method:'get',
 			required:false,
+			width : 300,
 			height:28,
+			value :  <#if category>${category.id}<#else>0</#if>,
 			onSelect : function(rec){
 			  $('#path').val(rec.path+rec.id+'|');
 			}

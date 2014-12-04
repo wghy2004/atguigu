@@ -101,7 +101,7 @@
 		delete from
 		category
 		where
-		path like CONCAT('%','|#{id}|','%')
+		path like CONCAT('%','|${_parameter}|','%' )
 	</delete>
 	
 	<insert id="insert" parameterType="com.atguigu.sys.domain.SysCategory">

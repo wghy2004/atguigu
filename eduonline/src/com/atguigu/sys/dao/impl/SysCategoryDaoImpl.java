@@ -29,7 +29,7 @@ public class SysCategoryDaoImpl extends BaseDaoImpl<SysCategory> implements
 			return sqlSessionTemplate.delete(getSqlName("deleteChild"), id);
 		} catch (Exception e) {
 			throw new DaoException(String.format("根据ID删除对象出错！语句：%s",
-					getSqlName(SqlId.SQL_DELETE_BY_ID)), e);
+					getSqlName("deleteChild")), e);
 		}
 	}
 

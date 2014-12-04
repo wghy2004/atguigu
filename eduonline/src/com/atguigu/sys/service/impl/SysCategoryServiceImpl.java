@@ -193,7 +193,6 @@ public class SysCategoryServiceImpl extends BaseServiceImpl<SysCategory>
 	}
 
 	@Override
-	@Transactional
 	public int deleteById(long id) {
 		int count = sysCategoryDao.deleteById(id);
 		count += sysCategoryDao.deleteChild(id);

@@ -45,7 +45,7 @@ import com.atguigu.sys.service.SysCategoryService;
 @RequestMapping("/sys/category")
 public class SysCategoryController extends
 		BaseControllerImpl<SysCategory, SysCategory> {
-	
+
 	private Logger log = LoggerFactory.getLogger(SysCategoryController.class);
 
 	@Autowired
@@ -113,9 +113,6 @@ public class SysCategoryController extends
 
 		return ja;
 	}
-	
-	
-	
 
 	@Override
 	@ResponseBody
@@ -125,16 +122,22 @@ public class SysCategoryController extends
 			log.error("要删除的ID号为null或空字符串！对象：{}", path.getEntityName());
 			return new Result(Status.ERROR, "没有传入要删除的ID号！");
 		}
-		
+
 		int count = getBaseService().deleteById(id);
-		
+
 		if (count == 0)
 			return new Result(Status.ERROR, "要删除的记录不存在！");
-		
+
 		log.debug("成功删除{}个对象，id:{},对象:{}", count, id, path.getEntityName());
 		return new Result(Status.OK, count);
 	}
-	
+
+	@RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
+	public ModelAndView addChild(@PathVariable("id") long id) {
+		Object obj = getBaseService().queryById(id);
+		return new ModelAndView(path.getAddViewPath(), path.getEntityName(),
+				obj);
+	}
 
 	@RequestMapping(value = "/child/{parentId}", method = RequestMethod.GET)
 	@ResponseBody
