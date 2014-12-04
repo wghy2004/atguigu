@@ -26,6 +26,7 @@
 <script src="${base}/resources/js/jquery.form.js"></script>
 <script type="text/javascript" src="${base}/resources/js/bootstrap.min.js"></script>
 <script src="${base}/resources/js/unicorn.js"></script>
+<script src="${base}/resources/js/common/common.js"></script>
 
 <#-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>

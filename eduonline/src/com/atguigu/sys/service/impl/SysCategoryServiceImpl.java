@@ -10,6 +10,7 @@ import net.sf.json.JSONObject;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.atguigu.frame.core.dao.BaseDao;
 import com.atguigu.frame.core.dao.impl.BaseServiceImpl;
@@ -190,6 +191,13 @@ public class SysCategoryServiceImpl extends BaseServiceImpl<SysCategory>
 		}
 		return ja;
 	}
-	
+
+	@Override
+	@Transactional
+	public int deleteById(long id) {
+		int count = sysCategoryDao.deleteById(id);
+		count += sysCategoryDao.deleteChild(id);
+		return count;
+	}
 	
 }

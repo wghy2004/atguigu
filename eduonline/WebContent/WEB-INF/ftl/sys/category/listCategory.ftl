@@ -23,7 +23,7 @@
 				</span>
 			</div>
 			<#-- 结果列表 -->
-			<table id="dg"  class="easyui-treegrid" style="width:100%;height:250px;border:1px solid #ccc;" data-options="url:'${base}/sys/category/list?groupId=1&format=json',fitColumns:'true',idField: 'id',treeField: 'name'">
+			<table id="dg"  class="easyui-treegrid" style="width:100%;height:250px;border:1px solid #ccc;" >
 				<thead>
 					<tr>
 						<th data-options="field:'id',width:5">ID</th>
@@ -48,7 +48,7 @@
 	<#include "/common/footer.ftl"> 
 	<@modal/>
 	<script type="text/javascript">
-		function append(id, obj) {
+	function append(id, obj) {
 		var map = {}; // Map map = new HashMap();
 		if (!id) {
 			map["href"] = "${base}/sys/category/add";
@@ -61,14 +61,14 @@
 			if (obj == 1) {
 				map["href"] = "${base}/sys/category/edit/" + id;
 				map["formId"] = "#editForm";
-				map["method"] = "put";
+				map["method"] = "post";
 				map["url"] = "${base}/sys/category";
 				map["title"] = "添加子列表";
 				map["loadshow"] = "正在添加......";
 			} else {
 				map["href"] = "${base}/sys/category/edit/" + id;
 				map["formId"] = "#editForm";
-				map["method"] = "put";
+				map["method"] = "post";
 				map["url"] = "${base}/sys/category";
 				map["title"] = "修改分类";
 				map["loadshow"] = "正在修改......";
@@ -142,54 +142,58 @@
 		$(map["formId"]).form('clear');
 	}
 	
-	
+	function del(id){
+		  deleteOne('${base}/sys/category/'+id , function(result){
+			  	console.log(result);
+			  	$('#dg').treegrid('reload');
+				$.Loading.success('成功删除'+result.message+'!');
+		  });
+	}	
 		
-		function formatAdd(value, row, index) {
-			var val = "<a href='javascript:void(0);' class='add' onclick='append(" + row.id
-					+ ",1)'><img src='${base}/resources/images/transparent.gif'></a>";
-			return val;
-		}
-		function formatEdit(value, row, index) {
-			var val = "<a class='edit' title='修改' href='javascript:void(0);' onclick='append("
-					+ row.id + ",2)' ></a>";
-			return val;
-		}
-		function formatDelete(value, row, index) {
-			var val = '<a href="javascript:;" class="delete" onclick="del('
-					+ row.id
-					+ ')"><img catid="'+row.cat_id+'" src="${base}/resources/images/transparent.gif"></a>';
-			return val;
-		}
-	
-		function formatGoodscount(value, row, index) {
-			var val = '<input type="text" class="receiptsInputText" autocomplete="off" value="'+value+'" style="width:30px" name="cat_sorts">';
-			val+='<input type="hidden" name="cat_ids" value="'+row.id+'" > '
-			return val;
-		}
-		$(function(){
-			$('#dg').treegrid({
-					url: '${base}/sys/category/list?groupId=1&format=json',
-	                method: 'get',
-	                fit:true,
-	                idField: 'id',
-	                treeField: 'name'
+	function formatAdd(value, row, index) {
+		var val = "<a href='javascript:void(0);' class='add' onclick='append(" + row.id
+				+ ",1)'><img src='${base}/resources/images/transparent.gif'></a>";
+		return val;
+	}
+	function formatEdit(value, row, index) {
+		var val = "<a class='edit' title='修改' href='javascript:void(0);' onclick='append("
+				+ row.id + ",2)' ></a>";
+		return val;
+	}
+	function formatDelete(value, row, index) {
+		var val = '<a href="javascript:" class="delete" onclick="del('+row.id+')"><img catid="'+row.cat_id+'" src="${base}/resources/images/transparent.gif"></a>';
+		return val;
+	}
+
+	function formatGoodscount(value, row, index) {
+		var val = '<input type="text" class="receiptsInputText" autocomplete="off" value="'+value+'" style="width:30px" name="cat_sorts">';
+		val+='<input type="hidden" name="cat_ids" value="'+row.id+'" > '
+		return val;
+	}
+	$(function(){
+		$('#dg').treegrid({
+				url: '${base}/sys/category/list?groupId=1&format=json',
+                method: 'get',
+                idField: 'id',
+                treeField: 'name',
+                fit:true,
+                fitColumns:'true'
+		});
+		
+		$(window).resize(function(){
+			$('#dg').treegrid('resize',{
+				width  : $('.container').width() ,
+				height : $('.container').height()
 			});
-						
-			$('#group').combobox({
-			     onSelect: function(rec){
-			     	var groupId = rec.value;
-			     	console.log(1,groupId);
-					$('#dg').treegrid('load',{
-						groupId: groupId
-					});
-			     }
-			});
-			//编辑
-			$('#btnEdit').on('click',function(){
-				var row = $('#dg').treegrid('getSelected');
-				console.log(row)
-			});
-		});	
+		});
+					
+		//编辑
+		$('#btnEdit').on('click',function(){
+			var row = $('#dg').treegrid('getSelected');
+			console.log(row)
+		});
+		
+	});	
 	</script>
 </body>
 </html>

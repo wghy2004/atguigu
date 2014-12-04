@@ -18,7 +18,7 @@ import com.atguigu.sys.domain.SysCategory;
  *
  */
 public interface SysCategoryService extends BaseService<SysCategory> {
-
+	
 	/**
 	 * 转换成easyui tree
 	 * 

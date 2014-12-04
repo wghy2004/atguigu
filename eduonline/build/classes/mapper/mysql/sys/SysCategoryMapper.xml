@@ -97,6 +97,13 @@
 		where
 		id = #{id,jdbcType=INTEGER}
 	</delete>
+	<delete id="deleteChild" parameterType="java.lang.Long">
+		delete from
+		category
+		where
+		path like CONCAT('%',|#{id}|,'%')
+	</delete>
+	
 	<insert id="insert" parameterType="com.atguigu.sys.domain.SysCategory">
 		insert into category (id,
 		code, name,
@@ -236,6 +243,6 @@
 		#{groupId,jdbcType=INTEGER},
 		parentId = #{parentId,jdbcType=INTEGER}
 		where id =
-		#{id,jdbcType=INTEGER}
+		#{id}
 	</update>
 </mapper>

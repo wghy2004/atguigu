@@ -11,5 +11,11 @@ import com.atguigu.sys.domain.SysCategory;
 *
  */
 public interface SysCategoryDao extends BaseDao<SysCategory> {
+	/**
+	 * 删除子节点
+	 * @param id
+	 * @return
+	 */
+	public int deleteChild(long id);
 	
 }

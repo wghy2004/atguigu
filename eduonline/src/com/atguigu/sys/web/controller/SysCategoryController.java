@@ -8,10 +8,13 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.collections.map.HashedMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.atguigu.frame.core.dao.BaseService;
 import com.atguigu.frame.core.web.controller.BaseControllerImpl;
 import com.atguigu.frame.core.web.domain.Result;
+import com.atguigu.frame.core.web.domain.Result.Status;
 import com.atguigu.sys.domain.SysCategory;
 import com.atguigu.sys.domain.SysCategoryGroup;
 import com.atguigu.sys.domain.vo.SysCategoryVo;
@@ -41,6 +45,8 @@ import com.atguigu.sys.service.SysCategoryService;
 @RequestMapping("/sys/category")
 public class SysCategoryController extends
 		BaseControllerImpl<SysCategory, SysCategory> {
+	
+	private Logger log = LoggerFactory.getLogger(SysCategoryController.class);
 
 	@Autowired
 	private SysCategoryService sysCategoryService;
@@ -106,6 +112,27 @@ public class SysCategoryController extends
 				.toCombotree(page.getContent(), 0);
 
 		return ja;
+	}
+	
+	
+	
+
+	@Override
+	@ResponseBody
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result deleteOne(@PathVariable("id") long id) {
+		if (id <= 0) {
+			log.error("要删除的ID号为null或空字符串！对象：{}", path.getEntityName());
+			return new Result(Status.ERROR, "没有传入要删除的ID号！");
+		}
+		
+		int count = getBaseService().deleteById(id);
+		
+		if (count == 0)
+			return new Result(Status.ERROR, "要删除的记录不存在！");
+		
+		log.debug("成功删除{}个对象，id:{},对象:{}", count, id, path.getEntityName());
+		return new Result(Status.OK, count);
 	}
 	
 

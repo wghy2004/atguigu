@@ -86,7 +86,7 @@
 							<ul class="option-group">
 								<li><a data-toggle="modal" data-backdrop="static" data-target="#myModal" href="${base}/sys/dictionary/edit/${result.dicId}" title="编辑"
 									class="glyphicon glyphicon-edit"></a></li>
-								<li><a href="${base}/sys/dictionary/${result.dicId}" ssr-delete-one title="删除" class="glyphicon glyphicon-trash"></a>
+								<li><a href="${base}/sys/dictionary/${result.dicId}" ssr-delete-one title="删除" class="glyphicon glyphicon-trash">删除</a>
 								</li>
 							</ul>
 						</td>

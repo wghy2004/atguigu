@@ -1,7 +1,7 @@
 <#assign base=request.contextPath />
 <div class="main" style="background-color: white;">
 	<div class="easyui-panel" style="border-style: none;">
-		<form class="validate" id="editForm">
+		<form class="validate" method="put" id="editForm">
 			<table>
 					<tbody><tr>
 						<th>分类名称</th>
@@ -9,6 +9,7 @@
 							<input class="input_text" type="text" id="name" name="name" value="${category.name}">
 							<input type="hidden"  name="id" value="${category.id}">
 							<input type="hidden"  name="groupId" value="${category.groupId}">
+							 <input type="hidden" name="_method" value="put"/>
 						</td>
 					</tr>
 					<tr>
