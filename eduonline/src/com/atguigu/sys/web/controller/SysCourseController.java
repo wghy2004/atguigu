@@ -1,6 +1,8 @@
 package com.atguigu.sys.web.controller;
 
-import org.apache.poi.ss.formula.functions.T;
+import net.sf.json.JSONObject;
+
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.atguigu.frame.core.dao.BaseService;
 import com.atguigu.frame.core.web.controller.BaseControllerImpl;
+import com.atguigu.frame.core.web.domain.EasyUIPage;
 import com.atguigu.sys.domain.SysCourse;
 import com.atguigu.sys.domain.query.SysCourseQuery;
 import com.atguigu.sys.domain.vo.SysCourseVo;
@@ -30,19 +33,27 @@ public class SysCourseController extends
 		return sysCourseService;
 	}
 
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public ModelAndView selectAll(SysCourseVo query,
-			@PageableDefault Pageable pageable) {
+	@Override
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView selectList(SysCourseQuery query, Pageable pageable) {
 
-		Page<SysCourseVo> page = sysCourseService.queryPageList(query, pageable);
-
-		ModelAndView mav = new ModelAndView(path.getListViewPath(), "page",
-				page);
+		ModelAndView mav = new ModelAndView(path.getListViewPath());
 
 		mav.addObject("query", query);
 
 		return mav;
+	}
 
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	@ResponseBody
+	@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+	public String selectAll(SysCourseVo query,
+			@PageableDefault Pageable pageable) {
+
+		Page<SysCourseVo> page = sysCourseService
+				.queryPageList(query, pageable);
+
+		return EasyUIPage.formPage(page).toString();
 	}
 
 }

@@ -14,84 +14,167 @@
 			<a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
 			<a href="#" class="current">Tables</a>
 		</div>
-			
-		<!-- 工具栏 -->
-		<div class='buttonArea'>
-			<span id="searchbtn">	
-				<a href="javascript:void(0)" class="button blueButton"  onclick="newTab('添加商品','/version4/shop/admin/goods!selectCat.do')">添加</a>
-				<a href="javascript:void(0)" class="button"  onclick="del()">删除</a>
-				<a href="javascript:void(0)" class="button"  onclick="newTab('商品回收站','/version4/shop/admin/goods!trash_list.do')">回收站</a>
-			</span>
-			<span class="fr"> 
-				<input id="searchKeyword" class="input_text  mr5" type="text" value="" size="30"	placeholder="请输入模糊关键字" name="searchKeyWord">
-				<a href="javascript:void(0)" class="button " id="aAdvanced"  >高级搜索</a>
-				<a href="javascript:void(0)" class="button " onclick="searchGoods()">搜索</a>
-			</span>
-		</div>
 		
-		<div id="tb" style="padding:5px;height:auto">
-	        <div style="margin-bottom:5px">
-	            <a href="${base}/sys/course/add"  title="添加" class="easyui-linkbutton" iconCls="icon-add" plain="true"></a>
-	            <a data-toggle="modal" data-backdrop="static" data-target="#myModal" href="${base}/sys/course/edit" id="btnEdit" class="easyui-linkbutton" iconCls="icon-edit" plain="true"></a>
-	            <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true"></a>
-	            <a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true"></a>
-	            <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"></a>
-	        </div>
-	        <div>
-	            分组: 
-	            <select id="group" name="group" class="easyui-combobox" panelHeight="auto" style="width:100px">
-						<option value="0">请选择</option>
-						<#list model.groupList as group>
-						<option value="${group.id}">${group.name}</option>
-						</#list>
-				</select>
-	        </div>
+		<div class="warp container">	
+			<!-- 工具栏 -->
+			<div class='buttonArea'>
+				<span id="searchbtn">	
+					<a href="${base}/sys/course/add" class="button blueButton" >新课程</a>
+					<a href="javascript:void(0)" class="button"  onclick="del()">删除</a>
+					<a href="javascript:void(0)" class="button"  onclick="newTab('商品回收站','/version4/shop/admin/goods!trash_list.do')">回收站</a>
+				</span>
+				<span class="fr"> 
+					<input id="searchKeyword" class="input_text  mr5" type="text" value="" size="30"	placeholder="请输入模糊关键字" name="searchKeyWord">
+					<a href="javascript:void(0)" class="button " id="aAdvanced"  >高级搜索</a>
+					<a href="javascript:void(0)" class="button " onclick="searchGoods()">搜索</a>
+				</span>
+			</div>
+			
+			<#-- 结果列表 -->
+			<table id="dg" class="easyui-datagrid"  style="width:90%;height:250px;border:1px solid #ccc;">
+		        <thead>
+		            <tr>
+		                <th data-options="field:'id',width:10,align:'center'">id</th>
+		                <th data-options="field:'title',width:30">标题</th>
+		                <th data-options="field:'status',width:10">状态</th>
+		                <th data-options="field:'syscourse.name',width:15">课程分类</th>
+		                <th data-options="field:'createdTime',width:15">创建时间</th>
+		                <th data-options="field:'edit',width:10,align:'center'" formatter="formatEdit">编辑</th>
+		                <th data-options="field:'delete',width:10,align:'center'" formatter="formatDelete">删除</th>
+		            </tr>
+		        </thead>
+		    </table>
 	    </div>
-		<#-- 结果列表 -->
-		<table id="dg" style="width:100%;height:auto;border:1px solid #ccc;">
-        <thead>
-            <tr>
-                <th data-options="field:'id'">id</th>
-                <th data-options="field:'title',width:15">标题</th>
-                <th data-options="field:'subtitle',width:20">副标题</th>
-                <th data-options="field:'status',width:5">状态</th>
-                <th data-options="field:'type',width:5">类型</th>
-                <th data-options="field:'price',width:5">价格</th>
-                <th data-options="field:'lessonNum',width:5">课时数</th>
-                <th data-options="field:'studentNum',width:5">学员数</th>
-                <th data-options="field:'sysCategory.name',width:5">课程分类</th>
-                <th data-options="field:'createdTime',width:10">创建时间</th>
-                <th data-options="field:'action',width:10" formatter="formatAction">操作</th
-            </tr>
-        </thead>
-        <tbody>
-     	   <#list page.content as result>
-            <tr>
-                <td>${result.id}</td><td>${result.title}</td><td>${result.subtitle}</td><td>${result.status}</td>
-                <td>${result.type}</td>
-                <td>${result.price}</td>
-                <td>${result.lessonNum}</td>
-                <td>${result.studentNum}</td>
-                <td>${result.sysCategory.name}</td>
-                <td>${result.createdTime}</td>
-                <td><a>修改</a>&nbsp;&nbsp;<a>删除</a></td>
-            </tr>
-            </#list>
-        </tbody>
-    </table>
 	</div>
 	<#-- 内容结束 --> 
 	<#include "/common/footer.ftl"> 
 	<@modal/>
 	<script type="text/javascript">
-		function formatAction(value,row,index){
-			var val="<a class='edit' title='查看' href='#'>编辑</a><a class='edit' title='查看' href='#'>删除</a>";
+		function append(id, obj) {
+			var map = {}; // Map map = new HashMap();
+			if (!id) {
+				map["href"] = "${base}/sys/course/add";
+				map["formId"] = "#addForm";
+				map["method"] = "post";
+				map["url"] = "${base}/sys/course";
+				map["title"] = "添加分类";
+				map["loadshow"] = "正在添加......";
+			} else {
+				if (obj == 1) {
+					map["href"] = "${base}/sys/course/add/"+id;
+					map["formId"] = "#addForm";
+					map["method"] = "post";
+					map["url"] = "${base}/sys/course";
+					map["title"] = "添加子分类";
+					map["loadshow"] = "正在添加......";
+				} else {
+					map["href"] = "${base}/sys/course/edit/" + id;
+					map["formId"] = "#editForm";
+					map["method"] = "post";
+					map["url"] = "${base}/sys/course";
+					map["title"] = "修改分类";
+					map["loadshow"] = "正在修改......";
+				}
+	
+			}
+			map["divDialog"] = "#divdia";
+			map["gridreload"] = "#dg";
+			addDialog(map);
+		}
+		function addDialog(map) {
+			$(map["divDialog"]).show();
+			$(map["divDialog"]).dialog({
+				title : map["title"],
+				width : 420,
+				height : 280,
+				closed : false,
+				cache : false,
+				href : map["href"],
+				modal : true,
+				buttons : [ {
+					text : '保存',
+					handler : function() {
+						var savebtn = $(this);
+		　　				var disabled=savebtn.hasClass("l-btn-disabled");
+		　　				if(!disabled){
+							 submitForm(map,savebtn);
+						}
+					}
+				}, {
+					text : '清空',
+					handler : function() {
+						clearForm(map);
+					}
+				} ]
+			});
+		}
+		
+		function submitForm(map,savebtn) {
+			var formflag = $(map["formId"]).form().form('validate');
+			if (formflag) {
+				$.Loading.show("正在保存请稍后...");
+				savebtn.linkbutton("disable");	
+				$(map["formId"]).ajaxSubmit({
+					url : map["url"],
+					type : map["method"],
+					dataType : 'json',
+					success : function(result) {
+						if (result.status == 'OK') {
+							$(map["divDialog"]).dialog('close');
+							$(map["gridreload"]).datagrid('reload');
+							$.Loading.success(map["title"]+':'+result.message.name+'!');
+						}
+						if (result.status == 'ERROR') {
+							$.Loading.error(result.message);
+						}
+						savebtn.linkbutton("enable");
+					},
+					error : function(e) {
+						$.Loading.error("出现错误 ，请重试");
+						savebtn.linkbutton("enable");
+					}
+				});
+			}else{
+				savebtn.linkbutton("enable");
+				$.Loading.hide();
+			}
+		}
+	
+		function clearForm(map) {
+			$(map["formId"]).form('clear');
+		}
+		
+		function del(id){
+			  deleteOne('${base}/sys/course/'+id , function(result){
+				  	console.log(result);
+				  	$('#dg').datagrid('reload');
+					$.Loading.success('成功删除'+result.message+'!');
+			  });
+		}		
+		
+		function formatEdit(value, row, index) {
+			var val = "<a class='edit' title='修改' href='javascript:void(0);' onclick='append("
+					+ row.id + ",2)' ></a>";
 			return val;
 		}
+		function formatDelete(value, row, index) {
+			var val = '<a href="javascript:" class="delete" onclick="del('+row.id+')"><img catid="'+row.cat_id+'" src="${base}/resources/images/transparent.gif"></a>';
+			return val;
+		}
+		
 		$(function(){
 			$('#dg').datagrid({
+				url : '${base}/sys/course/all',
+				method : 'get',
 				fit : true,
+				height : '250px',
 				fitColumns : true
+			});
+			$(window).resize(function(){
+				$('#dg').treegrid('resize',{
+						width  : $('.container').width()-150 ,
+						height : $('.container').height()
+				});
 			});
 		});	
 	</script>

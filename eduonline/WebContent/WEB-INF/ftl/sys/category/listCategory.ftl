@@ -23,10 +23,10 @@
 				</span>
 			</div>
 			<#-- 结果列表 -->
-			<table id="dg"  class="easyui-treegrid" style="width:100%;height:250px;border:1px solid #ccc;" >
+			<table id="dg"  class="easyui-treegrid" style="width:auto;height:250px;border:1px solid #ccc;" >
 				<thead>
 					<tr>
-						<th data-options="field:'id',width:5">ID</th>
+						<th data-options="field:'id',width:5,align:'center'">ID</th>
 						<th data-options="field:'name',width:25">名称</th>
 						<th data-options="field:'code',width:10">代码</th>
 						<th data-options="field:'weight',width:20"
@@ -179,10 +179,9 @@
                 fit:true,
                 fitColumns:'true'
 		});
-		
 		$(window).resize(function(){
 			$('#dg').treegrid('resize',{
-				width  : $('.container').width()-20 ,
+				width  : $('.container').width()-150 ,
 				height : $('.container').height()
 			});
 		});
