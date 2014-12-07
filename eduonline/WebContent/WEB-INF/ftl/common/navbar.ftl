@@ -1,3 +1,4 @@
+<#assign base=request.contextPath />
 <!-- SSR实验员--导航条开始 -->
 <div id="header">
 	<h1><a href="./dashboard.html">Unicorn Admin</a></h1>		
@@ -46,7 +47,8 @@
 				<li><a href="invoice.html">上传视频</a></li>
 				<li><a href="chat.html">视频列表</a></li>
 				<li><a href="chat.html">图片列表</a></li>
-				<li><a href="chat.html">文件列表</a></li>
+				<li><a href="${base}/sys/file">文件列表</a></li>
+				<li><a href="${base}/sys/file/group">文件组</a></li>
 			</ul>
 		</li>
 		<li>

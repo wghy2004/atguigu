@@ -16,7 +16,9 @@ public class EasyUIPage {
 		
 		JSONObject jo = new JSONObject();
 		
-		jo.put("total", page.getSize());
+		jo.put("total", page.getTotalElements());
+		jo.put("pageNumber", page.getNumber());
+		jo.put("pageSize", page.getSize());
 		jo.put("rows", page.getContent());
 		
 		return jo;

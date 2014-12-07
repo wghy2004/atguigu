@@ -14,8 +14,7 @@
 			<a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
 			<a href="#" class="current">Tables</a>
 		</div>
-		
-		<div class="warp container">	
+		<div class="warp">	
 			<!-- 工具栏 -->
 			<div class='buttonArea'>
 				<span id="searchbtn">	
@@ -29,24 +28,26 @@
 					<a href="javascript:void(0)" class="button " onclick="searchGoods()">搜索</a>
 				</span>
 			</div>
-			
 			<#-- 结果列表 -->
-			<table id="dg" class="easyui-datagrid"  style="width:90%;height:250px;border:1px solid #ccc;">
-		        <thead>
-		            <tr>
-		                <th data-options="field:'id',width:10,align:'center'">id</th>
-		                <th data-options="field:'title',width:30">标题</th>
-		                <th data-options="field:'status',width:10">状态</th>
-		                <th data-options="field:'syscourse.name',width:15">课程分类</th>
-		                <th data-options="field:'createdTime',width:15">创建时间</th>
-		                <th data-options="field:'edit',width:10,align:'center'" formatter="formatEdit">编辑</th>
-		                <th data-options="field:'delete',width:10,align:'center'" formatter="formatDelete">删除</th>
-		            </tr>
-		        </thead>
-		    </table>
+			<div class="table-container">
+				<table id="dg"  style="border:1px solid #ccc;">
+			        <thead>
+			            <tr>
+			                <th data-options="field:'id',width:10,align:'center'">id</th>
+			                <th data-options="field:'title',width:30">标题</th>
+			                <th data-options="field:'status',width:10">状态</th>
+			                <th data-options="field:'syscourse.name',width:15">课程分类</th>
+			                <th data-options="field:'createdTime',width:15">创建时间</th>
+			                <th data-options="field:'edit',width:10,align:'center'" formatter="formatEdit">编辑</th>
+			                <th data-options="field:'delete',width:10,align:'center'" formatter="formatDelete">删除</th>
+			            </tr>
+			        </thead>
+			    </table>
+			 </div>
+			 <@easyuiPage/>
 	    </div>
 	</div>
-	<#-- 内容结束 --> 
+	<#-- 内容结束 -->
 	<#include "/common/footer.ftl"> 
 	<@modal/>
 	<script type="text/javascript">
@@ -167,14 +168,25 @@
 				url : '${base}/sys/course/all',
 				method : 'get',
 				fit : true,
-				height : '250px',
-				fitColumns : true
+				fitColumns : true,
+				onLoadSuccess : function(data){
+					//设置分页控件 
+				    $('#pp').pagination({ 
+				    	total : data.total,
+				    	pageSize : data.pageSize,
+				    	pageNumber : data.pageNumber+1,
+				        onSelectPage:function(pageNumber, pageSize){
+							$(this).pagination('loading');
+							$('#dg').datagrid('reload',{
+								page : pageNumber-1
+							});
+							$(this).pagination('loaded');
+						}
+				    });                
+           		}
 			});
 			$(window).resize(function(){
-				$('#dg').treegrid('resize',{
-						width  : $('.container').width()-150 ,
-						height : $('.container').height()
-				});
+				$('#dg').datagrid('resize');
 			});
 		});	
 	</script>

@@ -5748,6 +5748,15 @@ input ..receiptsInputText:focus {
 	text-indent: 5px
 }
 
+.table-container{
+	height: 300px;
+}
+#footer{
+	margin: 10px 0;
+}
+#content{
+	min-height: initial;
+}
 /* 重写 bootstrap*/
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"],
 	input[type="datetime-local"], input[type="date"], input[type="month"],
@@ -5779,4 +5788,11 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	line-height: 20px;
 	padding-top: 0;
 	padding-bottom: 0;
+}
+
+.pagination {
+ margin: 0;
+}
+p{
+	margin: 0;
 }

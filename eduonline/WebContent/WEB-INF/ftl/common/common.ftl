@@ -1,6 +1,7 @@
 <#assign base=request.contextPath />
 
 <#-- 公共标签引入 -->
+<#include "/common/easyui-page.ftl"/>
 <#include "/common/page.ftl"/>
 <#include "/common/modal.ftl"/>
 

@@ -6,7 +6,7 @@
 
 	<!--驱动包的绝对路径 -->
 	<classPathEntry
-		location="/home/wg/workspace/eduonline/WebContent/WEB-INF/lib/mysql-connector-java-5.1.25.jar" />
+		location="/home/wg/git/atguigu/eduonline/WebContent/WEB-INF/lib/mysql-connector-java-5.1.25.jar" />
 
 	<context id="context1" targetRuntime="MyBatis3">
 
@@ -39,7 +39,12 @@
 		</javaClientGenerator>
 		<!--与原来mybatis-generator不一样，这个table标签不是必须的。只有对生成的映射有复杂要求时，才需要在这里详细配置 -->
 
-		<table tableName="course" schema="atguigu_edu" domainObjectName="SysCourse">
+		<table tableName="file_group" schema="atguigu_edu" domainObjectName="SysFileGroup">
+		<property name="useActualColumnNames" value="true"/>
+			<!-- <ignoreColumn column="fred" /> <columnOverride column="BEG_DATE" 
+				property="startDate" /> -->
+		</table>
+			<table tableName="file" schema="atguigu_edu" domainObjectName="SysFile">
 		<property name="useActualColumnNames" value="true"/>
 			<!-- <ignoreColumn column="fred" /> <columnOverride column="BEG_DATE" 
 				property="startDate" /> -->
