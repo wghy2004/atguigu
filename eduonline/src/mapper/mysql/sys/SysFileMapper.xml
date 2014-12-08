@@ -9,8 +9,17 @@
 		<result column="mime" property="mime" jdbcType="VARCHAR" />
 		<result column="size" property="size" jdbcType="INTEGER" />
 		<result column="status" property="status" jdbcType="TINYINT" />
-		<result column="createdTime" property="createdTime" jdbcType="INTEGER" />
+		<result column="createdTime" property="createdTime" jdbcType="TIMESTAMP" />
 	</resultMap>
+
+	<resultMap id="AssociationResultMap" type="sysFileVo"
+		extends="BaseResultMap">
+		<!-- 关联分组类型 -->
+		<association property="sysFileGroup" column="groupId"
+			javaType="sysFileGroup" select="com.atguigu.sys.domain.SysFileGroup.selectById">
+		</association>
+	</resultMap>
+
 	<sql id="Base_Column_List">
 		id, groupId, userId, uri, mime, size, status, createdTime
 	</sql>
@@ -38,7 +47,7 @@
 	</select>
 
 	<!-- 查询 -->
-	<select id="select" resultMap="BaseResultMap" parameterType="java.util.Map">
+	<select id="select" resultMap="AssociationResultMap" parameterType="java.util.Map">
 		select
 		<include refid="Base_Column_List" />
 		from file
@@ -66,7 +75,7 @@
 		#{uri,jdbcType=VARCHAR},
 		#{mime,jdbcType=VARCHAR}, #{size,jdbcType=INTEGER},
 		#{status,jdbcType=TINYINT},
-		#{createdTime,jdbcType=INTEGER})
+		#{createdTime,jdbcType=TIMESTAMP})
 	</insert>
 	<insert id="insertSelective" parameterType="com.atguigu.sys.domain.SysFile">
 		insert into file
@@ -119,7 +128,7 @@
 				#{status,jdbcType=TINYINT},
 			</if>
 			<if test="createdTime != null">
-				#{createdTime,jdbcType=INTEGER},
+				#{createdTime,jdbcType=TIMESTAMP},
 			</if>
 		</trim>
 	</insert>
@@ -145,7 +154,7 @@
 				status = #{status,jdbcType=TINYINT},
 			</if>
 			<if test="createdTime != null">
-				createdTime = #{createdTime,jdbcType=INTEGER},
+				createdTime = #{createdTime,jdbcType=TIMESTAMP},
 			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}
@@ -166,7 +175,7 @@
 		status =
 		#{status,jdbcType=TINYINT},
 		createdTime =
-		#{createdTime,jdbcType=INTEGER}
+		#{createdTime,jdbcType=TIMESTAMP}
 		where id =
 		#{id,jdbcType=INTEGER}
 	</update>

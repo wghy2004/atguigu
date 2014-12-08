@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   name=""
+   repos="https://192.168.0.166/svn/roseonly"
+   revision="6832"
+   last-author="liwei"
+   uuid="2821dde3-0b12-af40-8b1a-3ad5ab02d635"
+   url="https://192.168.0.166/svn/roseonly/mamaletao/WebRoot/scripts/kindeditor"
+   committed-rev="2"
+   kind="dir"
+   committed-date="2013-04-01T06:38:22.620427Z"/>
+<entry
+   name="jsp"
+   kind="dir"/>
+<entry
+   name="kindeditor.js"
+   checksum="330f939d01d6fe7305e4a941afcdf7c6"
+   last-author="liwei"
+   text-time="2013-04-01T06:38:22.000000Z"
+   committed-rev="2"
+   kind="file"
+   committed-date="2013-04-01T06:38:22.620427Z"/>
+<entry
+   name="license.txt"
+   checksum="9170589bf7f7853089ab52d4181e665c"
+   last-author="liwei"
+   text-time="2013-04-01T06:38:22.000000Z"
+   committed-rev="2"
+   kind="file"
+   committed-date="2013-04-01T06:38:22.620427Z"/>
+<entry
+   name="plugins"
+   kind="dir"/>
+<entry
+   name="skins"
+   kind="dir"/>
+</wc-entries>

@@ -1,5 +1,7 @@
 package com.atguigu.sys.domain;
 
+import java.sql.Timestamp;
+
 import com.atguigu.frame.core.dao.domain.Identifiable;
 
 public class SysFile implements Identifiable {
@@ -17,7 +19,7 @@ public class SysFile implements Identifiable {
 
 	private Byte status;
 
-	private Integer createdTime;
+	private Timestamp createdTime;
 
 	public Integer getId() {
 		return id;
@@ -75,11 +77,11 @@ public class SysFile implements Identifiable {
 		this.status = status;
 	}
 
-	public Integer getCreatedTime() {
+	public Timestamp getCreatedTime() {
 		return createdTime;
 	}
 
-	public void setCreatedTime(Integer createdTime) {
+	public void setCreatedTime(Timestamp createdTime) {
 		this.createdTime = createdTime;
 	}
 }

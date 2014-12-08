@@ -5749,7 +5749,7 @@ input ..receiptsInputText:focus {
 }
 
 .table-container{
-	height: 300px;
+	min-height: 500px;
 }
 #footer{
 	margin: 10px 0;

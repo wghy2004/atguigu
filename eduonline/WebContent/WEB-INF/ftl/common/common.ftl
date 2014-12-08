@@ -28,6 +28,7 @@
 <script type="text/javascript" src="${base}/resources/js/bootstrap.min.js"></script>
 <script src="${base}/resources/js/unicorn.js"></script>
 <script src="${base}/resources/js/common/common.js"></script>
+<script src="${base}/resources/js/common/util.js"></script>
 
 <#-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -50,8 +51,16 @@
 
 <#-- pnotify组件  -->
 <#macro pnotify>
-<link href="${base}/resources/plugs/pnotify/1.2.2/jquery.pnotify.default.css" rel="stylesheet">
-<link href="${base}/resources/plugs/pnotify/1.2.2/jquery.pnotify.default.icons.css" rel="stylesheet">
-<script type="text/javascript" src="${base}/resources/plugs/pnotify/1.2.2/jquery.pnotify.js"></script>
+	<link href="${base}/resources/plugs/pnotify/1.2.2/jquery.pnotify.default.css" rel="stylesheet">
+	<link href="${base}/resources/plugs/pnotify/1.2.2/jquery.pnotify.default.icons.css" rel="stylesheet">
+	<script type="text/javascript" src="${base}/resources/plugs/pnotify/1.2.2/jquery.pnotify.js"></script>
+</#macro>
+<#-- kindeditor组件  -->
+<#macro kindeditor>
+	<link rel="stylesheet" href="${base}/resources/plugs/kindeditor/4.1.10/themes/default/default.css" />
+	<link rel="stylesheet" href="${base}/resources/plugs/kindeditor/4.1.10/plugins/code/prettify.css" />
+	<script charset="utf-8" src="${base}/resources/plugs/kindeditor/4.1.10/kindeditor.js"></script>
+	<script charset="utf-8" src="${base}/resources/plugs/kindeditor/4.1.10/lang/zh_CN.js"></script>
+	<script charset="utf-8" src="${base}/resources/plugs/kindeditor/4.1.10/plugins/code/prettify.js"></script>
 </#macro>
 

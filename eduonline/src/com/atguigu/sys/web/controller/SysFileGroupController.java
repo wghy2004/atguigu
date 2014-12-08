@@ -1,9 +1,11 @@
 package com.atguigu.sys.web.controller;
 
+import java.util.List;
+
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.atguigu.frame.core.dao.BaseService;
 import com.atguigu.frame.core.web.controller.BaseControllerImpl;
-import com.atguigu.frame.core.web.domain.EasyUIPage;
 import com.atguigu.sys.domain.SysFileGroup;
 import com.atguigu.sys.service.SysFileGroupService;
 
@@ -39,13 +40,12 @@ public class SysFileGroupController extends
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
-	public JSONObject selectListJson(SysFileGroup query,
+	public JSONArray selectListJson(SysFileGroup query,
 			@PageableDefault Pageable pageable) {
 
-		Page<SysFileGroup> page = sysFileGroupService.queryPageList(query,
-				pageable);
+		List<SysFileGroup> lsit = sysFileGroupService.queryList(query);
 
-		return EasyUIPage.formPage(page);
+		return JSONArray.fromObject(lsit);
 	}
 
 }

@@ -42,7 +42,6 @@
 			<div id="divdia" style="display: none;"></div>
 		</div>
 	</div>
-	<@easyuiPage/>
 	<#-- 内容结束 --> 
 	<script type="text/javascript">
 	function append(id, obj) {
@@ -162,22 +161,7 @@
             method: 'get',
             idField: 'id',
             fit:true,
-            fitColumns:true,
-            onLoadSuccess : function(data){
-				//设置分页控件 
-			    $('#pp').pagination({ 
-			    	total : data.total,
-			    	pageSize : data.pageSize,
-			    	pageNumber : data.pageNumber+1,
-			        onSelectPage:function(pageNumber, pageSize){
-						$(this).pagination('loading');
-						$('#dg').datagrid('reload',{
-							page : pageNumber-1
-						});
-						$(this).pagination('loaded');
-					}
-			    });                
-            }
+            fitColumns:true
 		});
 		$(window).resize(function(){
 			$('#dg').datagrid('resize');

@@ -1,11 +1,2 @@
 /com/
-/doc/
-/ehcache.xml
-/freemarker.properties
-/generatorConfig.xml
-/jdbc.properties
-/log4j.properties
 /mapper/
-/spring-config.xml
-/spring-mvc.xml
-/sqlMapConfig.xml

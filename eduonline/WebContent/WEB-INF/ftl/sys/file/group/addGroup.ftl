@@ -18,7 +18,7 @@
 					<tr>
 						<th>公开</th>
 						<td>
-							<input type="radio"   name="isPublic"  value="0" id="isPublic" > 否 
+							<input type="radio"   name="isPublic"  value="0" id="isPublic" checked="checked"> 否 
 							<input type="radio"   name="isPublic"  value="1" > 是 
 						</td> 
 					</tr>

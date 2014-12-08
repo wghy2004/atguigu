@@ -3,32 +3,25 @@
 	<div class="easyui-panel" style="border-style: none;">
 		<form class="validate" method="put" id="editForm">
 			<table>
-					<tbody><tr>
-						<th>分类名称</th>
+					<tbody>
+					<tr>
+						<th>文件组</th>
 						<td>
-							<input class="input_text" type="text" id="name" name="name" value="${category.name}">
-							<input type="hidden"  name="id" value="${category.id}">
-							<input type="hidden"  name="groupId" value="${category.groupId}">
+							<input name="groupId"   class="easyui-combobox" id="groupId" value="${file.groupId}" data-options="value:'${file.groupId}',valueField:'id',method:'get',textField:'name',url:'${base}/sys/file/group/list'">
+							<input type="hidden"  name="id" value="${file.id}">
 							 <input type="hidden" name="_method" value="put"/>
 						</td>
 					</tr>
 					<tr>
-						<th>上级分类</th>
+						<th>选择文件</th>
 						<td>
-							<input name="parentId" id="parentId" value="${category.parentId}">
-							<input type="hidden" name="path" id="path" value="${category.path}">
+							<input class="input_text" type="file" id="files" name="files" value="${file.uri}">
 						</td>
 					</tr>
 					<tr>
-						<th>代码</th>
+						<th>状态</th>
 						<td>
-							<input type="text" class="input_text" name="code"  value="${category.code}" id="code" >
-						</td>
-					</tr>
-					<tr>
-						<th>排序</th>
-						<td>
-							<input type="text" class="input_text" name="weight"  value="${category.weight}" id="weight" >
+							<input type="text" class="input_text" name="status"  value="${file.status}" id="status" >
 						</td>
 					</tr>
 				</tbody>
@@ -36,17 +29,3 @@
 		</form>
 	</div>
 </div>
-<script type="text/javascript">
-	$(function() {
-		$('#parentId').combotree({
-			url:'${base}/sys/category/combotree?format=json',
-			method:'get',
-			required:false,
-			value:'${category.parentId}',
-			height:28,
-			onSelect : function(rec){
-			  $('#path').val(rec.path+rec.id+'|');
-			}
-		});
-	});
-</script>

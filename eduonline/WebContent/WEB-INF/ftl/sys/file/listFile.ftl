@@ -4,7 +4,7 @@
 <#include "/common/common.ftl">
 <@pnotify/>
 <@easyui/>
-<title>分组类型</title>
+<title>文件列表</title>
 </head>
 <body>
 	<#include "/common/navbar.ftl"> 
@@ -12,14 +12,13 @@
 	<div id="content">
 		<div id="breadcrumb">
 			<a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
-			<a href="#" class="current">Tables</a>
+			<a href="#" class="current">文件列表</a>
 		</div>
 		<div class="warp">
 			<!-- 工具栏 -->
 			<div class='buttonArea'>
 				<span id="searchbtn">	
-					<a href="javascript:" onclick="append()" class="button blueButton">添加分类</a>
-					<a href="javascript:void(0)" class="button"  onclick="del()">保存排序</a>
+					<a href="javascript:" onclick="append()" class="button blueButton">上传文件</a>
 				</span>
 			</div>
 			<#-- 结果列表 -->
@@ -28,15 +27,13 @@
 					<thead>
 						<tr>
 							<th data-options="field:'id',width:5,align:'center'">ID</th>
+							<th data-options="field:'uri',width:30"">uri</th>
 							<th data-options="field:'mime',width:10">mime</th>
 							<th data-options="field:'size',width:10">大小</th>
 							<th data-options="field:'status',width:10">状态</th>
-							<th data-options="field:'uri',width:20"">uri</th>
-							<th data-options="field:'groupId',width:25">文件组</th>
+							<th data-options="field:'sysFileGroup.name',width:10" formatter="formatGroup">文件组</th>
 							<th data-options="field:'userId',width:10">用户</th>
-							<th data-options="field:'createdTime',width:10">创建时间</th>
-							<th data-options="field:'add',width:10,align:'center'"
-								formatter="formatAdd">添加子</th>
+							<th data-options="field:'createdTime',width:15" formatter="formatTime">创建时间</th>
 							<th data-options="field:'edit',width:10,align:'center'"
 								formatter="formatEdit">编辑</th>
 							<th data-options="field:'delete',width:10,align:'center'"
@@ -59,25 +56,16 @@
 			map["href"] = "${base}/sys/file/add";
 			map["formId"] = "#addForm";
 			map["method"] = "post";
-			map["url"] = "${base}/sys/file";
-			map["title"] = "添加分类";
-			map["loadshow"] = "正在添加......";
+			map["url"] = "${base}/sys/file/upload";
+			map["title"] = "上传文件";
+			map["loadshow"] = "正在上传......";
 		} else {
-			if (obj == 1) {
-				map["href"] = "${base}/sys/file/add/"+id;
-				map["formId"] = "#addForm";
-				map["method"] = "post";
-				map["url"] = "${base}/sys/file";
-				map["title"] = "添加子分类";
-				map["loadshow"] = "正在添加......";
-			} else {
-				map["href"] = "${base}/sys/file/edit/" + id;
-				map["formId"] = "#editForm";
-				map["method"] = "post";
-				map["url"] = "${base}/sys/file";
-				map["title"] = "修改分类";
-				map["loadshow"] = "正在修改......";
-			}
+			map["href"] = "${base}/sys/file/edit/" + id;
+			map["formId"] = "#editForm";
+			map["method"] = "post";
+			map["url"] = "${base}/sys/file";
+			map["title"] = "修改文件";
+			map["loadshow"] = "正在修改......";
 
 		}
 		map["divDialog"] = "#divdia";
@@ -154,6 +142,17 @@
 				$.Loading.success('成功删除'+result.message+'!');
 		  });
 	}	
+	
+	function formatTime(value, row, index){
+		var time = row.createdTime; 
+		var date = new Date(time.year,time.month,time.date,time.hours,time.minutes,time.seconds);
+		return util.formatDate(date,'YYYY-MM-DD hh:mm:ss');
+	}
+	
+	function formatGroup(value, row, index){
+	
+		return row.sysFileGroup.name;
+	}
 		
 	function formatAdd(value, row, index) {
 		var val = "<a href='javascript:void(0);' class='add' onclick='append(" + row.id
@@ -177,15 +176,17 @@
 	}
 	$(function(){
 		$('#dg').datagrid({
-				url: '${base}/sys/file/list?groupId=1&format=json',
+				url: '${base}/sys/file/list',
                 method: 'get',
                 idField: 'id',
                 fit:true,
                 fitColumns:'true',
                 onLoadSuccess : function(data){
+                	console.log(data.total)
 					//设置分页控件 
 				    $('#pp').pagination({ 
 				    	total : data.total,
+				    	pageList :[data.pageSize],
 				    	pageSize : data.pageSize,
 				    	pageNumber : data.pageNumber+1,
 				        onSelectPage:function(pageNumber, pageSize){
