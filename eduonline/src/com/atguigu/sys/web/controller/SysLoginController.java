@@ -60,6 +60,18 @@ public class SysLoginController{
 		
 		String url      = request.getParameter("url");
 		
+		//已经登录
+		SysUser user = (SysUser) request.getSession().getAttribute("user");
+		
+		if(null != user){
+			
+			if(!StringUtils.isEmpty(url)){
+				return new ModelAndView("redirect:"+url);
+			}
+			
+			return new ModelAndView("redirect:/sys/admin");
+		}
+		
 		return new ModelAndView("sys/login","url",url);
 	}
 }

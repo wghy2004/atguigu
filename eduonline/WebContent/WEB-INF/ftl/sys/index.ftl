@@ -4,17 +4,15 @@
 <#include "/common/common.ftl">
 <@pnotify/>
 <@easyui/>
-<title>分组类型</title>
+<title>后台管理</title>
 </head>
 <body>
 	<#include "/common/navbar.ftl"> 
+	<@nav nav="mainNav"/>
 	<#-- 内容开始 -->
 	<div id="content">
-		<div id="breadcrumb">
-			<a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
-			<a href="#" class="current">Tables</a>
-		</div>
-		<div class="warp container">
+		<@breadcrumb />
+		<div class="warp">
 			主面板
 		</div>
 	</div>
