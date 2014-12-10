@@ -8,12 +8,10 @@
 </head>
 <body>
 	<#include "/common/navbar.ftl"> 
+	<@nav nav="fileGroupNav"/>
 	<#-- 内容开始 -->
 	<div id="content">
-		<div id="breadcrumb">
-			<a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
-			<a href="#" class="current">Tables</a>
-		</div>
+		<@breadcrumb crumb1="文件" crumb2="文件组"/>
 		<div class="warp">
 			<!-- 工具栏 -->
 			<div class='buttonArea'>

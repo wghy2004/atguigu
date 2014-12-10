@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.sys.domain.SysFileGroup">
+	<resultMap id="BaseResultMap" type="sysFileGroup">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="isPublic" property="isPublic" jdbcType="TINYINT" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, name, code, isPublic
+	</sql>
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim prefixOverrides="and">
+				<if test="id != null"> and id = #{id}</if>
+				<if test="name != null">and name = #{name}</if>
+				<if test="code != null">and code = #{code}</if>
+				<if test="isPublic != null">and isPublic = #{isPublic}</if>
+			</trim>
+		</where>
+		<if test="sorting != null">order by ${sorting}</if>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</sql>
+	<!-- 查询总数 -->
+	<select id="selectCount" resultType="java.lang.Long"
+		parameterType="java.util.Map">
+		select count(id)
+		from file_group
+		<include refid="Base_Where_Clause" />
+	</select>
+
+	<!-- 查询 -->
+	<select id="select" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from file_group
+		<include refid="Base_Where_Clause" />
+	</select>
+
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from file_group
+		where id = #{id}
+	</select>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from file_group
+		where id = #{id}
+	</delete>
+	<insert id="insert" parameterType="sysFileGroup">
+		insert into file_group (id,
+		name, code,
+		isPublic)
+		values (#{id,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},
+		#{code,jdbcType=VARCHAR},
+		#{isPublic,jdbcType=TINYINT})
+	</insert>
+	<insert id="insertSelective" parameterType="sysFileGroup">
+		insert into file_group
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="isPublic != null">
+				isPublic,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="isPublic != null">
+				#{isPublic,jdbcType=TINYINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByIdSelective" parameterType="sysFileGroup">
+		update file_group
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="isPublic != null">
+				isPublic = #{isPublic,jdbcType=TINYINT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateById" parameterType="sysFileGroup">
+		update file_group
+		set name
+		= #{name,jdbcType=VARCHAR},
+		code = #{code,jdbcType=VARCHAR},
+		isPublic =
+		#{isPublic,jdbcType=TINYINT}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

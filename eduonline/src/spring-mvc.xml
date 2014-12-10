@@ -86,8 +86,18 @@
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 
-
-
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/sys/**"/>
+			<bean class="com.atguigu.sys.interceptor.SystemInterceptor">
+				<property name="allowUrls">
+					<list>
+						<value>/login</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 </beans>
 	

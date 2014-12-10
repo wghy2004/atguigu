@@ -1,9 +1,15 @@
 <#assign base=request.contextPath />
+<#if Session.user?exists>  
+	 <#assign user = Session["user"]>
+</#if>  
+
 
 <#-- 公共标签引入 -->
+<#include "/common/breadcrumb.ftl"/>
 <#include "/common/easyui-page.ftl"/>
 <#include "/common/page.ftl"/>
 <#include "/common/modal.ftl"/>
+
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">

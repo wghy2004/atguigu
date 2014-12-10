@@ -8,12 +8,10 @@
 </head>
 <body>
 	<#include "/common/navbar.ftl"> 
+	<@nav nav="fileNav"/>
 	<#-- 内容开始 -->
 	<div id="content">
-		<div id="breadcrumb">
-			<a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
-			<a href="#" class="current">文件列表</a>
-		</div>
+		<@breadcrumb crumb1="文件" crumb2="文件列表"/>
 		<div class="warp">
 			<!-- 工具栏 -->
 			<div class='buttonArea'>
@@ -113,7 +111,7 @@
 					if (result.status == 'OK') {
 						$(map["divDialog"]).dialog('close');
 						$(map["gridreload"]).datagrid('reload');
-						$.Loading.success(map["title"]+':'+result.message.name+'!');
+						$.Loading.success(map["title"]+':'+result.message.id+'!');
 					}
 					if (result.status == 'ERROR') {
 						$.Loading.error(result.message);
