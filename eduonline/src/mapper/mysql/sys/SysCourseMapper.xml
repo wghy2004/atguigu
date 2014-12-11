@@ -30,16 +30,16 @@
 		<result column="recommendedSeq" property="recommendedSeq"
 			jdbcType="INTEGER" />
 		<result column="recommendedTime" property="recommendedTime"
-			jdbcType="INTEGER" />
+			jdbcType="TIMESTAMP" />
 		<result column="locationId" property="locationId" jdbcType="INTEGER" />
 		<result column="address" property="address" jdbcType="VARCHAR" />
 		<result column="studentNum" property="studentNum" jdbcType="INTEGER" />
 		<result column="hitNum" property="hitNum" jdbcType="INTEGER" />
 		<result column="userId" property="userId" jdbcType="INTEGER" />
-		<result column="createdTime" property="createdTime" jdbcType="INTEGER" />
+		<result column="createdTime" property="createdTime" jdbcType="TIMESTAMP" />
 		<result column="freeStartTime" property="freeStartTime"
-			jdbcType="INTEGER" />
-		<result column="freeEndTime" property="freeEndTime" jdbcType="INTEGER" />
+			jdbcType="TIMESTAMP" />
+		<result column="freeEndTime" property="freeEndTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	<resultMap id="ResultMapWithBLOBs" type="com.atguigu.sys.domain.SysCourseWithBLOBs"
 		extends="BaseResultMap">
@@ -216,7 +216,7 @@
 			<include refid="Example_Where_Clause" />
 		</if>
 	</delete>
-	<insert id="insert" parameterType="com.atguigu.sys.domain.SysCourseWithBLOBs">
+	<insert id="insert" parameterType="com.atguigu.sys.domain.SysCourse">
 		insert into course (id, title,
 		subtitle,
 		status, type, maxStudentNum,
@@ -250,12 +250,12 @@
 		#{middlePicture,jdbcType=VARCHAR}, #{largePicture,jdbcType=VARCHAR},
 		#{recommended,jdbcType=TINYINT},
 		#{recommendedSeq,jdbcType=INTEGER},
-		#{recommendedTime,jdbcType=INTEGER}, #{locationId,jdbcType=INTEGER},
+		#{recommendedTime,jdbcType=TIMESTAMP}, #{locationId,jdbcType=INTEGER},
 		#{address,jdbcType=VARCHAR}, #{studentNum,jdbcType=INTEGER},
 		#{hitNum,jdbcType=INTEGER},
 		#{userId,jdbcType=INTEGER},
-		#{createdTime,jdbcType=INTEGER}, #{freeStartTime,jdbcType=INTEGER},
-		#{freeEndTime,jdbcType=INTEGER}, #{tags,jdbcType=LONGVARCHAR},
+		#{createdTime,jdbcType=TIMESTAMP}, #{freeStartTime,jdbcType=TIMESTAMP},
+		#{freeEndTime,jdbcType=TIMESTAMP}, #{tags,jdbcType=LONGVARCHAR},
 		#{about,jdbcType=LONGVARCHAR},
 		#{teacherIds,jdbcType=LONGVARCHAR},
 		#{goals,jdbcType=LONGVARCHAR}, #{audiences,jdbcType=LONGVARCHAR}
@@ -441,7 +441,7 @@
 				#{recommendedSeq,jdbcType=INTEGER},
 			</if>
 			<if test="recommendedTime != null">
-				#{recommendedTime,jdbcType=INTEGER},
+				#{recommendedTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="locationId != null">
 				#{locationId,jdbcType=INTEGER},
@@ -459,13 +459,13 @@
 				#{userId,jdbcType=INTEGER},
 			</if>
 			<if test="createdTime != null">
-				#{createdTime,jdbcType=INTEGER},
+				#{createdTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="freeStartTime != null">
-				#{freeStartTime,jdbcType=INTEGER},
+				#{freeStartTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="freeEndTime != null">
-				#{freeEndTime,jdbcType=INTEGER},
+				#{freeEndTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="tags != null">
 				#{tags,jdbcType=LONGVARCHAR},

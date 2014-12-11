@@ -5,11 +5,11 @@ import java.sql.Timestamp;
 import com.atguigu.frame.core.dao.domain.Identifiable;
 
 public class SysFile implements Identifiable {
-	private Integer id;
+	private Long id;
 
-	private Integer groupId;
+	private Long groupId;
 
-	private Integer userId;
+	private Long userId;
 
 	private String uri;
 
@@ -17,31 +17,31 @@ public class SysFile implements Identifiable {
 
 	private Integer size;
 
-	private Byte status;
+	private Integer status;
 
 	private Timestamp createdTime;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Integer getGroupId() {
+	public Long getGroupId() {
 		return groupId;
 	}
 
-	public void setGroupId(Integer groupId) {
+	public void setGroupId(Long groupId) {
 		this.groupId = groupId;
 	}
 
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -69,11 +69,11 @@ public class SysFile implements Identifiable {
 		this.size = size;
 	}
 
-	public Byte getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(Byte status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

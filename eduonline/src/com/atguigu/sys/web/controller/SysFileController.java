@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.atguigu.frame.core.dao.BaseService;
 import com.atguigu.frame.core.utils.FileUploadUtil;
+import com.atguigu.frame.core.utils.SystemConfig;
 import com.atguigu.frame.core.web.controller.BaseControllerImpl;
 import com.atguigu.frame.core.web.domain.EasyUIPage;
 import com.atguigu.frame.core.web.domain.Result;
@@ -60,7 +61,7 @@ public class SysFileController extends BaseControllerImpl<SysFile, SysFile> {
 	@ResponseBody
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public Result addOne(HttpServletRequest request,
-			HttpServletResponse response,SysFile entity) {
+			HttpServletResponse response, SysFile entity) {
 
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
@@ -77,7 +78,15 @@ public class SysFileController extends BaseControllerImpl<SysFile, SysFile> {
 
 			entity.setMime(file.getContentType());
 
-			entity.setUserId(1);
+			entity.setUserId(SystemConfig.getLoginUser(request).getId());
+
+			if (null == entity.getGroupId()) {
+				entity.setGroupId(0L);
+			}
+
+			if (null == entity.getStatus()) {
+				entity.setStatus(0);
+			}
 
 			entity.setCreatedTime(new Timestamp(System.currentTimeMillis()));
 

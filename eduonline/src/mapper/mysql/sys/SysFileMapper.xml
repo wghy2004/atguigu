@@ -77,7 +77,7 @@
 		#{status,jdbcType=TINYINT},
 		#{createdTime,jdbcType=TIMESTAMP})
 		
-		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id"> 
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id"> 
 			SELECT LAST_INSERT_ID() 
 		</selectKey> 
 	</insert>

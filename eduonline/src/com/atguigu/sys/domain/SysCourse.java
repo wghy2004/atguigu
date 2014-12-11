@@ -1,10 +1,12 @@
 package com.atguigu.sys.domain;
 
+import java.sql.Timestamp;
+
 import com.atguigu.frame.core.dao.domain.Identifiable;
 
 public class SysCourse implements Identifiable {
-	
-	private Integer id;
+
+	private Long id;
 
 	private String title;
 
@@ -38,17 +40,27 @@ public class SysCourse implements Identifiable {
 
 	private Integer categoryId;
 
+	private String tags;
+
 	private String smallPicture;
 
 	private String middlePicture;
 
 	private String largePicture;
 
-	private Byte recommended;
+	private String about;
+
+	private String teacherIds;
+
+	private String goals;
+
+	private String audiences;
+
+	private Integer recommended;
 
 	private Integer recommendedSeq;
 
-	private Integer recommendedTime;
+	private Timestamp recommendedTime;
 
 	private Integer locationId;
 
@@ -58,19 +70,19 @@ public class SysCourse implements Identifiable {
 
 	private Integer hitNum;
 
-	private Integer userId;
+	private Long userId;
 
-	private Integer createdTime;
+	private Timestamp createdTime;
 
-	private Integer freeStartTime;
+	private Timestamp freeStartTime;
 
-	private Integer freeEndTime;
+	private Timestamp freeEndTime;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -229,12 +241,44 @@ public class SysCourse implements Identifiable {
 		this.largePicture = largePicture == null ? null : largePicture.trim();
 	}
 
-	public Byte getRecommended() {
+	public Integer getRecommended() {
 		return recommended;
 	}
 
-	public void setRecommended(Byte recommended) {
+	public void setRecommended(Integer recommended) {
 		this.recommended = recommended;
+	}
+
+	public String getAbout() {
+		return about;
+	}
+
+	public void setAbout(String about) {
+		this.about = about;
+	}
+
+	public String getTeacherIds() {
+		return teacherIds;
+	}
+
+	public void setTeacherIds(String teacherIds) {
+		this.teacherIds = teacherIds;
+	}
+
+	public String getGoals() {
+		return goals;
+	}
+
+	public void setGoals(String goals) {
+		this.goals = goals;
+	}
+
+	public String getAudiences() {
+		return audiences;
+	}
+
+	public void setAudiences(String audiences) {
+		this.audiences = audiences;
 	}
 
 	public Integer getRecommendedSeq() {
@@ -245,11 +289,11 @@ public class SysCourse implements Identifiable {
 		this.recommendedSeq = recommendedSeq;
 	}
 
-	public Integer getRecommendedTime() {
+	public Timestamp getRecommendedTime() {
 		return recommendedTime;
 	}
 
-	public void setRecommendedTime(Integer recommendedTime) {
+	public void setRecommendedTime(Timestamp recommendedTime) {
 		this.recommendedTime = recommendedTime;
 	}
 
@@ -285,35 +329,44 @@ public class SysCourse implements Identifiable {
 		this.hitNum = hitNum;
 	}
 
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
-	public Integer getCreatedTime() {
+	public Timestamp getCreatedTime() {
 		return createdTime;
 	}
 
-	public void setCreatedTime(Integer createdTime) {
+	public void setCreatedTime(Timestamp createdTime) {
 		this.createdTime = createdTime;
 	}
 
-	public Integer getFreeStartTime() {
+	public Timestamp getFreeStartTime() {
 		return freeStartTime;
 	}
 
-	public void setFreeStartTime(Integer freeStartTime) {
+	public void setFreeStartTime(Timestamp freeStartTime) {
 		this.freeStartTime = freeStartTime;
 	}
 
-	public Integer getFreeEndTime() {
+	public Timestamp getFreeEndTime() {
 		return freeEndTime;
 	}
 
-	public void setFreeEndTime(Integer freeEndTime) {
+	public void setFreeEndTime(Timestamp freeEndTime) {
 		this.freeEndTime = freeEndTime;
 	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
 }

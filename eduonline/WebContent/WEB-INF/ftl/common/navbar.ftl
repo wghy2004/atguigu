@@ -22,7 +22,7 @@
 <div id="sidebar">
 	<a href="#" class="visible-phone"><i class="icon icon-th-list"></i> Tables</a>
 	<ul>
-		<li id="mainNav"><a href="index.html"><i class="icon icon-home"></i> <span>主页</span></a></li>
+		<li id="mainNav"><a href="/eduonline/sys/admin"><i class="icon icon-home"></i> <span>主页</span></a></li>
 		<li>
 			<a href="widgets.html"><i class="icon icon-inbox"></i> <span>系统设置</span></a>
 		</li>
