@@ -1,5 +1,7 @@
 package com.atguigu.sys.web.controller;
 
+import java.sql.Timestamp;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -56,10 +58,16 @@ public class SysCourseController extends
 		return mav;
 	}
 	@Override
+	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST)
 	public Result addOne(SysCourse entity) {
 		
 		entity.setUserId(SystemConfig.getLoginUser(request).getId());
+		entity.setCreatedTime(new Timestamp(System.currentTimeMillis()));
+		entity.setFreeStartTime(new Timestamp(System.currentTimeMillis()));
+		entity.setFreeEndTime(new Timestamp(System.currentTimeMillis()));
+		
+		sysCourseService.insert(entity);
 		
 		return new Result(Status.OK, entity);
 	}

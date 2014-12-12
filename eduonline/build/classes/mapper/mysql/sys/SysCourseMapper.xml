@@ -197,7 +197,7 @@
 			order by ${orderByClause}
 		</if>
 	</select>
-	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+	<select id="selectById" resultMap="ResultMapWithBLOBs"
 		parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List" />
@@ -206,15 +206,9 @@
 		from course
 		where id = #{id,jdbcType=INTEGER}
 	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	<delete id="deleteById" parameterType="java.lang.Long">
 		delete from course
 		where id = #{id,jdbcType=INTEGER}
-	</delete>
-	<delete id="deleteByExample" parameterType="com.atguigu.sys.domain.SysCourseExample">
-		delete from course
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
 	</delete>
 	<insert id="insert" parameterType="com.atguigu.sys.domain.SysCourse">
 		insert into course (id, title,
@@ -750,7 +744,7 @@
 			<include refid="Update_By_Example_Where_Clause" />
 		</if>
 	</update>
-	<update id="updateByPrimaryKeySelective" parameterType="com.atguigu.sys.domain.SysCourseWithBLOBs">
+	<update id="updateByIdSelective" parameterType="com.atguigu.sys.domain.SysCourseWithBLOBs">
 		update course
 		<set>
 			<if test="title != null">
@@ -861,7 +855,7 @@
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
-	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.atguigu.sys.domain.SysCourseWithBLOBs">
+	<update id="updateByIdWithBLOBs" parameterType="com.atguigu.sys.domain.SysCourseWithBLOBs">
 		update
 		course
 		set title = #{title,jdbcType=VARCHAR},
@@ -922,7 +916,7 @@
 		#{audiences,jdbcType=LONGVARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
-	<update id="updateByPrimaryKey" parameterType="com.atguigu.sys.domain.SysCourse">
+	<update id="updateById" parameterType="com.atguigu.sys.domain.SysCourse">
 		update course
 		set
 		title = #{title,jdbcType=VARCHAR},

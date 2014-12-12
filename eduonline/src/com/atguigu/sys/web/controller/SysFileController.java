@@ -51,11 +51,11 @@ public class SysFileController extends BaseControllerImpl<SysFile, SysFile> {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
-	public JSONObject selectListJson(SysFile query, Pageable pageable) {
+	public String selectListJson(SysFile query, Pageable pageable) {
 
 		Page<SysFile> page = sysFileService.queryPageList(query, pageable);
 
-		return EasyUIPage.formPage(page);
+		return EasyUIPage.formPage(page).toString();
 	}
 
 	@ResponseBody

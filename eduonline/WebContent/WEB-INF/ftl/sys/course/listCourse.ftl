@@ -34,8 +34,8 @@
 			                <th data-options="field:'id',width:10,align:'center'">id</th>
 			                <th data-options="field:'title',width:30">标题</th>
 			                <th data-options="field:'status',width:10">状态</th>
-			                <th data-options="field:'syscourse.name',width:15">课程分类</th>
-			                <th data-options="field:'createdTime',width:15">创建时间</th>
+			                <th data-options="field:'syscourse.name',width:15" formatter="formatCategory">课程分类</th>
+			                <th data-options="field:'createdTime',width:15" formatter="formatTime">创建时间</th>
 			                <th data-options="field:'edit',width:10,align:'center'" formatter="formatEdit">编辑</th>
 			                <th data-options="field:'delete',width:10,align:'center'" formatter="formatDelete">删除</th>
 			            </tr>
@@ -147,9 +147,20 @@
 			  deleteOne('${base}/sys/course/'+id , function(result){
 				  	console.log(result);
 				  	$('#dg').datagrid('reload');
-					$.Loading.success('成功删除'+result.message+'!');
+					$.Loading.success('删除成功!');
 			  });
 		}		
+		
+		function formatCategory(value, row, index){
+	
+			return row.sysCategory?row.sysCategory.name : '未分类';
+		}
+		
+		function formatTime(value, row, index){
+			var time = row.createdTime; 
+			var date = new Date(time.year,time.month,time.date,time.hours,time.minutes,time.seconds);
+			return util.formatDate(date,'YYYY-MM-DD hh:mm:ss');
+		}
 		
 		function formatEdit(value, row, index) {
 			var val = "<a class='edit' title='修改' href='javascript:void(0);' onclick='append("

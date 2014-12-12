@@ -149,7 +149,7 @@
 	
 	function formatGroup(value, row, index){
 	
-		return row.sysFileGroup.name;
+		return row.sysFileGroup?row.sysFileGroup.name : '未分组';
 	}
 		
 	function formatAdd(value, row, index) {

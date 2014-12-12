@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
+<title>后台管理</title>
 <#include "/common/common.ftl">
 <@pnotify/>
 <@easyui/>
@@ -89,7 +90,7 @@
 
 											<tr>
 												<th>简介：</th>
-												<td><textarea id="intro" name="content1" cols="100"
+												<td><textarea id="about" name="about" cols="100"
 														rows="8"
 														style="width: 98%; height: 300px; "></textarea>
 												</td>
@@ -122,7 +123,7 @@
 								</form>
 								<div tabid="3" style="display: none;" class="tab-panel">
 									<div id="album_tab" class="form-table albumbox">
-										<div ><img id="largePicturePreview" src="" /></div>
+										<div ><img style="max-height:300px;" id="largePicturePreview" src="" /></div>
 										<form  method="post" action="${base}/sys/file/upload" class="validate" id="addFileForm" enctype="multipart/form-data">
 											<table>
 													<tbody>
@@ -152,6 +153,7 @@
 	<@modal/>
 	<script>
 		$(function(){
+			var aboutEditor ;  
 			$(".contentTab>ul>li").on('click',function() {
 				var tabid = $(this).attr("tabid");
 				$(".contentTab>ul>li").removeClass("contentTabS");
@@ -160,8 +162,8 @@
 				$(".tab-panel[tabid=" + tabid + "]").show();
 			});
 			KindEditor.ready(function(K) {
-				var editor1 = K.create('textarea[name="content1"]', {
-					items :['source','undo','redo','cut','copy','paste','selectall','plainpaste'],
+				aboutEditor = K.create('textarea[name="about"]', {
+					items :['source','bold','italic','underline','strikethrough','|','undo','redo','cut','copy','paste','selectall','plainpaste'],
 					newlineTag : 'br'
 				});
 				prettyPrint();
@@ -177,6 +179,7 @@
 				  $('#path').val(rec.path+rec.id+'|');
 				}
 			});
+			$('#categoryId').combotree('setValue','请选择');
 			//封面
 			$('#files').on('change',function(){
 				var formflag = $("#addFileForm").form('validate');
@@ -187,8 +190,8 @@
 						type : "POST",
 						dataType : "json",
 						success : function(result) {
-							$.Loading.success('图片上传成功!');
 							if (result.status == 'OK') {
+								$.Loading.success('图片上传成功!');
 								$('#largePicturePreview').attr('src','${base}/'+result.message.uri);
 								$('#largePicture').val(result.message.uri);
 							}
@@ -197,12 +200,14 @@
 							$.Loading.error("出错了,请重试");
 						}
 					};
-					console.log(options)
 					$('#addFileForm').ajaxSubmit(options);
 				}
 			});
 			
 			$("#courseAddBtn").click(function() {
+			
+				$('#about').val(aboutEditor.html());
+				
 				var formflag = $("#addForm").form('validate');
 				if (formflag) {
 					$("#courseAddBtn").linkbutton("disable");
@@ -212,9 +217,11 @@
 						type : "POST",
 						dataType : "json",
 						success : function(result) {
-							$.Loading.success(result.message);
-							if (result.result == 1) {
+							$.Loading.success('成功添加课程:'+result.message.title);
+							if (result.status == 'OK') {
 								window.location.href = "${base}/sys/course";
+							}else{
+								$.Loading.error("出错了,请重试");
 							}
 						},
 						error : function(e) {
