@@ -4,19 +4,19 @@
 <#include "/common/common.ftl">
 <@pnotify/>
 <@easyui/>
-<title>课程</title>
+<title>课时</title>
 </head>
 <body>
 	<#include "/common/navbar.ftl"> 
-	<@nav nav="courseNav"/>
+	<@nav nav="lessonNav"/>
 	<#-- 内容开始 -->
 	<div id="content">
-		<@breadcrumb crumb1="课程" crumb2="课程列表"/>
+		<@breadcrumb crumb1="课时" crumb2="课时列表"/>
 		<div class="warp">	
 			<!-- 工具栏 -->
 			<div class='buttonArea'>
 				<span id="searchbtn">	
-					<a href="${base}/sys/course/add" class="button blueButton" >新课程</a>
+					<a href="${base}/sys/course/lesson/add" class="button blueButton" >新课时</a>
 					<a href="javascript:void(0)" class="button"  onclick="del()">删除</a>
 					<a href="javascript:void(0)" class="button"  onclick="newTab('商品回收站','/version4/shop/admin/goods!trash_list.do')">回收站</a>
 				</span>
@@ -33,10 +33,9 @@
 			            <tr>
 			                <th data-options="field:'id',width:10,align:'center'">id</th>
 			                <th data-options="field:'title',width:30">标题</th>
-			                <th data-options="field:'status.label',width:10" formatter="formatStatus">状态</th>
-			                <th data-options="field:'syscourse.name',width:15" formatter="formatCategory">课程分类</th>
+			                <th data-options="field:'status',width:10" formatter="formatStatus">状态</th>
+			                <th data-options="field:'sysCourse.title',width:15" formatter="formatCourse">所属课程</th>
 			                <th data-options="field:'createdTime',width:15" formatter="formatTime">创建时间</th>
-			                <th data-options="field:'lesson',width:15" formatter="formatLesson">课时</th>
 			                <th data-options="field:'edit',width:10,align:'center'" formatter="formatEdit">编辑</th>
 			                <th data-options="field:'delete',width:10,align:'center'" formatter="formatDelete">删除</th>
 			            </tr>
@@ -145,34 +144,27 @@
 		}
 		
 		function del(id){
-			  deleteOne('${base}/sys/course/'+id , function(result){
-				  	console.log(result);
+			  deleteOne('${base}/sys/course/lesson/'+id , function(result){
 				  	$('#dg').datagrid('reload');
 					$.Loading.success('删除成功!');
 			  });
 		}		
 		
-		function formatLesson(value, row, index){
-			return '<a>新课时</a>&nbsp;&nbsp;<a href="${base}/sys/course/lesson?courseId='+row.id+'">查看课时</a>';
-		}
-		
 		function formatStatus(value, row, index){
 			
 			var status = row.status;
-			if(status == 'draft'){
-				status = '草稿';
+			if(status == 'unpublished'){
+				status = '未发布';
 			}else if(status == 'published'){
 				status = '已发布';
-			}else if(status == 'closed'){
-				status = '已关闭';
 			}
 			
 			return status;
 		}
 		
-		function formatCategory(value, row, index){
+		function formatCourse(value, row, index){
 	
-			return row.sysCategory?row.sysCategory.name : '未分类';
+			return row.sysCourse?row.sysCourse.title : '未知'
 		}
 		
 		function formatTime(value, row, index){
@@ -193,7 +185,7 @@
 		
 		$(function(){
 			$('#dg').datagrid({
-				url : '${base}/sys/course/all',
+				url : '${base}/sys/course/lesson/list',
 				method : 'get',
 				fit : true,
 				fitColumns : true,

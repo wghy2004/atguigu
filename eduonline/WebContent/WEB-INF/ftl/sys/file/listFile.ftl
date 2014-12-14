@@ -141,6 +141,8 @@
 		  });
 	}	
 	
+
+	
 	function formatTime(value, row, index){
 		var time = row.createdTime; 
 		var date = new Date(time.year,time.month,time.date,time.hours,time.minutes,time.seconds);

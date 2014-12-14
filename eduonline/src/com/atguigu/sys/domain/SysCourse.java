@@ -3,6 +3,7 @@ package com.atguigu.sys.domain;
 import java.sql.Timestamp;
 
 import com.atguigu.frame.core.dao.domain.Identifiable;
+import com.atguigu.frame.core.status.EnumCourseStatus;
 
 public class SysCourse implements Identifiable {
 
@@ -12,7 +13,7 @@ public class SysCourse implements Identifiable {
 
 	private String subtitle;
 
-	private String status;
+	private EnumCourseStatus status;
 
 	private String type;
 
@@ -102,12 +103,12 @@ public class SysCourse implements Identifiable {
 		this.subtitle = subtitle == null ? null : subtitle.trim();
 	}
 
-	public String getStatus() {
+	public EnumCourseStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
-		this.status = status == null ? null : status.trim();
+	public void setStatus(EnumCourseStatus status) {
+		this.status =  status;
 	}
 
 	public String getType() {

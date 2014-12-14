@@ -37,6 +37,9 @@
 			</trim>
 		</where>
 		<if test="sorting != null">order by ${sorting}</if>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
 	</sql>
 	<!-- 查询总数 -->
 	<select id="selectCount" resultType="java.lang.Long"

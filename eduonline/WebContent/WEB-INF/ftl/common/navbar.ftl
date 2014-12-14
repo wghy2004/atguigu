@@ -37,8 +37,8 @@
 		<li class="submenu">
 			<a href="#"><i class="icon icon-file"></i> <span>课时</span> <span class="label">2</span></a>
 			<ul>
-				<li><a href="invoice.html">新课时</a></li>
-				<li><a href="chat.html">全部课时</a></li>
+				<li id="newLessonNav"><a href="/eduonline/sys/course/lesson/add">新课时</a></li>
+				<li id="lessonNav"><a href="/eduonline/sys/course/lesson">全部课时</a></li>
 			</ul>
 		</li>
 		<li class="submenu">

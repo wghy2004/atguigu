@@ -5,7 +5,7 @@
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="title" property="title" jdbcType="VARCHAR" />
 		<result column="subtitle" property="subtitle" jdbcType="VARCHAR" />
-		<result column="status" property="status" jdbcType="CHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
 		<result column="type" property="type" jdbcType="VARCHAR" />
 		<result column="maxStudentNum" property="maxStudentNum"
 			jdbcType="INTEGER" />
@@ -41,7 +41,7 @@
 			jdbcType="TIMESTAMP" />
 		<result column="freeEndTime" property="freeEndTime" jdbcType="TIMESTAMP" />
 	</resultMap>
-	<resultMap id="ResultMapWithBLOBs" type="com.atguigu.sys.domain.SysCourseWithBLOBs"
+	<resultMap id="ResultMapWithBLOBs" type="com.atguigu.sys.domain.SysCourse"
 		extends="BaseResultMap">
 		<result column="tags" property="tags" jdbcType="LONGVARCHAR" />
 		<result column="about" property="about" jdbcType="LONGVARCHAR" />
@@ -64,73 +64,11 @@
 			</trim>
 		</where>
 		<if test="sorting != null">order by ${sorting}</if>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
 	</sql>
 
-	<sql id="Example_Where_Clause">
-		<where>
-			<foreach collection="oredCriteria" item="criteria" separator="or">
-				<if test="criteria.valid">
-					<trim prefix="(" suffix=")" prefixOverrides="and">
-						<foreach collection="criteria.criteria" item="criterion">
-							<choose>
-								<when test="criterion.noValue">
-									and ${criterion.condition}
-								</when>
-								<when test="criterion.singleValue">
-									and ${criterion.condition} #{criterion.value}
-								</when>
-								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value}
-									and
-									#{criterion.secondValue}
-								</when>
-								<when test="criterion.listValue">
-									and ${criterion.condition}
-									<foreach collection="criterion.value" item="listItem"
-										open="(" close=")" separator=",">
-										#{listItem}
-									</foreach>
-								</when>
-							</choose>
-						</foreach>
-					</trim>
-				</if>
-			</foreach>
-		</where>
-	</sql>
-	<sql id="Update_By_Example_Where_Clause">
-		<where>
-			<foreach collection="example.oredCriteria" item="criteria"
-				separator="or">
-				<if test="criteria.valid">
-					<trim prefix="(" suffix=")" prefixOverrides="and">
-						<foreach collection="criteria.criteria" item="criterion">
-							<choose>
-								<when test="criterion.noValue">
-									and ${criterion.condition}
-								</when>
-								<when test="criterion.singleValue">
-									and ${criterion.condition} #{criterion.value}
-								</when>
-								<when test="criterion.betweenValue">
-									and ${criterion.condition} #{criterion.value}
-									and
-									#{criterion.secondValue}
-								</when>
-								<when test="criterion.listValue">
-									and ${criterion.condition}
-									<foreach collection="criterion.value" item="listItem"
-										open="(" close=")" separator=",">
-										#{listItem}
-									</foreach>
-								</when>
-							</choose>
-						</foreach>
-					</trim>
-				</if>
-			</foreach>
-		</where>
-	</sql>
 	<sql id="Base_Column_List">
 		id, title, subtitle, status, type, maxStudentNum, price,
 		expiryDay,
@@ -165,40 +103,8 @@
 		<include refid="Base_Where_Clause" />
 	</select>
 
-	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
-		parameterType="com.atguigu.sys.domain.SysCourseExample">
-		select
-		<if test="distinct">
-			distinct
-		</if>
-		<include refid="Base_Column_List" />
-		,
-		<include refid="Blob_Column_List" />
-		from course
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
-		<if test="orderByClause != null">
-			order by ${orderByClause}
-		</if>
-	</select>
-	<select id="selectByExample" resultMap="BaseResultMap"
-		parameterType="com.atguigu.sys.domain.SysCourseExample">
-		select
-		<if test="distinct">
-			distinct
-		</if>
-		<include refid="Base_Column_List" />
-		from course
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
-		<if test="orderByClause != null">
-			order by ${orderByClause}
-		</if>
-	</select>
 	<select id="selectById" resultMap="ResultMapWithBLOBs"
-		parameterType="java.lang.Integer">
+		parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		,
@@ -208,7 +114,8 @@
 	</select>
 	<delete id="deleteById" parameterType="java.lang.Long">
 		delete from course
-		where id = #{id,jdbcType=INTEGER}
+		where id
+		= #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="com.atguigu.sys.domain.SysCourse">
 		insert into course (id, title,
@@ -231,7 +138,7 @@
 		values
 		(#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
 		#{subtitle,jdbcType=VARCHAR},
-		#{status,jdbcType=CHAR},
+		#{status,jdbcType=VARCHAR},
 		#{type,jdbcType=VARCHAR}, #{maxStudentNum,jdbcType=INTEGER},
 		#{price,jdbcType=REAL}, #{expiryDay,jdbcType=INTEGER},
 		#{showStudentNumType,jdbcType=CHAR},
@@ -248,14 +155,15 @@
 		#{address,jdbcType=VARCHAR}, #{studentNum,jdbcType=INTEGER},
 		#{hitNum,jdbcType=INTEGER},
 		#{userId,jdbcType=INTEGER},
-		#{createdTime,jdbcType=TIMESTAMP}, #{freeStartTime,jdbcType=TIMESTAMP},
+		#{createdTime,jdbcType=TIMESTAMP},
+		#{freeStartTime,jdbcType=TIMESTAMP},
 		#{freeEndTime,jdbcType=TIMESTAMP}, #{tags,jdbcType=LONGVARCHAR},
 		#{about,jdbcType=LONGVARCHAR},
 		#{teacherIds,jdbcType=LONGVARCHAR},
 		#{goals,jdbcType=LONGVARCHAR}, #{audiences,jdbcType=LONGVARCHAR}
 		)
 	</insert>
-	<insert id="insertSelective" parameterType="com.atguigu.sys.domain.SysCourseWithBLOBs">
+	<insert id="insertSelective" parameterType="com.atguigu.sys.domain.SysCourse">
 		insert into course
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -378,7 +286,7 @@
 				#{subtitle,jdbcType=VARCHAR},
 			</if>
 			<if test="status != null">
-				#{status,jdbcType=CHAR},
+				#{status,jdbcType=VARCHAR},
 			</if>
 			<if test="type != null">
 				#{type,jdbcType=VARCHAR},
@@ -478,391 +386,16 @@
 			</if>
 		</trim>
 	</insert>
-	<select id="countByExample" parameterType="com.atguigu.sys.domain.SysCourseExample"
-		resultType="java.lang.Integer">
-		select count(*) from course
-		<if test="_parameter != null">
-			<include refid="Example_Where_Clause" />
-		</if>
-	</select>
-	<update id="updateByExampleSelective" parameterType="map">
-		update course
-		<set>
-			<if test="record.id != null">
-				id = #{record.id,jdbcType=INTEGER},
-			</if>
-			<if test="record.title != null">
-				title = #{record.title,jdbcType=VARCHAR},
-			</if>
-			<if test="record.subtitle != null">
-				subtitle = #{record.subtitle,jdbcType=VARCHAR},
-			</if>
-			<if test="record.status != null">
-				status = #{record.status,jdbcType=CHAR},
-			</if>
-			<if test="record.type != null">
-				type = #{record.type,jdbcType=VARCHAR},
-			</if>
-			<if test="record.maxStudentNum != null">
-				maxStudentNum = #{record.maxStudentNum,jdbcType=INTEGER},
-			</if>
-			<if test="record.price != null">
-				price = #{record.price,jdbcType=REAL},
-			</if>
-			<if test="record.expiryDay != null">
-				expiryDay = #{record.expiryDay,jdbcType=INTEGER},
-			</if>
-			<if test="record.showStudentNumType != null">
-				showStudentNumType =
-				#{record.showStudentNumType,jdbcType=CHAR},
-			</if>
-			<if test="record.serializeMode != null">
-				serializeMode = #{record.serializeMode,jdbcType=CHAR},
-			</if>
-			<if test="record.income != null">
-				income = #{record.income,jdbcType=REAL},
-			</if>
-			<if test="record.lessonNum != null">
-				lessonNum = #{record.lessonNum,jdbcType=INTEGER},
-			</if>
-			<if test="record.giveCredit != null">
-				giveCredit = #{record.giveCredit,jdbcType=INTEGER},
-			</if>
-			<if test="record.rating != null">
-				rating = #{record.rating,jdbcType=INTEGER},
-			</if>
-			<if test="record.ratingNum != null">
-				ratingNum = #{record.ratingNum,jdbcType=INTEGER},
-			</if>
-			<if test="record.vipLevelId != null">
-				vipLevelId = #{record.vipLevelId,jdbcType=INTEGER},
-			</if>
-			<if test="record.categoryId != null">
-				categoryId = #{record.categoryId,jdbcType=INTEGER},
-			</if>
-			<if test="record.smallPicture != null">
-				smallPicture = #{record.smallPicture,jdbcType=VARCHAR},
-			</if>
-			<if test="record.middlePicture != null">
-				middlePicture = #{record.middlePicture,jdbcType=VARCHAR},
-			</if>
-			<if test="record.largePicture != null">
-				largePicture = #{record.largePicture,jdbcType=VARCHAR},
-			</if>
-			<if test="record.recommended != null">
-				recommended = #{record.recommended,jdbcType=TINYINT},
-			</if>
-			<if test="record.recommendedSeq != null">
-				recommendedSeq =
-				#{record.recommendedSeq,jdbcType=INTEGER},
-			</if>
-			<if test="record.recommendedTime != null">
-				recommendedTime =
-				#{record.recommendedTime,jdbcType=INTEGER},
-			</if>
-			<if test="record.locationId != null">
-				locationId = #{record.locationId,jdbcType=INTEGER},
-			</if>
-			<if test="record.address != null">
-				address = #{record.address,jdbcType=VARCHAR},
-			</if>
-			<if test="record.studentNum != null">
-				studentNum = #{record.studentNum,jdbcType=INTEGER},
-			</if>
-			<if test="record.hitNum != null">
-				hitNum = #{record.hitNum,jdbcType=INTEGER},
-			</if>
-			<if test="record.userId != null">
-				userId = #{record.userId,jdbcType=INTEGER},
-			</if>
-			<if test="record.createdTime != null">
-				createdTime = #{record.createdTime,jdbcType=INTEGER},
-			</if>
-			<if test="record.freeStartTime != null">
-				freeStartTime = #{record.freeStartTime,jdbcType=INTEGER},
-			</if>
-			<if test="record.freeEndTime != null">
-				freeEndTime = #{record.freeEndTime,jdbcType=INTEGER},
-			</if>
-			<if test="record.tags != null">
-				tags = #{record.tags,jdbcType=LONGVARCHAR},
-			</if>
-			<if test="record.about != null">
-				about = #{record.about,jdbcType=LONGVARCHAR},
-			</if>
-			<if test="record.teacherIds != null">
-				teacherIds = #{record.teacherIds,jdbcType=LONGVARCHAR},
-			</if>
-			<if test="record.goals != null">
-				goals = #{record.goals,jdbcType=LONGVARCHAR},
-			</if>
-			<if test="record.audiences != null">
-				audiences = #{record.audiences,jdbcType=LONGVARCHAR},
-			</if>
-		</set>
-		<if test="_parameter != null">
-			<include refid="Update_By_Example_Where_Clause" />
-		</if>
-	</update>
-	<update id="updateByExampleWithBLOBs" parameterType="map">
-		update course
-		set id = #{record.id,jdbcType=INTEGER},
-		title =
-		#{record.title,jdbcType=VARCHAR},
-		subtitle =
-		#{record.subtitle,jdbcType=VARCHAR},
-		status =
-		#{record.status,jdbcType=CHAR},
-		type = #{record.type,jdbcType=VARCHAR},
-		maxStudentNum = #{record.maxStudentNum,jdbcType=INTEGER},
-		price =
-		#{record.price,jdbcType=REAL},
-		expiryDay =
-		#{record.expiryDay,jdbcType=INTEGER},
-		showStudentNumType =
-		#{record.showStudentNumType,jdbcType=CHAR},
-		serializeMode =
-		#{record.serializeMode,jdbcType=CHAR},
-		income =
-		#{record.income,jdbcType=REAL},
-		lessonNum =
-		#{record.lessonNum,jdbcType=INTEGER},
-		giveCredit =
-		#{record.giveCredit,jdbcType=INTEGER},
-		rating =
-		#{record.rating,jdbcType=INTEGER},
-		ratingNum =
-		#{record.ratingNum,jdbcType=INTEGER},
-		vipLevelId =
-		#{record.vipLevelId,jdbcType=INTEGER},
-		categoryId =
-		#{record.categoryId,jdbcType=INTEGER},
-		smallPicture =
-		#{record.smallPicture,jdbcType=VARCHAR},
-		middlePicture =
-		#{record.middlePicture,jdbcType=VARCHAR},
-		largePicture =
-		#{record.largePicture,jdbcType=VARCHAR},
-		recommended =
-		#{record.recommended,jdbcType=TINYINT},
-		recommendedSeq =
-		#{record.recommendedSeq,jdbcType=INTEGER},
-		recommendedTime =
-		#{record.recommendedTime,jdbcType=INTEGER},
-		locationId =
-		#{record.locationId,jdbcType=INTEGER},
-		address =
-		#{record.address,jdbcType=VARCHAR},
-		studentNum =
-		#{record.studentNum,jdbcType=INTEGER},
-		hitNum =
-		#{record.hitNum,jdbcType=INTEGER},
-		userId =
-		#{record.userId,jdbcType=INTEGER},
-		createdTime =
-		#{record.createdTime,jdbcType=INTEGER},
-		freeStartTime =
-		#{record.freeStartTime,jdbcType=INTEGER},
-		freeEndTime =
-		#{record.freeEndTime,jdbcType=INTEGER},
-		tags =
-		#{record.tags,jdbcType=LONGVARCHAR},
-		about =
-		#{record.about,jdbcType=LONGVARCHAR},
-		teacherIds =
-		#{record.teacherIds,jdbcType=LONGVARCHAR},
-		goals =
-		#{record.goals,jdbcType=LONGVARCHAR},
-		audiences =
-		#{record.audiences,jdbcType=LONGVARCHAR}
-		<if test="_parameter != null">
-			<include refid="Update_By_Example_Where_Clause" />
-		</if>
-	</update>
-	<update id="updateByExample" parameterType="map">
-		update course
-		set id = #{record.id,jdbcType=INTEGER},
-		title =
-		#{record.title,jdbcType=VARCHAR},
-		subtitle =
-		#{record.subtitle,jdbcType=VARCHAR},
-		status =
-		#{record.status,jdbcType=CHAR},
-		type = #{record.type,jdbcType=VARCHAR},
-		maxStudentNum = #{record.maxStudentNum,jdbcType=INTEGER},
-		price =
-		#{record.price,jdbcType=REAL},
-		expiryDay =
-		#{record.expiryDay,jdbcType=INTEGER},
-		showStudentNumType =
-		#{record.showStudentNumType,jdbcType=CHAR},
-		serializeMode =
-		#{record.serializeMode,jdbcType=CHAR},
-		income =
-		#{record.income,jdbcType=REAL},
-		lessonNum =
-		#{record.lessonNum,jdbcType=INTEGER},
-		giveCredit =
-		#{record.giveCredit,jdbcType=INTEGER},
-		rating =
-		#{record.rating,jdbcType=INTEGER},
-		ratingNum =
-		#{record.ratingNum,jdbcType=INTEGER},
-		vipLevelId =
-		#{record.vipLevelId,jdbcType=INTEGER},
-		categoryId =
-		#{record.categoryId,jdbcType=INTEGER},
-		smallPicture =
-		#{record.smallPicture,jdbcType=VARCHAR},
-		middlePicture =
-		#{record.middlePicture,jdbcType=VARCHAR},
-		largePicture =
-		#{record.largePicture,jdbcType=VARCHAR},
-		recommended =
-		#{record.recommended,jdbcType=TINYINT},
-		recommendedSeq =
-		#{record.recommendedSeq,jdbcType=INTEGER},
-		recommendedTime =
-		#{record.recommendedTime,jdbcType=INTEGER},
-		locationId =
-		#{record.locationId,jdbcType=INTEGER},
-		address =
-		#{record.address,jdbcType=VARCHAR},
-		studentNum =
-		#{record.studentNum,jdbcType=INTEGER},
-		hitNum =
-		#{record.hitNum,jdbcType=INTEGER},
-		userId =
-		#{record.userId,jdbcType=INTEGER},
-		createdTime =
-		#{record.createdTime,jdbcType=INTEGER},
-		freeStartTime =
-		#{record.freeStartTime,jdbcType=INTEGER},
-		freeEndTime =
-		#{record.freeEndTime,jdbcType=INTEGER}
-		<if test="_parameter != null">
-			<include refid="Update_By_Example_Where_Clause" />
-		</if>
-	</update>
-	<update id="updateByIdSelective" parameterType="com.atguigu.sys.domain.SysCourseWithBLOBs">
-		update course
-		<set>
-			<if test="title != null">
-				title = #{title,jdbcType=VARCHAR},
-			</if>
-			<if test="subtitle != null">
-				subtitle = #{subtitle,jdbcType=VARCHAR},
-			</if>
-			<if test="status != null">
-				status = #{status,jdbcType=CHAR},
-			</if>
-			<if test="type != null">
-				type = #{type,jdbcType=VARCHAR},
-			</if>
-			<if test="maxStudentNum != null">
-				maxStudentNum = #{maxStudentNum,jdbcType=INTEGER},
-			</if>
-			<if test="price != null">
-				price = #{price,jdbcType=REAL},
-			</if>
-			<if test="expiryDay != null">
-				expiryDay = #{expiryDay,jdbcType=INTEGER},
-			</if>
-			<if test="showStudentNumType != null">
-				showStudentNumType = #{showStudentNumType,jdbcType=CHAR},
-			</if>
-			<if test="serializeMode != null">
-				serializeMode = #{serializeMode,jdbcType=CHAR},
-			</if>
-			<if test="income != null">
-				income = #{income,jdbcType=REAL},
-			</if>
-			<if test="lessonNum != null">
-				lessonNum = #{lessonNum,jdbcType=INTEGER},
-			</if>
-			<if test="giveCredit != null">
-				giveCredit = #{giveCredit,jdbcType=INTEGER},
-			</if>
-			<if test="rating != null">
-				rating = #{rating,jdbcType=INTEGER},
-			</if>
-			<if test="ratingNum != null">
-				ratingNum = #{ratingNum,jdbcType=INTEGER},
-			</if>
-			<if test="vipLevelId != null">
-				vipLevelId = #{vipLevelId,jdbcType=INTEGER},
-			</if>
-			<if test="categoryId != null">
-				categoryId = #{categoryId,jdbcType=INTEGER},
-			</if>
-			<if test="smallPicture != null">
-				smallPicture = #{smallPicture,jdbcType=VARCHAR},
-			</if>
-			<if test="middlePicture != null">
-				middlePicture = #{middlePicture,jdbcType=VARCHAR},
-			</if>
-			<if test="largePicture != null">
-				largePicture = #{largePicture,jdbcType=VARCHAR},
-			</if>
-			<if test="recommended != null">
-				recommended = #{recommended,jdbcType=TINYINT},
-			</if>
-			<if test="recommendedSeq != null">
-				recommendedSeq = #{recommendedSeq,jdbcType=INTEGER},
-			</if>
-			<if test="recommendedTime != null">
-				recommendedTime = #{recommendedTime,jdbcType=INTEGER},
-			</if>
-			<if test="locationId != null">
-				locationId = #{locationId,jdbcType=INTEGER},
-			</if>
-			<if test="address != null">
-				address = #{address,jdbcType=VARCHAR},
-			</if>
-			<if test="studentNum != null">
-				studentNum = #{studentNum,jdbcType=INTEGER},
-			</if>
-			<if test="hitNum != null">
-				hitNum = #{hitNum,jdbcType=INTEGER},
-			</if>
-			<if test="userId != null">
-				userId = #{userId,jdbcType=INTEGER},
-			</if>
-			<if test="createdTime != null">
-				createdTime = #{createdTime,jdbcType=INTEGER},
-			</if>
-			<if test="freeStartTime != null">
-				freeStartTime = #{freeStartTime,jdbcType=INTEGER},
-			</if>
-			<if test="freeEndTime != null">
-				freeEndTime = #{freeEndTime,jdbcType=INTEGER},
-			</if>
-			<if test="tags != null">
-				tags = #{tags,jdbcType=LONGVARCHAR},
-			</if>
-			<if test="about != null">
-				about = #{about,jdbcType=LONGVARCHAR},
-			</if>
-			<if test="teacherIds != null">
-				teacherIds = #{teacherIds,jdbcType=LONGVARCHAR},
-			</if>
-			<if test="goals != null">
-				goals = #{goals,jdbcType=LONGVARCHAR},
-			</if>
-			<if test="audiences != null">
-				audiences = #{audiences,jdbcType=LONGVARCHAR},
-			</if>
-		</set>
-		where id = #{id,jdbcType=INTEGER}
-	</update>
-	<update id="updateByIdWithBLOBs" parameterType="com.atguigu.sys.domain.SysCourseWithBLOBs">
+	<update id="updateByIdWithBLOBs" parameterType="com.atguigu.sys.domain.SysCourse">
 		update
 		course
-		set title = #{title,jdbcType=VARCHAR},
+		set
+		title = #{title,jdbcType=VARCHAR},
 		subtitle =
 		#{subtitle,jdbcType=VARCHAR},
-		status = #{status,jdbcType=CHAR},
-		type =
+		status = #{status,jdbcType=VARCHAR},
+		type
+		=
 		#{type,jdbcType=VARCHAR},
 		maxStudentNum =
 		#{maxStudentNum,jdbcType=INTEGER},
@@ -919,19 +452,22 @@
 	<update id="updateById" parameterType="com.atguigu.sys.domain.SysCourse">
 		update course
 		set
-		title = #{title,jdbcType=VARCHAR},
+		title =
+		#{title,jdbcType=VARCHAR},
 		subtitle =
 		#{subtitle,jdbcType=VARCHAR},
-		status = #{status,jdbcType=CHAR},
+		status = #{status,jdbcType=VARCHAR},
 		type =
 		#{type,jdbcType=VARCHAR},
 		maxStudentNum =
 		#{maxStudentNum,jdbcType=INTEGER},
-		price = #{price,jdbcType=REAL},
+		price =
+		#{price,jdbcType=REAL},
 		expiryDay = #{expiryDay,jdbcType=INTEGER},
 		showStudentNumType =
 		#{showStudentNumType,jdbcType=CHAR},
-		serializeMode =
+		serializeMode
+		=
 		#{serializeMode,jdbcType=CHAR},
 		income = #{income,jdbcType=REAL},
 		lessonNum = #{lessonNum,jdbcType=INTEGER},
