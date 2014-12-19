@@ -31,53 +31,51 @@
 									<table class="form-table" width="100%">
 										<tbody>
 											<tr>
-												<th style="width: 20%;">课程分类：</th>
-												<td style="width: 80%; text-align: left;">
-													<input name="categoryId" id="categoryId">
-												</td>
-											</tr>
-											<tr>
 												<th style="width: 20%;">所属课程：</th>
 												<td style="width: 80%; text-align: left;">
-													<input name="courseId" id="courseId">
+													<input type="hidden" name="courseId" id="courseId" value="${model.courseId}">
+													<span>${model.sysCourse.title}</span>
 												</td>
 											</tr>
 											<tr>
 												<th>标题：</th>
-												<td style="text-align: left;"><input
-													class="easyui-validatebox input_text  validatebox-text validatebox-invalid"
-													type="text" name="title" data-options="required:true"
+												<td style="text-align: left;">
+													<input	class="easyui-validatebox input_text  validatebox-text validatebox-invalid"	type="text" name="title" data-options="required:true"
 													datatype="string" isrequired="true" autocomplete="off"
-													title=""></td>
-											</tr>
-											<tr>
-												<th>副标题：</th>
-												<td style="text-align: left;"><input type="text"
-													name="subtitle"
-													class="input_text">
+													title="">
 												</td>
 											</tr>
-
+											<tr>
+												<th>摘要：</th>
+												<td style="text-align: left;">
+													<input type="text"	name="summary"	class="input_text">
+												</td>
+											</tr>
 											<tr>
 												<th>课时状态：</th>
-												<td style="text-align: left;"><input type="radio"
-													name="status" checked="checked" value="draft"
-													class="market_enable"> 草稿&nbsp;&nbsp; <input
-													type="radio" name="status" value="published"
-													class="market_enable"> 发布&nbsp;&nbsp; <input
-													type="radio" name="status" value="closed"
-													class="market_enable"> 关闭</td>
+												<td style="text-align: left;">
+													<input type="radio" name="status" checked="checked" value="unpublished"	class="market_enable"> 草稿&nbsp;&nbsp; 
+													<input type="radio" name="status" value="published"	class="market_enable"> 发布&nbsp;&nbsp;
+												</td>
 											</tr>
 											<tr>
 												<th>课时类型：</th>
-												<td style="text-align: left;"><input type="radio"
-													name="type" checked="checked" value="normal"
-													class="market_enable"> 视频</td>
+												<td style="text-align: left;">
+													<input type="radio"	name="type" checked="checked" value="normal" class="market_enable"> 视频
+												</td>
 											</tr>
 											<tr style="display: none">
-												<th>课时数：</th>
-												<td style="text-align: left;"><input type="text"
-													class="nodiscount" name="lessonNum" value="0"></td>
+												<th>视频来源：</th>
+												<td style="text-align: left;">
+													<input type="radio" name="mediaSource" checked="checked" value="self"	class="market_enable"> 本站上传&nbsp;&nbsp; 
+													<input type="radio" name="mediaSource" value="youku"	class="market_enable"> 优酷
+												</td>
+											</tr>
+											<tr>
+												<th>时长：</th>
+												<td style="text-align: left;">
+													<input type="text"	name="length" value="" class="market_enable">
+												</td>
 											</tr>
 											<tr>
 												<th>推荐：</th>
@@ -95,31 +93,29 @@
 											
 
 											<tr>
-												<th>简介：</th>
-												<td><textarea id="about" name="about" cols="100"
-														rows="8"
-														style="width: 98%; height: 300px; "></textarea>
-												</td>
-											</tr>
-											<tr>
 												<td colspan="2">
-													<input type="hidden" name="largePicture" id="largePicture">
-													<input type="hidden" name="maxStudentNum" value="0">
-													<input type="hidden" name="price" value="0.0">
-													<input type="hidden" name="expiryDay" value="30">
-													<input type="hidden" name="showStudentNumType" value="opened">
-													<input type="hidden" name="serializeMode" value="none">
-													<input type="hidden" name="income" value="0">
+													<input type="hidden" name="chapterId" value="0">
+													<input type="hidden" name="seq">
+													<input type="hidden" name="free" value="1">
+													<input type="hidden" name="tags" value="">
+													<input type="hidden" name="content" value="">
 													<input type="hidden" name="giveCredit" value="0">
-													<input type="hidden" name="rating" value="0">
-													<input type="hidden" name="ratingNum" value="0">
-													<input type="hidden" name="vipLevelId" value="0">
-													<input type="hidden" name="smallPicture" value="">
-													<input type="hidden" name="middlePicture" value="">
-													<input type="hidden" name="locationId" value="0">
-													<input type="hidden" name="address" value="">
-													<input type="hidden" name="studentNum" value="0">
-													<input type="hidden" name="hitNum" value="0">
+													<input type="hidden" name="requireCredit" value="0">
+													<input type="hidden" name="mediaId" value="">
+													<input type="hidden" name="mediaName" value="">
+													<input type="hidden" name="mediaUri" value="">
+													<input type="hidden" name="materialNum" value="">
+													quizNum	int(10) UN
+	<input type="hidden" name="learnedNum" value="">
+	<input type="hidden" name="viewedNum" value="">
+	<input type="hidden" name="startTime" value="">
+	<input type="hidden" name="endTime" value="">
+	
+	<input type="hidden" name="memberNum" value="">
+	<input type="hidden" name="replayStatus" value="ungenerated">
+	<input type="hidden" name="learnedNum" value="">
+
+													
 												</td>
 											</tr>
 
@@ -173,35 +169,6 @@
 					newlineTag : 'br'
 				});
 				prettyPrint();
-			});
-			$('#categoryId').combotree({
-				url:'${base}/sys/category/combotree?format=json',
-				method:'get',
-				required:false,
-				width : 300,
-				height:28,
-				value :  <#if course>${course.categoryId}<#else>0</#if>,
-				onSelect : function(rec){
-				  $('#path').val(rec.path+rec.id+'|');
-				}
-			});
-			$('#categoryId').combotree('setValue','请选择');
-			//所属课程
-			$('#courseId').combogrid({
-				url:'${base}/sys/course/all',
-				method:'get',
-				required:false,
-				width : 400,
-				height:28,
-				value :  <#if course>${course.categoryId}<#else>0</#if>,
-				columns:[[
-			        {field:'id',width:40,align:'center',title:'id'},
-			        {field:'title',width:260,title:'标题'},
-			        {field:'status.label',width:50,title:'状态'}
-			    ]],
-				onSelect : function(rec){
-				  $('#path').val(rec.path+rec.id+'|');
-				}
 			});
 			//封面
 			$('#files').on('change',function(){

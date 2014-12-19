@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.sys.domain.SysCourseLesson">
+	<resultMap id="BaseResultMap" type="sysCourseLesson">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="courseId" property="courseId" jdbcType="INTEGER" />
+		<result column="chapterId" property="chapterId" jdbcType="INTEGER" />
+		<result column="number" property="number" jdbcType="INTEGER" />
+		<result column="seq" property="seq" jdbcType="INTEGER" />
+		<result column="free" property="free" jdbcType="TINYINT" />
+		<result column="status" property="status" jdbcType="CHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="giveCredit" property="giveCredit" jdbcType="INTEGER" />
+		<result column="requireCredit" property="requireCredit"
+			jdbcType="INTEGER" />
+		<result column="mediaId" property="mediaId" jdbcType="INTEGER" />
+		<result column="mediaSource" property="mediaSource" jdbcType="VARCHAR" />
+		<result column="mediaName" property="mediaName" jdbcType="VARCHAR" />
+		<result column="length" property="length" jdbcType="INTEGER" />
+		<result column="materialNum" property="materialNum" jdbcType="INTEGER" />
+		<result column="quizNum" property="quizNum" jdbcType="INTEGER" />
+		<result column="learnedNum" property="learnedNum" jdbcType="INTEGER" />
+		<result column="viewedNum" property="viewedNum" jdbcType="INTEGER" />
+		<result column="startTime" property="startTime" jdbcType="INTEGER" />
+		<result column="endTime" property="endTime" jdbcType="INTEGER" />
+		<result column="memberNum" property="memberNum" jdbcType="INTEGER" />
+		<result column="replayStatus" property="replayStatus" jdbcType="CHAR" />
+		<result column="userId" property="userId" jdbcType="INTEGER" />
+		<result column="createdTime" property="createdTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<resultMap id="ResultMapWithBLOBs" type="sysCourseLesson">
+		<result column="tags" property="tags" jdbcType="LONGVARCHAR" />
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+		<result column="mediaUri" property="mediaUri" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	
+	<resultMap id="AssociationResultMap" type="sysCourseLessonVo" extends="BaseResultMap">
+		<!-- 关联分组类型 -->
+		<association property="sysCourse" column="courseId"
+			javaType="sysCourse" select="com.atguigu.sys.domain.SysCourse.selectById">
+		</association>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, courseId, chapterId, number, seq, free, status, title,
+		type,
+		giveCredit, requireCredit,
+		mediaId, mediaSource, mediaName,
+		length, materialNum, quizNum, learnedNum,
+		viewedNum,
+		startTime, endTime,
+		memberNum, replayStatus, userId, createdTime
+	</sql>
+	<sql id="Blob_Column_List">
+		summary, tags, content, mediaUri
+	</sql>
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim prefixOverrides="and">
+				<if test="id != null"> and id = #{id}</if>
+				<if test="courseId!=null"> and courseId = #{courseId}</if>
+				<if test="title!=null"> and title = #{title}</if>
+				<if test="userId!=null"> and userId = #{userId}</if>
+			</trim>
+		</where>
+	</sql>
+
+	<!-- 查询总数 -->
+	<select id="selectCount" resultType="java.lang.Long"
+		parameterType="java.util.Map">
+		select count(id)
+		from course_lesson
+		<include refid="Base_Where_Clause" />
+	</select>
+
+	<!-- 查询 -->
+	<select id="select" resultMap="AssociationResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from
+		course_lesson
+		<include refid="Base_Where_Clause" />
+	</select>
+
+	<select id="selectById" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from course_lesson
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from course_lesson
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.atguigu.sys.domain.SysCourseLesson">
+		insert into course_lesson (id,
+		courseId, chapterId,
+		number, seq, free,
+		status, title, type, giveCredit,
+		requireCredit, mediaId, mediaSource,
+		mediaName, length, materialNum,
+		quizNum, learnedNum, viewedNum,
+		startTime, endTime, memberNum,
+		replayStatus, userId, createdTime,
+		summary, tags, content,
+		mediaUri)
+		values (#{id,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER},
+		#{chapterId,jdbcType=INTEGER},
+		#{number,jdbcType=INTEGER},
+		#{seq,jdbcType=INTEGER}, #{free,jdbcType=TINYINT},
+		#{status,jdbcType=CHAR}, #{title,jdbcType=VARCHAR},
+		#{type,jdbcType=VARCHAR}, #{giveCredit,jdbcType=INTEGER},
+		#{requireCredit,jdbcType=INTEGER}, #{mediaId,jdbcType=INTEGER},
+		#{mediaSource,jdbcType=VARCHAR},
+		#{mediaName,jdbcType=VARCHAR},
+		#{length,jdbcType=INTEGER}, #{materialNum,jdbcType=INTEGER},
+		#{quizNum,jdbcType=INTEGER}, #{learnedNum,jdbcType=INTEGER},
+		#{viewedNum,jdbcType=INTEGER},
+		#{startTime,jdbcType=INTEGER},
+		#{endTime,jdbcType=INTEGER}, #{memberNum,jdbcType=INTEGER},
+		#{replayStatus,jdbcType=CHAR}, #{userId,jdbcType=INTEGER},
+		#{createdTime,jdbcType=INTEGER},
+		#{summary,jdbcType=LONGVARCHAR},
+		#{tags,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR},
+		#{mediaUri,jdbcType=LONGVARCHAR})
+	</insert>
+	<update id="updateById" parameterType="com.atguigu.sys.domain.SysCourseLesson">
+		update course_lesson
+		set
+		courseId = #{courseId,jdbcType=INTEGER},
+		chapterId =
+		#{chapterId,jdbcType=INTEGER},
+		number = #{number,jdbcType=INTEGER},
+		seq
+		= #{seq,jdbcType=INTEGER},
+		free = #{free,jdbcType=TINYINT},
+		status =
+		#{status,jdbcType=CHAR},
+		title = #{title,jdbcType=VARCHAR},
+		type =
+		#{type,jdbcType=VARCHAR},
+		giveCredit = #{giveCredit,jdbcType=INTEGER},
+		requireCredit = #{requireCredit,jdbcType=INTEGER},
+		mediaId =
+		#{mediaId,jdbcType=INTEGER},
+		mediaSource =
+		#{mediaSource,jdbcType=VARCHAR},
+		mediaName =
+		#{mediaName,jdbcType=VARCHAR},
+		length = #{length,jdbcType=INTEGER},
+		materialNum = #{materialNum,jdbcType=INTEGER},
+		quizNum =
+		#{quizNum,jdbcType=INTEGER},
+		learnedNum =
+		#{learnedNum,jdbcType=INTEGER},
+		viewedNum =
+		#{viewedNum,jdbcType=INTEGER},
+		startTime =
+		#{startTime,jdbcType=INTEGER},
+		endTime = #{endTime,jdbcType=INTEGER},
+		memberNum = #{memberNum,jdbcType=INTEGER},
+		replayStatus =
+		#{replayStatus,jdbcType=CHAR},
+		userId = #{userId,jdbcType=INTEGER},
+		createdTime = #{createdTime,jdbcType=INTEGER}
+		where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+</mapper>

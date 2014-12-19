@@ -23,6 +23,7 @@ import com.atguigu.frame.core.web.domain.Result;
 import com.atguigu.frame.core.web.domain.Result.Status;
 import com.atguigu.sys.domain.SysCourse;
 import com.atguigu.sys.domain.SysCourseLesson;
+import com.atguigu.sys.domain.vo.SysCourseLessonVo;
 import com.atguigu.sys.service.SysCourseLessonService;
 import com.atguigu.sys.service.SysFileService;
 
@@ -52,6 +53,11 @@ public class SysCourseLessonController extends
 		mav.addObject("query", query);
 
 		return mav;
+	}
+
+	@RequestMapping(value = "/addBaseCourse", method = RequestMethod.GET)
+	public ModelAndView addViewBaseCourse(SysCourseLessonVo entity) {
+		return new ModelAndView(path.getAddViewPath(), "model", entity);
 	}
 
 	@Override

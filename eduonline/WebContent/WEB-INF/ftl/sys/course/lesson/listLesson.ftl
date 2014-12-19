@@ -184,8 +184,16 @@
 		}
 		
 		$(function(){
+			var courseId = ${(query.courseId)!0};
+			var params = {};
+			if(courseId>0){
+				params.courseId = courseId;
+			}
+			
+			console.log(params);
 			$('#dg').datagrid({
 				url : '${base}/sys/course/lesson/list',
+				queryParams:params,
 				method : 'get',
 				fit : true,
 				fitColumns : true,
