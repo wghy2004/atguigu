@@ -153,7 +153,7 @@
 		}		
 		
 		function formatLesson(value, row, index){
-			return '<a  href="${base}/sys/course/lesson/addBaseCourse?courseId='+row.id+'&sysCourse.title='+row.title+'">新课时</a>&nbsp;&nbsp;<a href="${base}/sys/course/lesson?courseId='+row.id+'">查看课时</a>';
+			return '<a  href="${base}/sys/course/lesson/addBaseCourse?courseId='+row.id+'&sysCourse.title='+row.title+'">新课时</a>&nbsp;&nbsp;<a target="_blank" href="${base}/sys/course/lesson?courseId='+row.id+'">查看课时</a>';
 		}
 		
 		function formatStatus(value, row, index){

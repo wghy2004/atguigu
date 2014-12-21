@@ -20,7 +20,6 @@
 					<div class="contentTab">
 						<ul class="tab">
 							<li tabid="1" class="contentTabS">基本信息</li>
-							<li tabid="3" class="">封面</li>
 						</ul>
 					</div>
 					<div class="shadowBoxWhite wf100 whiteBox">
@@ -48,7 +47,7 @@
 											<tr>
 												<th>摘要：</th>
 												<td style="text-align: left;">
-													<input type="text"	name="summary"	class="input_text">
+													<textarea name="summary"></textarea>
 												</td>
 											</tr>
 											<tr>
@@ -72,6 +71,12 @@
 												</td>
 											</tr>
 											<tr>
+												<th>选择文件：</th>
+												<td style="text-align: left;">
+													<input class="input_text" type="file" id="files" name="files" >
+												</td>
+											</tr>
+											<tr>
 												<th>时长：</th>
 												<td style="text-align: left;">
 													<input type="text"	name="length" value="" class="market_enable">
@@ -89,13 +94,12 @@
 													<input type="text" class="nodiscount" name="recommendedSeq" value="0">
 												</td>
 											</tr>
-											
-											
 
 											<tr>
 												<td colspan="2">
 													<input type="hidden" name="chapterId" value="0">
-													<input type="hidden" name="seq">
+													<input type="hidden" name="number" value="3243">
+													<input type="hidden" name="seq" value="1">
 													<input type="hidden" name="free" value="1">
 													<input type="hidden" name="tags" value="">
 													<input type="hidden" name="content" value="">
@@ -105,47 +109,26 @@
 													<input type="hidden" name="mediaName" value="">
 													<input type="hidden" name="mediaUri" value="">
 													<input type="hidden" name="materialNum" value="">
-													quizNum	int(10) UN
-	<input type="hidden" name="learnedNum" value="">
-	<input type="hidden" name="viewedNum" value="">
-	<input type="hidden" name="startTime" value="">
-	<input type="hidden" name="endTime" value="">
-	
-	<input type="hidden" name="memberNum" value="">
-	<input type="hidden" name="replayStatus" value="ungenerated">
-	<input type="hidden" name="learnedNum" value="">
-
-													
+													<input type="hidden" name="quizNum" value="0">
+													<input type="hidden" name="learnedNum" value="">
+													<input type="hidden" name="viewedNum" value="">
+													<input type="hidden" name="startTime" value="">
+													<input type="hidden" name="endTime" value="">
+													<input type="hidden" name="memberNum" value="">
+													<input type="hidden" name="replayStatus" value="ungenerated">
+													<input type="hidden" name="learnedNum" value="">
 												</td>
 											</tr>
-
 										</tbody>
 									</table>
 								</div>
 								</form>
-								<div tabid="3" style="display: none;" class="tab-panel">
-									<div id="album_tab" class="form-table albumbox">
-										<div ><img style="max-height:300px;" id="largePicturePreview" src="" /></div>
-										<form  method="post" action="${base}/sys/file/upload" class="validate" id="addFileForm" enctype="multipart/form-data">
-											<table>
-													<tbody>
-													<tr>
-														<th>选择文件</th>
-														<td>
-															<input class="input_text" type="file" id="files" name="files" >
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</form>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			<div class="buttonWrap">
-				<a href="javascript:;" class="easyui-linkbutton" id="courseAddBtn">确定</a>
+				<a href="javascript:;" class="easyui-linkbutton" id="lessonAddBtn">确定</a>
 			</div>
 		</div>
 	</div>
@@ -164,7 +147,7 @@
 				$(".tab-panel[tabid=" + tabid + "]").show();
 			});
 			KindEditor.ready(function(K) {
-				aboutEditor = K.create('textarea[name="about"]', {
+				aboutEditor = K.create('textarea[name="summary"]', {
 					items :['source','bold','italic','underline','strikethrough','|','undo','redo','cut','copy','paste','selectall','plainpaste'],
 					newlineTag : 'br'
 				});
@@ -194,29 +177,29 @@
 				}
 			});
 			
-			$("#courseAddBtn").click(function() {
+			$("#lessonAddBtn").click(function() {
 			
 				$('#about').val(aboutEditor.html());
 				
 				var formflag = $("#addForm").form('validate');
 				if (formflag) {
-					$("#courseAddBtn").linkbutton("disable");
+					$("#lessonAddBtn").linkbutton("disable");
 					$.Loading.show("正在保存请稍后..");
 					var options = {
-						url : '${base}/sys/course',
+						url : '${base}/sys/course/lesson',
 						type : "POST",
 						dataType : "json",
 						success : function(result) {
 							$.Loading.success('成功添加课时:'+result.message.title);
 							if (result.status == 'OK') {
-								window.location.href = "${base}/sys/course";
+								window.location.href = "${base}/sys/course/lesson";
 							}else{
 								$.Loading.error("出错了,请重试");
 							}
 						},
 						error : function(e) {
 							$.Loading.error("出错了,请重试");
-							$("#courseAddBtn").linkbutton("enable");
+							$("#lessonAddBtn").linkbutton("enable");
 						}
 					};
 					$('#addForm').ajaxSubmit(options);
