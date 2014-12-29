@@ -20,6 +20,7 @@
 					<div class="contentTab">
 						<ul class="tab">
 							<li tabid="1" class="contentTabS">基本信息</li>
+							<li tabid="2" class="contentTabS">视频</li>
 						</ul>
 					</div>
 					<div class="shadowBoxWhite wf100 whiteBox">
@@ -63,25 +64,6 @@
 													<input type="radio"	name="type" checked="checked" value="normal" class="market_enable"> 视频
 												</td>
 											</tr>
-											<tr style="display: none">
-												<th>视频来源：</th>
-												<td style="text-align: left;">
-													<input type="radio" name="mediaSource" checked="checked" value="self"	class="market_enable"> 本站上传&nbsp;&nbsp; 
-													<input type="radio" name="mediaSource" value="youku"	class="market_enable"> 优酷
-												</td>
-											</tr>
-											<tr>
-												<th>选择文件：</th>
-												<td style="text-align: left;">
-													<input class="input_text" type="file" id="files" name="files" >
-												</td>
-											</tr>
-											<tr>
-												<th>时长：</th>
-												<td style="text-align: left;">
-													<input type="text"	name="length" value="" class="market_enable">
-												</td>
-											</tr>
 											<tr>
 												<th>推荐：</th>
 												<td style="text-align: left;">
@@ -105,24 +87,55 @@
 													<input type="hidden" name="content" value="">
 													<input type="hidden" name="giveCredit" value="0">
 													<input type="hidden" name="requireCredit" value="0">
-													<input type="hidden" name="mediaId" value="">
+													<input type="hidden" name="mediaId" id="mediaId" value="">
 													<input type="hidden" name="mediaName" value="">
+													<input type="hidden" name="mediaSource" value="">
+													<input type="hidden" name="length" value="">
 													<input type="hidden" name="mediaUri" value="">
-													<input type="hidden" name="materialNum" value="">
+													<input type="hidden" name="materialNum" value="0">
 													<input type="hidden" name="quizNum" value="0">
-													<input type="hidden" name="learnedNum" value="">
-													<input type="hidden" name="viewedNum" value="">
+													<input type="hidden" name="learnedNum" value="0">
+													<input type="hidden" name="viewedNum" value="0">
 													<input type="hidden" name="startTime" value="">
 													<input type="hidden" name="endTime" value="">
-													<input type="hidden" name="memberNum" value="">
+													<input type="hidden" name="memberNum" value="0">
 													<input type="hidden" name="replayStatus" value="ungenerated">
-													<input type="hidden" name="learnedNum" value="">
 												</td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 								</form>
+								<div tabid="2" style="display: none;" class="tab-panel">
+									<div id="album_tab" class="form-table albumbox">
+										<div ><img style="max-height:300px;" id="largePicturePreview" src="" /></div>
+										<form  method="post" action="${base}/sys/file/upload" class="validate" id="addFileForm" enctype="multipart/form-data">
+											<table>
+													<tbody>
+													<tr>
+														<th>视频来源：</th>
+														<td style="text-align: left;">
+															<input type="radio" name="mediaSource" checked="checked" value="self"	class="market_enable"> 本站上传&nbsp;&nbsp; 
+															<input type="radio" name="mediaSource" value="youku" class="market_enable"> 优酷
+														</td>
+													</tr>
+													<tr>
+														<th>选择文件：</th>
+														<td style="text-align: left;">
+															<input class="input_text" type="file" id="files" name="files" >
+														</td>
+													</tr>
+													<tr>
+														<th>时长：</th>
+														<td style="text-align: left;">
+															<input type="text" id="mediaLength"	name="length" value="" class="market_enable">
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</form>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -164,9 +177,10 @@
 						dataType : "json",
 						success : function(result) {
 							if (result.status == 'OK') {
-								$.Loading.success('图片上传成功!');
-								$('#largePicturePreview').attr('src','${base}/'+result.message.uri);
-								$('#largePicture').val(result.message.uri);
+								$.Loading.success('视频上传成功!');
+								$('#addForm input[name=mediaId]').val(result.message.id);
+								$('#addForm input[name=mediaSource]').val('self');
+								$('#addForm input[name=length]').val($('#mediaLength').val());
 							}
 						},
 						error : function(e) {

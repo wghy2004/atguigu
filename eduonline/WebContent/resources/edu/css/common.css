@@ -1,0 +1,9 @@
+@charset "utf-8";
+/* CSS Document */
+body,ul,ol,li,form,table,tr,th,td,img,div,span,dl,dt,dd,input,textarea,select,button,p,h1,h2,h3,h4,h5,h6,a{margin:0;padding:0;}
+img,input{border:none;}
+ul{ list-style:none;}
+body{background:#ffffff; color:#323232; font-size:12px; font-family:"宋体";}
+select,input,img{vertical-align:middle;}
+a,a:link,a:active,a:visited{ text-decoration:none; color:#0078b1; }
+a:hover{color:#ff6600;}

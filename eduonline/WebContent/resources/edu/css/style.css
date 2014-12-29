@@ -1,0 +1,48 @@
+@charset "utf-8";
+/* CSS Document */
+body{ font-family:'微软雅黑'; font-size:14px; line-height:26px;}
+h6{ line-height:40px; font-size:14px; font-weight:bold; font-family:'微软雅黑'; margin:0; padding:0;}
+h5{ margin:0; padding:0; font-size:15px; font-weight:bold; line-height:35px; font-family:'微软雅黑'; }
+.clear{ clear:both; height:10px;}
+#header{ width:100%; height:85px; background:#152744; padding-top:12px;}
+#header .whole{ width:1000px; height:61px; margin:auto;}
+#header .logo{ width:187px; height:61px; float:left;}
+#header .search{ width:300px; height:30px; border:1px solid #f3f3f3; border-radius:5px; -moz-border-radius:5px; background:#fff; line-height:30px; float:left; margin:17px 0 0 400px;}
+#header .search .l{ width:24px; height:24px; padding:6px 0 0 4px; float:left;}
+#header .search .m{ width:200px; height:28px; line-height:28px; float:left;}
+#header .search .r{ width:70px; height:28px; line-height:28px; background:#f2f2f2; text-align:center; border-radius:5px; -moz-border-radius:5px; float:right;}
+#header .regist{width:80px; height:61px; line-height:65px; color:#fff; float:right;}
+#banner{ width:1000px; height:420px; margin:auto; }
+#banner .l{ width:268px; height:418px; border:1px solid #e4e4e4; float:left;}
+#banner .l .title{ width:268px; height:35px; line-height:35px; font-size:18px; background:#e4e4e4;}
+#banner .l .zi{ width:253px; height:380px; font-size:12px; padding-left:15px;}
+
+#banner .r{ width:720px; height:420px; float:right;}
+#banner .r .t{ width:720px; height:310px; margin-bottom:10px;}
+#banner .r .b{ width:718px; height:98px; border:1px solid #e4e4e4;}
+.youshi{ width:225px; height:70px; margin:13px 0 0 10px; float:left;}
+.youshil{ width:104px; float:left;}
+.youshir{ width:120px; float:left;}
+/*shipin*/
+.shipin{ width:1000px; height:auto; margin:auto;}
+.shipin .title{ width:1000px; height:35px; border-bottom:1px solid #e4e4e4; line-height:35px;}
+.shipin .title .l{width:200px; font-size:16px; float:left;}
+.shipin .title .r{ width:780px; float:left; text-align:right; font-size:12px;}
+.shipin .neinong{width:1000px; height:auto; float:left;}
+.shipin .splist{ width:228px; height:208px; border:1px solid #f3f3f3; border-radius:5px; -moz-border-radius:5px; margin:15px 4px 10px 15px; float:left;}
+.shipin .splist .pic{ width:205px; height:115px; background:#6CF; margin:10px 11px;}
+.shipin .splist .zit{ color:#152744; font-size:13px; width:205px; line-height:20px; height:47px; margin-left:11px;}
+.shipin .splist .zi{  width:205px; margin-left:11px; font-size:12px;}
+/*pingjia*/
+.pingjia{ width:1000px; height:auto; margin:auto;}
+.pingjia .title{ width:1000px; height:35px; border-bottom:1px solid #e4e4e4; line-height:35px;}
+.pingjia .title .l{width:200px; font-size:16px; float:left;}
+.pingjia .title .r{ width:780px; float:left; text-align:right; font-size:12px;}
+.pingjia .neirong{ width:980px; height:100px;; margin:10px 0 0 10px;}
+.pingjia .neirong .lb{ width:200px; float:left;}
+.pingjia .neirong .rb{ width:700px; float:left;}
+.pingjia .zi{ width:1000px; height:120px; }
+.pingjia .zi .zilist{ width:310px; padding:10px; font-size:12px; float:left; margin:10px; background:#f2f2f2; border-radius:5px; -moz-border-radius:5px;}
+/*footer*/
+#footer{ width:100%; height:150px; background:#152744;}
+
