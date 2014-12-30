@@ -18,7 +18,7 @@ import com.atguigu.sys.domain.SysCategory;
  *
  */
 public interface CategoryService extends BaseService<SysCategory> {
-	
+
 	/**
 	 * 转换成easyui tree
 	 * 
@@ -26,6 +26,9 @@ public interface CategoryService extends BaseService<SysCategory> {
 	 * @param id
 	 * @return
 	 */
-	public JSONArray selectList();
+
+	public List<SysCategory> toTree(List<SysCategory> list, long id);
+
+	public List<SysCategory> getIndexCategory(int parentCount, int childCount);
 
 }

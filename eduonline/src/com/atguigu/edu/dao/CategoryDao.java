@@ -17,5 +17,4 @@ import com.atguigu.sys.domain.SysCategory;
  *
  */
 public interface CategoryDao extends BaseDao<SysCategory> {
-	public List<SysCategory> toTree(List<SysCategory> list, long id);
 }
