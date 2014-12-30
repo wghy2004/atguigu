@@ -14,7 +14,7 @@ import com.atguigu.sys.domain.SysCourse;
 
 /**
  * 
- * SysCourseDaoImpl
+ * CourseDaoImpl
  * 
  * @Description
  * @author wg
