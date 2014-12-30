@@ -1,4 +1,3 @@
-<#assign base=request.contextPath />
 <div class="nav">
   <div class="classification">
     <div class="classification-title">课程分类</div>
@@ -43,7 +42,7 @@
     </div>
   </div>
   <div class="bannerbg">
-    <div class="banner"><img src="images/banner.jpg" alt="java培训" /></div>
+    <div class="banner"><img src="${base}/resources/edu/images/banner.jpg" alt="java培训" /></div>
     <div class="features">
       <div class="features1"><p>挑灯夜学</p><span class="introduce">夜学堂每晚不见不散</span></div>
       <div class="features2"><p>求职季</p><span class="introduce">各种面试资格精英定制</span></div>
@@ -51,5 +50,4 @@
     </div>
   </div>
 </div>
-<div class="recommend-video"><a href="#">更多视频 >></a>推荐视频</div>
 <!-- 导航条结束 -->

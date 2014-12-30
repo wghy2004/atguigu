@@ -112,6 +112,15 @@
 		from course
 		where id = #{id,jdbcType=INTEGER}
 	</select>
+	<!-- 查询 -->
+	<select id="selectByCount" resultMap="AllResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from course
+		order by id desc
+		limit  #{limit}
+	</select>
+	
 	<delete id="deleteById" parameterType="java.lang.Long">
 		delete from course
 		where id
