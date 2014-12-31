@@ -15,7 +15,7 @@
 	  <div class="study-video-box">
 	     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
 	     <div class="video-course-name"><a href="#">${course.title}</a></div>
-	     <div class="video-updata-time">2014-11-13</div>
+	     <div class="video-updata-time">${course.createdTime}</div>
 	  </div>
 	</#list>
 </div>

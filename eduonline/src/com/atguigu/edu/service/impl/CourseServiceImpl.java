@@ -1,6 +1,8 @@
 package com.atguigu.edu.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,15 @@ public class CourseServiceImpl extends BaseServiceImpl<SysCourse> implements
 
 	@Override
 	public List<SysCourse> getIndexCourse(int count) {
-		return courseDao.selectList(20);
+
+		Map<String, Object> map = new HashMap();
+
+		map.put("status", "published");
+		map.put("sorting", "id desc");
+		map.put("offset", 0);
+		map.put("limit" , count);
+		
+		return courseDao.selectList(map);
 	}
 
 }

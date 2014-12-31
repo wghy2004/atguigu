@@ -3,6 +3,7 @@ package com.atguigu.edu.dao.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Repository;
 
 import com.atguigu.edu.dao.CourseDao;
@@ -22,17 +23,17 @@ import com.atguigu.sys.domain.SysCourse;
  *
  */
 @Repository
-public class CourseDaoImpl extends BaseDaoImpl<SysCourse> implements
-		CourseDao {
+public class CourseDaoImpl extends BaseDaoImpl<SysCourse> implements CourseDao {
 
 	@Override
-	public List<SysCourse> selectList(int count) {
+	public List<SysCourse> selectList(Map map) {
 		try {
-			return sqlSessionTemplate.selectList(getSqlName("selectByCount"),
-					count);
+
+			return sqlSessionTemplate.selectList(getSqlName("selectByMap"),
+					map);
 		} catch (Exception e) {
 			throw new DaoException(String.format("查询对象列表出错！语句：%s",
-					getSqlName("selectByCount")), e);
+					getSqlName("selectByMap")), e);
 		}
 	}
 
