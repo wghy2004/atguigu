@@ -2,43 +2,14 @@
   <div class="classification">
     <div class="classification-title">课程分类</div>
     <div class="course-type">
-      <div class="course-title">Java基础</div>
-      <ul>
-         <li><a href="#">JavaSE</a></li>
-         <li><a href="#">Bank项目</a></li>
-      </ul>
-      <div class="course-title">数据库</div>
-      <ul>
-         <li><a href="#">ORACLE </a></li>
-         <li><a href="#">SQL</a></li>
-         <li><a href="#">PLSQL</a></li>
-      </ul>
-      <div class="course-title">Web开发</div>
-      <ul style="height:75px;">
-         <li><a href="#">JDBC</a></li>
-         <li><a href="#">JavaScript</a></li>
-         <li><a href="#">jQuery</a></li>
-         <li><a href="#">Ajax</a></li>
-         <li><a href="#">Servlet</a></li>
-         <li><a href="#">JSP</a></li>
-         <li><a href="#">MVC</a></li>
-         <li><a href="#">EL表达式</a></li>
-         <li><a href="#">JavaBean</a></li>
-         <li><a href="#">JSTL</a></li>
-         <li><a href="#">Cookie</a></li>
-         <li><a href="#">国际化</a></li>
-      </ul>
-      <div class="course-title">JavaEE</div>
-      <ul style="height:75px;">
-         <li><a href="#">Struts2</a></li>
-         <li><a href="#">Hibernate4</a></li>
-         <li><a href="#">Spring4</a></li>
-         <li><a href="#">MyBatis</a></li>
-         <li><a href="#">WebService</a></li>
-         <li><a href="#">SSH整合</a></li>
-         <li><a href="#">数据采集系统 </a></li>
-         <li><a href="#">JavaWEB书城</a></li>
-      </ul>
+    <#list categorys as category >
+    	<div class="course-title">${category.name}</div>
+	      <ul>
+	      	<#list category.children as child >
+	      		<li><a href="#">${child.name}</a></li>
+	      	</#list>
+	      </ul>
+    </#list>
     </div>
   </div>
   <div class="bannerbg">

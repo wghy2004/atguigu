@@ -160,13 +160,12 @@ public class CategoryServiceImpl extends BaseServiceImpl<SysCategory> implements
 	}
 
 	@Override
-	public List<SysCategory> getIndexCategory(int parentCount, int childCount) {
+	public JSONArray getIndexCategory(int parentCount, int childCount) {
 		
 		List<SysCategory> list = categoryDao.selectAll();
 		
-		this.toTree(list, 0);
+		return this.toTree(list, 0);
 		
-		return null;
 	}
 
 }

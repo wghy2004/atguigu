@@ -11,103 +11,13 @@
 <#include "/edu/nav.ftl">
 <div class="recommend-video"><a href="#">更多视频 >></a>推荐视频</div>
 <div class="main">
-<#list courses as course>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">${course.title}</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
- </#list>
-    <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
-  <div class="study-video-box">
-     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
-     <div class="video-course-name"><a href="#">尚硅谷Java视频_Java基础实战Bank项目</a></div>
-     <div class="video-updata-time">2014-11-13</div>
-  </div>
+	<#list courses as course>
+	  <div class="study-video-box">
+	     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
+	     <div class="video-course-name"><a href="#">${course.title}</a></div>
+	     <div class="video-updata-time">2014-11-13</div>
+	  </div>
+	</#list>
 </div>
 <div class="students-evaluation">学员评价</div>
 <div class="evaluation">

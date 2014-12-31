@@ -29,6 +29,6 @@ public interface CategoryService extends BaseService<SysCategory> {
 
 	public List<SysCategory> toTree(List<SysCategory> list, long id);
 
-	public List<SysCategory> getIndexCategory(int parentCount, int childCount);
+	public JSONArray getIndexCategory(int parentCount, int childCount);
 
 }
