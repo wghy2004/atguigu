@@ -152,23 +152,39 @@
 			  });
 		}		
 		
-		function formatLesson(value, row, index){
-			return '<a  href="${base}/sys/course/lesson/addBaseCourse?courseId='+row.id+'&sysCourse.title='+row.title+'">新课时</a>&nbsp;&nbsp;<a target="_blank" href="${base}/sys/course/lesson?courseId='+row.id+'">查看课时</a>';
+		//更改状态
+		function setStatus(id,ele){
+			$.post('${base}/sys/course/updateByIdSelective',{
+				id 		: 	id,
+				status  : 	$(ele).val()
+			},function(data){
+				alert(data.status);
+			});
 		}
 		
 		function formatStatus(value, row, index){
+		
+			var status_list = [['draft','草稿'],['published','已发布'],['closed','已关闭']];
 			
-			var status = row.status;
-			if(status == 'draft'){
-				status = '草稿';
-			}else if(status == 'published'){
-				status = '已发布';
-			}else if(status == 'closed'){
-				status = '已关闭';
-			}
+			var str = ['<select onchange="setStatus('+row.id+',this)">'];
+			for(var i=0; i< status_list.length; i++){
+				str.push('<option value="'+status_list[i][0]+'"');
+				if(status_list[i][0]==row.status){
+					str.push(' selected ');
+				}
+				str.push('>'+status_list[i][1]+'</option>');
+			}	
 			
-			return status;
+			str.push('</select>');
+			
+			return str.join('');
 		}
+		
+		function formatLesson(value, row, index){
+			return '<a  href="${base}/sys/course/lesson/addBaseCourse?courseId='+row.id+'&sysCourse.title='+row.title+'">新课时</a>&nbsp;&nbsp;<a target="_blank" href="${base}/sys/course/lesson?courseId='+row.id+'">查看课时('+row.lessonNum+')</a>';
+		}
+		
+		
 		
 		function formatCategory(value, row, index){
 	
@@ -182,8 +198,7 @@
 		}
 		
 		function formatEdit(value, row, index) {
-			var val = "<a class='edit' title='修改' href='javascript:void(0);' onclick='append("
-					+ row.id + ",2)' ></a>";
+			var val = "<a class='edit' title='修改' href='${base}/sys/course/edit/"+row.id+"'></a>";
 			return val;
 		}
 		function formatDelete(value, row, index) {

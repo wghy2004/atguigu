@@ -26,15 +26,17 @@
 					<div class="shadowBoxWhite wf100 whiteBox">
 						<div class="text">
 							<div class="tab-page">
-								<form  method="post" action="${base}/sys/course/lesson/add" class="validate" id="addForm">
+								<form  method="post" action="${base}/sys/course/lesson/edit" class="validate" id="addForm">
+								<input type="hidden" name="_method" value="put">
+								<input type="hidden" name="id" value="${lesson.id}">
 								<div tabid="1" class="tab-panel" style="display: block;">
 									<table class="form-table" width="100%">
 										<tbody>
 											<tr>
 												<th style="width: 20%;">所属课程：</th>
 												<td style="width: 80%; text-align: left;">
-													<input type="hidden" name="courseId" id="courseId" value="${model.courseId}">
-													<span>${model.sysCourse.title}</span>
+													<input type="hidden" name="courseId" id="courseId" value="${lesson.courseId}">
+													<span>${lesson.sysCourse.title}</span>
 												</td>
 											</tr>
 											<tr>
@@ -42,14 +44,14 @@
 												<td style="text-align: left;">
 													<input	class="easyui-validatebox input_text  validatebox-text validatebox-invalid"	type="text" name="title" data-options="required:true"
 													datatype="string" isrequired="true" autocomplete="off"
-													title="">
+													title="" value="${lesson.title}">
 												</td>
 											</tr>
 											<tr>
 												<th>课时状态：</th>
 												<td style="text-align: left;">
-													<input type="radio" name="status" checked="checked" value="unpublished"	class="market_enable"> 草稿&nbsp;&nbsp; 
-													<input type="radio" name="status" value="published"	class="market_enable"> 发布&nbsp;&nbsp;
+													<input type="radio" name="status"  <#if lesson.status=='unpublished'>checked</#if> value="unpublished"	class="market_enable"> 草稿&nbsp;&nbsp; 
+													<input type="radio" name="status"  <#if lesson.status=='published'>checked</#if> value="published"	class="market_enable"> 发布&nbsp;&nbsp;
 												</td>
 											</tr>
 											<tr>
@@ -61,38 +63,26 @@
 											<tr>
 												<th>视频来源：</th>
 												<td style="text-align: left;">
-													<input type="radio" name="mediaSource" checked="checked" value="self"	class="market_enable"> 本站上传&nbsp;&nbsp; 
-													<input type="radio" name="mediaSource" value="youku" class="market_enable"> 优酷
+													<input type="radio" name="mediaSource" <#if lesson.mediaSource=='self'>checked</#if> value="self"	class="market_enable"> 本站上传&nbsp;&nbsp; 
+													<input type="radio" name="mediaSource" <#if lesson.mediaSource=='youku'>checked</#if> value="youku" class="market_enable"> 优酷
 												</td>
 											</tr>
-											<tr id="mediaYoukuTr" style="display:none;">
+											<tr id="mediaYoukuTr">
 												<th>视频地址:</th>
 												<td style="text-align: left;">
-													<input type="text" id="mediaUri" name="mediaUri" value="" style="width:350px;">
+													<input type="text" id="mediaUri" name="mediaUri"  value="${lesson.mediaUri}" style="width:350px;">
 												</td>
 											</tr>
 											<tr>
 												<th>时长：</th>
 												<td style="text-align: left;">
-													<input type="text" id="mediaLength"	name="length" value="" class="market_enable">
+													<input type="text" id="mediaLength"	name="length" value="${lesson.length}" class="market_enable">
 												</td>
 											</tr>
 											<tr>
-												<th>推荐：</th>
-												<td style="text-align: left;">
-													<input type="radio"	name="recommended" checked="checked" value="1"	class="market_enable"> 是&nbsp;&nbsp; 
-													<input type="radio" name="recommended" value="0" class="market_enable"> 否</td>
-											</tr>
-											<tr>
-												<th>推荐序号：</th>
-												<td style="text-align: left;">
-													<input type="text" class="nodiscount" name="recommendedSeq" value="0">
-												</td>
-											</tr>
-												<tr>
 												<th>摘要：</th>
 												<td style="text-align: left;">
-													<textarea name="summary"></textarea>
+													<textarea name="summary" style="height:150px;">${lesson.summary}</textarea>
 												</td>
 											</tr>
 

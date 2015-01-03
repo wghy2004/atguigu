@@ -395,7 +395,7 @@
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByIdWithBLOBs" parameterType="com.atguigu.sys.domain.SysCourse">
+	<update id="updateById" parameterType="com.atguigu.sys.domain.SysCourse">
 		update
 		course
 		set
@@ -458,60 +458,12 @@
 		#{audiences,jdbcType=LONGVARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
-	<update id="updateById" parameterType="com.atguigu.sys.domain.SysCourse">
+	<!-- 通过ID更新 -->
+	<update id="updateByIdSelective" parameterType="com.atguigu.sys.domain.SysCourse">
 		update course
-		set
-		title =
-		#{title,jdbcType=VARCHAR},
-		subtitle =
-		#{subtitle,jdbcType=VARCHAR},
-		status = #{status,jdbcType=VARCHAR},
-		type =
-		#{type,jdbcType=VARCHAR},
-		maxStudentNum =
-		#{maxStudentNum,jdbcType=INTEGER},
-		price =
-		#{price,jdbcType=REAL},
-		expiryDay = #{expiryDay,jdbcType=INTEGER},
-		showStudentNumType =
-		#{showStudentNumType,jdbcType=CHAR},
-		serializeMode
-		=
-		#{serializeMode,jdbcType=CHAR},
-		income = #{income,jdbcType=REAL},
-		lessonNum = #{lessonNum,jdbcType=INTEGER},
-		giveCredit =
-		#{giveCredit,jdbcType=INTEGER},
-		rating = #{rating,jdbcType=INTEGER},
-		ratingNum = #{ratingNum,jdbcType=INTEGER},
-		vipLevelId =
-		#{vipLevelId,jdbcType=INTEGER},
-		categoryId =
-		#{categoryId,jdbcType=INTEGER},
-		smallPicture =
-		#{smallPicture,jdbcType=VARCHAR},
-		middlePicture =
-		#{middlePicture,jdbcType=VARCHAR},
-		largePicture =
-		#{largePicture,jdbcType=VARCHAR},
-		recommended =
-		#{recommended,jdbcType=TINYINT},
-		recommendedSeq =
-		#{recommendedSeq,jdbcType=INTEGER},
-		recommendedTime =
-		#{recommendedTime,jdbcType=INTEGER},
-		locationId =
-		#{locationId,jdbcType=INTEGER},
-		address = #{address,jdbcType=VARCHAR},
-		studentNum = #{studentNum,jdbcType=INTEGER},
-		hitNum =
-		#{hitNum,jdbcType=INTEGER},
-		userId = #{userId,jdbcType=INTEGER},
-		createdTime = #{createdTime,jdbcType=INTEGER},
-		freeStartTime =
-		#{freeStartTime,jdbcType=INTEGER},
-		freeEndTime =
-		#{freeEndTime,jdbcType=INTEGER}
+		<set>
+			<if test="status != null">status =  #{status,jdbcType=VARCHAR},</if>
+		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>

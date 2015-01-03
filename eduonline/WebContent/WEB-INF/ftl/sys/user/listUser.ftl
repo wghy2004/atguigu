@@ -12,9 +12,21 @@
 	<div id="content">
 		<@breadcrumb crumb1="用户" crumb2="注册用户"/>
 		<div class="warp">
-		<form action="${base}/sys/user">
+			<!-- 工具栏 -->
+			<div class='buttonArea'>
+				<span id="searchbtn">	
+					<a href="${base}/sys/course/add" class="button blueButton" >新课程</a>
+					<a href="javascript:void(0)" class="button"  onclick="del()">删除</a>
+					<a href="javascript:void(0)" class="button"  onclick="newTab('商品回收站','/version4/shop/admin/goods!trash_list.do')">回收站</a>
+				</span>
+				<span class="fr"> 
+					<input id="searchKeyword" class="input_text  mr5" type="text" value="" size="30"	placeholder="请输入模糊关键字" name="searchKeyWord">
+					<a href="javascript:void(0)" class="button " id="aAdvanced"  >高级搜索</a>
+					<a href="javascript:void(0)" class="button " onclick="searchGoods()">搜索</a>
+				</span>
+			</div>
 			<#-- 结果列表 -->
-			<div class="panel panel-default">
+			<div class="table-container">
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
@@ -50,12 +62,8 @@
 						</td>
 					</tr>
 					</#list>
-					<tr>
-						<td colspan="100"><@tablePage/></td>
-					</tr>
 				</table>
 			</div>
-		</form>
 	</div>
 	</div>
 	<#-- 内容结束 --> 

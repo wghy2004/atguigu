@@ -12,7 +12,7 @@
 	<#-- 内容开始 -->
 	<div id="content">
 		<@breadcrumb crumb1="课程" crumb2="课程分类"/>
-		<div class="warp container">
+		<div class="warp">
 			<!-- 工具栏 -->
 			<div class='buttonArea'>
 				<span id="searchbtn">	
@@ -21,7 +21,8 @@
 				</span>
 			</div>
 			<#-- 结果列表 -->
-			<table id="dg"  class="easyui-treegrid" style="width:auto;height:250px;border:1px solid #ccc;" >
+			<div  class="table-container">
+			<table id="dg"  style="width:auto;height:250px;border:1px solid #ccc;" >
 				<thead>
 					<tr>
 						<th data-options="field:'id',width:5,align:'center'">ID</th>
@@ -38,6 +39,7 @@
 					</tr>
 				</thead>
 			</table>
+			</div>
 			<div id="divdia" style="display: none;"></div>
 			
 		</div>

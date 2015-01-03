@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,14 +34,13 @@ import com.atguigu.sys.service.SysFileService;
 @RequestMapping("/sys/course")
 public class SysCourseController extends
 		BaseControllerImpl<SysCourse, SysCourseQuery> {
-	
+
 	@Autowired
 	private SysCourseService sysCourseService;
 	@Autowired
 	private SysFileService sysFileService;
 	@Autowired
 	private HttpServletRequest request;
-	
 
 	@Override
 	protected BaseService<SysCourse> getBaseService() {
@@ -57,18 +57,19 @@ public class SysCourseController extends
 
 		return mav;
 	}
+
 	@Override
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST)
 	public Result addOne(SysCourse entity) {
-		
+
 		entity.setUserId(SystemConfig.getLoginUser(request).getId());
 		entity.setCreatedTime(new Timestamp(System.currentTimeMillis()));
 		entity.setFreeStartTime(new Timestamp(System.currentTimeMillis()));
 		entity.setFreeEndTime(new Timestamp(System.currentTimeMillis()));
-		
+
 		sysCourseService.insert(entity);
-		
+
 		return new Result(Status.OK, entity);
 	}
 
@@ -83,5 +84,24 @@ public class SysCourseController extends
 
 		return EasyUIPage.formPage(page).toString();
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/updateByIdSelective", method = RequestMethod.POST)
+	public Result updateByIdSelective(SysCourse entity) {
+
+		int r = sysCourseService.updateByIdSelective(entity);
+
+		return new Result(Status.OK, r);
+	}
+	
+	@Override
+	@ResponseBody
+	@RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result editOne(SysCourse entity) {
+		entity.setUserId(SystemConfig.getLoginUser(request).getId());
+		getBaseService().updateById(entity);
+		return new Result(Status.OK, entity);
+	}
+
 
 }

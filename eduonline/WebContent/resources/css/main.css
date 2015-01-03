@@ -1912,7 +1912,9 @@ input ..receiptsInputText:focus {
 	height: 14px;
 	display: inline-block
 }
-
+.contentTab{
+	background: #ebebeb;
+}
 .contentTab ul li {
 	float: left;
 	padding-right: 10px;
@@ -5672,7 +5674,7 @@ input ..receiptsInputText:focus {
 	text-align: center;
 	width: 100%;
 	height: 30px;
-	padding: 3px 0;
+	padding: 30px 0;
 	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
 	filter:
 		"progid:DXImageTransform.Microsoft.Shadow(color=#AAAAAA,direction=0,strength=0) progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=90,strength=3) progid:DXImageTransform.Microsoft.Shadow(color=#888888,direction=180,strength=5) progid:DXImageTransform.Microsoft.Shadow(color=#CCCCCC,direction=270,strength=3)";
@@ -5769,7 +5771,11 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	-moz-box-shadow: none;
 	box-shadow: none;
 }
-
+select {
+	width: auto;
+	background-color: #fff;
+	border: 1px solid #ccc;
+}
 .panel input {
 	/*border: 1px solid #d7d7d7;*/
 	background-color: #fff;
@@ -5795,4 +5801,9 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 p{
 	margin: 0;
+}
+
+/** easyui */
+.datagrid-row-selected {
+	background: #fafafa;
 }

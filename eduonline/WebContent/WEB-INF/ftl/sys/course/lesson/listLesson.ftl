@@ -174,8 +174,7 @@
 		}
 		
 		function formatEdit(value, row, index) {
-			var val = "<a class='edit' title='修改' href='javascript:void(0);' onclick='append("
-					+ row.id + ",2)' ></a>";
+			var val = "<a class='edit' title='修改' href='${base}/sys/course/lesson/edit/"+row.id+"'></a>";
 			return val;
 		}
 		function formatDelete(value, row, index) {

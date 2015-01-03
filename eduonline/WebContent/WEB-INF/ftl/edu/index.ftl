@@ -13,7 +13,7 @@
 <div class="main">
 	<#list courses as course>
 	  <div class="study-video-box">
-	     <div class="study-video"><a href="#"><img src="${base}/resources/edu/images/video-img.jpg" /></a></div>
+	     <div class="study-video"><a href="#"><img src="${base}/${course.largePicture}" /></a></div>
 	     <div class="video-course-name"><a href="#">${course.title}</a></div>
 	     <div class="video-updata-time">${course.createdTime}</div>
 	  </div>

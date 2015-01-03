@@ -86,7 +86,7 @@
 	</select>
 
 	<select id="selectById" resultMap="ResultMapWithBLOBs"
-		parameterType="java.lang.Integer">
+		parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		,
@@ -161,6 +161,14 @@
 		#{learnedNum,jdbcType=INTEGER},
 		viewedNum =
 		#{viewedNum,jdbcType=INTEGER},
+		summary =
+		#{summary,jdbcType=LONGVARCHAR} , 
+		tags =
+		#{tags,jdbcType=LONGVARCHAR}, 
+		content = 
+		#{content,jdbcType=LONGVARCHAR}, 
+		mediaUri = 
+		#{mediaUri,jdbcType=LONGVARCHAR},
 		startTime =
 		#{startTime,jdbcType=INTEGER},
 		endTime = #{endTime,jdbcType=INTEGER},

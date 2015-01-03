@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -83,6 +84,15 @@ public class SysCourseLessonController extends
 				query, pageable);
 
 		return EasyUIPage.formPage(page).toString();
+	}
+
+	@Override
+	@ResponseBody
+	@RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result editOne(SysCourseLesson entity) {
+		entity.setUserId(SystemConfig.getLoginUser(request).getId());
+		getBaseService().updateById(entity);
+		return new Result(Status.OK, entity);
 	}
 
 }
