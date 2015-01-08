@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.sys.domain.SysUserProfile">
+	<resultMap id="BaseResultMap" type="com.atguigu.sys.domain.SysUserProfile">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="truename" property="truename" jdbcType="VARCHAR" />
+		<result column="idcard" property="idcard" jdbcType="VARCHAR" />
+		<result column="gender" property="gender" jdbcType="VARCHAR" />
+		<result column="iam" property="iam" jdbcType="VARCHAR" />
+		<result column="birthday" property="birthday" jdbcType="VARCHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="qq" property="qq" jdbcType="VARCHAR" />
+		<result column="signature" property="signature" jdbcType="VARCHAR" />
+		<result column="about" property="about" jdbcType="VARCHAR" />
+		<result column="company" property="company" jdbcType="VARCHAR" />
+		<result column="job" property="job" jdbcType="VARCHAR" />
+		<result column="school" property="school" jdbcType="VARCHAR" />
+		<result column="clazz" property="clazz" jdbcType="VARCHAR" />
+		<result column="weibo" property="weibo" jdbcType="VARCHAR" />
+		<result column="weixin" property="weixin" jdbcType="VARCHAR" />
+		<result column="site" property="site" jdbcType="VARCHAR" />
+		<result column="intField1" property="intField1" jdbcType="VARCHAR" />
+		<result column="intField2" property="intField2" jdbcType="VARCHAR" />
+		<result column="intField3" property="intField3" jdbcType="VARCHAR" />
+		<result column="intField4" property="intField4" jdbcType="VARCHAR" />
+		<result column="intField5" property="intField5" jdbcType="VARCHAR" />
+		<result column="dateField1" property="dateField1" jdbcType="VARCHAR" />
+		<result column="dateField2" property="dateField2" jdbcType="VARCHAR" />
+		<result column="dateField3" property="dateField3" jdbcType="VARCHAR" />
+		<result column="dateField4" property="dateField4" jdbcType="VARCHAR" />
+		<result column="dateField5" property="dateField5" jdbcType="VARCHAR" />
+		<result column="floatField1" property="floatField1" jdbcType="VARCHAR" />
+		<result column="floatField2" property="floatField2" jdbcType="VARCHAR" />
+		<result column="floatField3" property="floatField3" jdbcType="VARCHAR" />
+		<result column="floatField4" property="floatField4" jdbcType="VARCHAR" />
+		<result column="floatField5" property="floatField5" jdbcType="VARCHAR" />
+		<result column="varcharField1" property="varcharField1"
+			jdbcType="VARCHAR" />
+		<result column="varcharField2" property="varcharField2"
+			jdbcType="VARCHAR" />
+		<result column="varcharField3" property="varcharField3"
+			jdbcType="VARCHAR" />
+		<result column="varcharField4" property="varcharField4"
+			jdbcType="VARCHAR" />
+		<result column="varcharField5" property="varcharField5"
+			jdbcType="VARCHAR" />
+		<result column="varcharField6" property="varcharField6"
+			jdbcType="VARCHAR" />
+		<result column="varcharField7" property="varcharField7"
+			jdbcType="VARCHAR" />
+		<result column="varcharField8" property="varcharField8"
+			jdbcType="VARCHAR" />
+		<result column="varcharField9" property="varcharField9"
+			jdbcType="VARCHAR" />
+		<result column="varcharField10" property="varcharField10"
+			jdbcType="VARCHAR" />
+		<result column="textField1" property="textField1" jdbcType="VARCHAR" />
+		<result column="textField2" property="textField2" jdbcType="VARCHAR" />
+		<result column="textField3" property="textField3" jdbcType="VARCHAR" />
+		<result column="textField4" property="textField4" jdbcType="VARCHAR" />
+		<result column="textField5" property="textField5" jdbcType="VARCHAR" />
+		<result column="textField6" property="textField6" jdbcType="VARCHAR" />
+		<result column="textField7" property="textField7" jdbcType="VARCHAR" />
+		<result column="textField8" property="textField8" jdbcType="VARCHAR" />
+		<result column="textField9" property="textField9" jdbcType="VARCHAR" />
+		<result column="textField10" property="textField10" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		TIMESTAMP
+	</sql>
+
+	<sql id="Base_Where_Clause">
+		<where>
+			<trim prefixOverrides="and">
+				<if test="id != null"> and id = #{id}</if>
+			</trim>
+		</where>
+		<if test="sorting != null">order by ${sorting}</if>
+
+	</sql>
+
+	<!-- 查询 -->
+	<select id="select" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		<include refid="Base_Where_Clause" />
+	</select>
+
+	<!-- 查询总数 -->
+	<select id="selectCount" resultType="java.lang.Long"
+		parameterType="java.util.Map">
+		select count(id)
+		from user
+		<include refid="Base_Where_Clause" />
+	</select>
+	<!-- 根据ID查询 -->
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where id = #{id}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from user
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+</mapper>
