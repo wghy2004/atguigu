@@ -54,7 +54,7 @@
 		<li  class="submenu">
 			<a href="#"><i class="icon icon-signal"></i> <span>用户</span> <span class="label">1</span></a>
 			<ul>
-				<li id="userNav"><a href="${base}/sys/user">注册用户</a></li>
+				<li id="userNav"><a href="${base}/sys/user">用户列表</a></li>
 			</ul>
 		</li>
 	</ul>

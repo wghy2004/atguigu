@@ -90,9 +90,10 @@ public abstract class BaseControllerImpl<T extends Identifiable, Q extends T>
 	@Override
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView selectList(Q query, @PageableDefault Pageable pageable) {
-		Page<T> page = getBaseService().queryPageList(query, pageable);
-		ModelAndView mav = new ModelAndView(path.getListViewPath(), "page",
-				page);
+		// Page<T> page = getBaseService().queryPageList(query, pageable);
+		// ModelAndView mav = new ModelAndView(path.getListViewPath(), "page",
+		// page);
+		ModelAndView mav = new ModelAndView(path.getListViewPath());
 		mav.addObject("query", query);
 		return mav;
 	}

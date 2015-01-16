@@ -14,12 +14,13 @@ import com.atguigu.frame.core.annotation.MethodLog;
 import com.atguigu.frame.core.dao.BaseService;
 import com.atguigu.frame.core.web.controller.BaseControllerImpl;
 import com.atguigu.frame.core.web.domain.EasyUIPage;
+import com.atguigu.sys.domain.SysFile;
 import com.atguigu.sys.domain.SysUser;
 import com.atguigu.sys.domain.SysUserProfile;
-import com.atguigu.sys.service.SysUserService;
+import com.atguigu.sys.service.SysUserProfileService;
 
 /**
- * UserController
+ * SysUserProfileController
  * 
  * @Description
  * @author wg
@@ -27,30 +28,16 @@ import com.atguigu.sys.service.SysUserService;
  *
  */
 @Controller
-@RequestMapping("/sys/user")
-public class SysUserController extends BaseControllerImpl<SysUser, SysUser> {
+@RequestMapping("/sys/user/profile")
+public class SysUserProfileController extends
+		BaseControllerImpl<SysUserProfile, SysUserProfile> {
 
 	@Autowired
-	private SysUserService userService;
+	private SysUserProfileService sysUserProfileService;
 
 	@Override
-	protected BaseService<SysUser> getBaseService() {
-		return userService;
-	}
-
-	@Override
-	@MethodLog(remark = "查询所有用户")
-	public ModelAndView selectList(SysUser query, Pageable pageable) {
-		return super.selectList(query, pageable);
-	}
-
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	@ResponseBody
-	public String selectListJson(SysUser query, Pageable pageable) {
-
-		Page<SysUser> page = userService.queryPageList(query, pageable);
-
-		return EasyUIPage.formPage(page).toString();
+	protected BaseService<SysUserProfile> getBaseService() {
+		return sysUserProfileService;
 	}
 
 }

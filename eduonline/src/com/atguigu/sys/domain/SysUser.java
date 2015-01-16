@@ -63,7 +63,7 @@ public class SysUser implements Identifiable {
 
 	private String createdIp;
 
-	private Integer createdTime;
+	private String createdTime;
 
 	public Long getId() {
 		return id;
@@ -291,11 +291,11 @@ public class SysUser implements Identifiable {
 		this.createdIp = createdIp == null ? null : createdIp.trim();
 	}
 
-	public Integer getCreatedTime() {
+	public String getCreatedTime() {
 		return createdTime;
 	}
 
-	public void setCreatedTime(Integer createdTime) {
+	public void setCreatedTime(String createdTime) {
 		this.createdTime = createdTime;
 	}
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.atguigu.sys.domain.SysUserProfile">
-	<resultMap id="BaseResultMap" type="com.atguigu.sys.domain.SysUserProfile">
+	<resultMap id="BaseResultMap" type="sysUserProfile">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="email" property="email" jdbcType="VARCHAR" />
 		<result column="truename" property="truename" jdbcType="VARCHAR" />
@@ -21,16 +21,16 @@
 		<result column="weibo" property="weibo" jdbcType="VARCHAR" />
 		<result column="weixin" property="weixin" jdbcType="VARCHAR" />
 		<result column="site" property="site" jdbcType="VARCHAR" />
-		<result column="intField1" property="intField1" jdbcType="VARCHAR" />
-		<result column="intField2" property="intField2" jdbcType="VARCHAR" />
-		<result column="intField3" property="intField3" jdbcType="VARCHAR" />
-		<result column="intField4" property="intField4" jdbcType="VARCHAR" />
-		<result column="intField5" property="intField5" jdbcType="VARCHAR" />
-		<result column="dateField1" property="dateField1" jdbcType="VARCHAR" />
-		<result column="dateField2" property="dateField2" jdbcType="VARCHAR" />
-		<result column="dateField3" property="dateField3" jdbcType="VARCHAR" />
-		<result column="dateField4" property="dateField4" jdbcType="VARCHAR" />
-		<result column="dateField5" property="dateField5" jdbcType="VARCHAR" />
+		<result column="intField1" property="intField1" jdbcType="INTEGER" />
+		<result column="intField2" property="intField2" jdbcType="INTEGER" />
+		<result column="intField3" property="intField3" jdbcType="INTEGER" />
+		<result column="intField4" property="intField4" jdbcType="INTEGER" />
+		<result column="intField5" property="intField5" jdbcType="INTEGER" />
+		<result column="dateField1" property="dateField1" jdbcType="DATE" javaType="java.util.Date" />
+		<result column="dateField2" property="dateField2" jdbcType="DATE" javaType="java.util.Date" />
+		<result column="dateField3" property="dateField3" jdbcType="DATE" javaType="java.util.Date" />
+		<result column="dateField4" property="dateField4" jdbcType="DATE" javaType="java.util.Date" />
+		<result column="dateField5" property="dateField5" jdbcType="DATE" javaType="java.util.Date" />
 		<result column="floatField1" property="floatField1" jdbcType="VARCHAR" />
 		<result column="floatField2" property="floatField2" jdbcType="VARCHAR" />
 		<result column="floatField3" property="floatField3" jdbcType="VARCHAR" />
@@ -56,19 +56,27 @@
 			jdbcType="VARCHAR" />
 		<result column="varcharField10" property="varcharField10"
 			jdbcType="VARCHAR" />
-		<result column="textField1" property="textField1" jdbcType="VARCHAR" />
-		<result column="textField2" property="textField2" jdbcType="VARCHAR" />
-		<result column="textField3" property="textField3" jdbcType="VARCHAR" />
-		<result column="textField4" property="textField4" jdbcType="VARCHAR" />
-		<result column="textField5" property="textField5" jdbcType="VARCHAR" />
-		<result column="textField6" property="textField6" jdbcType="VARCHAR" />
-		<result column="textField7" property="textField7" jdbcType="VARCHAR" />
-		<result column="textField8" property="textField8" jdbcType="VARCHAR" />
-		<result column="textField9" property="textField9" jdbcType="VARCHAR" />
-		<result column="textField10" property="textField10" jdbcType="VARCHAR" />
 	</resultMap>
+
+	<resultMap id="ResultMapWithBLOBs" type="sysUserProfile">
+		<result column="textField1" property="textField1" jdbcType="LONGVARCHAR" />
+		<result column="textField2" property="textField2" jdbcType="LONGVARCHAR" />
+		<result column="textField3" property="textField3" jdbcType="LONGVARCHAR" />
+		<result column="textField4" property="textField4" jdbcType="LONGVARCHAR" />
+		<result column="textField5" property="textField5" jdbcType="LONGVARCHAR" />
+		<result column="textField6" property="textField6" jdbcType="LONGVARCHAR" />
+		<result column="textField7" property="textField7" jdbcType="LONGVARCHAR" />
+		<result column="textField8" property="textField8" jdbcType="LONGVARCHAR" />
+		<result column="textField9" property="textField9" jdbcType="LONGVARCHAR" />
+		<result column="textField10" property="textField10" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
 	<sql id="Base_Column_List">
-		TIMESTAMP
+		id,truename,idcard,gender,iam,
+		birthday,city,mobile,qq,signature,about,company,job,school,clazz,weibo,weixin,site,intField1,intField2,intField3,intField4,intField5,dateField1,dateField2,dateField3,dateField4,dateField5,floatField1,floatField2,floatField3,floatField4,floatField5,varcharField1,varcharField2,varcharField3,varcharField4,varcharField5,varcharField6,varcharField7,varcharField8,varcharField9,varcharField10
+	</sql>
+	<sql id="Blob_Column_List">
+		textField1,textField2,textField3,textField4,textField5,textField6,textField7,textField8,textField9,textField10
 	</sql>
 
 	<sql id="Base_Where_Clause">
@@ -78,34 +86,186 @@
 			</trim>
 		</where>
 		<if test="sorting != null">order by ${sorting}</if>
-
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
 	</sql>
-
-	<!-- 查询 -->
-	<select id="select" resultMap="BaseResultMap" parameterType="java.util.Map">
-		select
-		<include refid="Base_Column_List" />
-		from user
-		<include refid="Base_Where_Clause" />
-	</select>
 
 	<!-- 查询总数 -->
 	<select id="selectCount" resultType="java.lang.Long"
 		parameterType="java.util.Map">
 		select count(id)
-		from user
+		from user_profile
 		<include refid="Base_Where_Clause" />
 	</select>
-	<!-- 根据ID查询 -->
-	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+
+	<!-- 查询 -->
+	<select id="select" resultMap="BaseResultMap" parameterType="java.util.Map">
 		select
 		<include refid="Base_Column_List" />
-		from user
+		from user_profile
+		<include refid="Base_Where_Clause" />
+	</select>
+
+
+	<!-- 根据ID查询 -->
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_profile
 		where id = #{id}
 	</select>
 
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from user
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from user_profile
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
+	<!-- 删除 -->
+	<delete id="delete" parameterType="java.util.Map">
+		delete from user_profile
+		<include refid="Base_Where_Clause" />
+	</delete>
+	<insert id="insert" parameterType="sysUserProfile">
+		insert into user_profile(
+		id,truename,idcard,gender,iam,
+		birthday,city,mobile,qq,signature,about,company,job,school,clazz,weibo,weixin,site,intField1,intField2,intField3,intField4,intField5,dateField1,dateField2,dateField3,dateField4,dateField5,floatField1,floatField2,floatField3,floatField4,floatField5,varcharField1,varcharField2,varcharField3,varcharField4,varcharField5,varcharField6,varcharField7,varcharField8,varcharField9,varcharField10,textField1,textField2,textField3,textField4,textField5,textField6,textField7,textField8,textField9,textField10
+		)
+		values (
+		#{id},#{truename},#{idcard},#{gender},#{iam},
+		#{birthday},#{city},#{mobile},#{qq},#{signature},#{about},#{company},#{job},#{school},#{clazz},#{weibo},#{weixin},#{site},#{intField1},#{intField2},#{intField3},#{intField4},#{intField5},#{dateField1},#{dateField2},#{dateField3},#{dateField4},#{dateField5},#{floatField1},#{floatField2},#{floatField3},#{floatField4},#{floatField5},#{varcharField1},#{varcharField2},#{varcharField3},#{varcharField4},#{varcharField5},#{varcharField6},#{varcharField7},#{varcharField8},#{varcharField9},#{varcharField10},#{textField1},#{textField2},#{textField3},#{textField4},#{textField5},#{textField6},#{textField7},#{textField8},#{textField9},#{textField10}
+		)
+	</insert>
+	<!-- 通过ID更新 -->
+	<update id="updateByIdSelective" parameterType="sysUserProfile">
+		update user_profile
+		<set>
+			<if test="truename != null">truename = #{truename},</if>
+			<if test="idcard != null">idcard = #{idcard},</if>
+			<if test="gender != null">gender = #{gender},</if>
+			<if test="iam != null">iam = #{iam},</if>
+			<if test="birthday != null">birthday = #{birthday},</if>
+			<if test="city != null">city = #{city},</if>
+			<if test="mobile != null">mobile = #{mobile},</if>
+			<if test="qq != null">qq = #{qq},</if>
+			<if test="signature != null">signature = #{signature},</if>
+			<if test="about != null">about = #{about},</if>
+			<if test="company != null">company = #{company},</if>
+			<if test="job != null">job = #{job},</if>
+			<if test="school != null">school = #{school},</if>
+			<if test="clazz != null">clazz = #{clazz},</if>
+			<if test="weibo != null">weibo = #{weibo},</if>
+			<if test="weixin != null">weixin = #{weixin},</if>
+			<if test="site != null">site = #{site},</if>
+			<if test="intField1 != null">intField1 = #{intField1},</if>
+			<if test="intField2 != null">intField2 = #{intField2},</if>
+			<if test="intField3 != null">intField3 = #{intField3},</if>
+			<if test="intField4 != null">intField4 = #{intField4},</if>
+			<if test="intField5 != null">intField5 = #{intField5},</if>
+			<if test="dateField1 != null">dateField1 = #{dateField1},</if>
+			<if test="dateField2 != null">dateField2 = #{dateField2},</if>
+			<if test="dateField3 != null">dateField3 = #{dateField3},</if>
+			<if test="dateField4 != null">dateField4 = #{dateField4},</if>
+			<if test="dateField5 != null">dateField5 = #{dateField5},</if>
+			<if test="floatField1 != null">floatField1 = #{floatField1},</if>
+			<if test="floatField2 != null">floatField2 = #{floatField2},</if>
+			<if test="floatField3 != null">floatField3 = #{floatField3},</if>
+			<if test="floatField4 != null">floatField4 = #{floatField4},</if>
+			<if test="floatField5 != null">floatField5 = #{floatField5},</if>
+			<if test="varcharField1 != null">varcharField1 = #{varcharField1},</if>
+			<if test="varcharField2 != null">varcharField2 = #{varcharField2},</if>
+			<if test="varcharField3 != null">varcharField3 = #{varcharField3},</if>
+			<if test="varcharField4 != null">varcharField4 = #{varcharField4},</if>
+			<if test="varcharField5 != null">varcharField5 = #{varcharField5},</if>
+			<if test="varcharField6 != null">varcharField6 = #{varcharField6},</if>
+			<if test="varcharField7 != null">varcharField7 = #{varcharField7},</if>
+			<if test="varcharField8 != null">varcharField8 = #{varcharField8},</if>
+			<if test="varcharField9 != null">varcharField9 = #{varcharField9},</if>
+			<if test="varcharField10 != null">varcharField10 = #{varcharField10},</if>
+			<if test="textField1 != null">textField1 = #{textField1},</if>
+			<if test="textField2 != null">textField2 = #{textField2},</if>
+			<if test="textField3 != null">textField3 = #{textField3},</if>
+			<if test="textField4 != null">textField4 = #{textField4},</if>
+			<if test="textField5 != null">textField5 = #{textField5},</if>
+			<if test="textField6 != null">textField6 = #{textField6},</if>
+			<if test="textField7 != null">textField7 = #{textField7},</if>
+			<if test="textField8 != null">textField8 = #{textField8},</if>
+			<if test="textField9 != null">textField9 = #{textField9},</if>
+			<if test="textField10 != null">textField10 = #{textField10},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateById" parameterType="sysUserProfile">
+		update user_profile
+		set
+		truename = #{truename},
+		idcard = #{idcard},
+		gender = #{gender},
+		iam =
+		#{iam},
+		birthday = #{birthday},
+		city = #{city},
+		mobile = #{mobile},
+		qq =
+		#{qq},
+		signature = #{signature},
+		about = #{about},
+		company = #{company},
+		job = #{job},
+		school = #{school},
+		clazz = #{clazz},
+		weibo = #{weibo},
+		weixin = #{weixin},
+		site = #{site},
+		intField1 = #{intField1},
+		intField2 =
+		#{intField2},
+		intField3 = #{intField3},
+		intField4 = #{intField4},
+		intField5 = #{intField5},
+		dateField1 = #{dateField1},
+		dateField2 =
+		#{dateField2},
+		dateField3 = #{dateField3},
+		dateField4 = #{dateField4},
+		dateField5 = #{dateField5},
+		floatField1 = #{floatField1},
+		floatField2 =
+		#{floatField2},
+		floatField3 = #{floatField3},
+		floatField4 =
+		#{floatField4},
+		floatField5 = #{floatField5},
+		varcharField1 =
+		#{varcharField1},
+		varcharField2 = #{varcharField2},
+		varcharField3 =
+		#{varcharField3},
+		varcharField4 = #{varcharField4},
+		varcharField5 =
+		#{varcharField5},
+		varcharField6 = #{varcharField6},
+		varcharField7 =
+		#{varcharField7},
+		varcharField8 = #{varcharField8},
+		varcharField9 =
+		#{varcharField9},
+		varcharField10 = #{varcharField10},
+		textField1 =
+		#{textField1},
+		textField2 = #{textField2},
+		textField3 = #{textField3},
+		textField4 = #{textField4},
+		textField5 = #{textField5},
+		textField6 =
+		#{textField6},
+		textField7 = #{textField7},
+		textField8 = #{textField8},
+		textField9 = #{textField9},
+		textField10 = #{textField10}
+
+		where id =
+		#{id}
+	</update>
+
 </mapper>
