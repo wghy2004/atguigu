@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-<#include "/edu/common.ftl">
+<#include "common.ftl">
 <title>尚硅谷-中国java培训领航者|java培训0费用入学,颠覆贷款java培训</title>
 <meta name="keywords" content="java培训,java就业培训,java课程,java视频教程" />
 <meta name="description" content="java培训革命者，颠覆贷款学习，真正0费用入学，挑战java培训行业潜规则！观就业、拼口碑、较课程、比学费，尚硅谷5个月、高质量java培训最靠谱！" />
 </head>
 <body>
-<#include "/edu/header.ftl">
-<#include "/edu/nav.ftl">
+<#include "header.ftl">
+<#include "nav.ftl">
 <div class="recommend-video"><a href="#">更多视频 >></a>推荐视频</div>
 <div class="main">
 	<#list courses as course>
@@ -37,45 +37,6 @@
   </div>
 </div>
 <div class="evaluation-list-more"><a href="#">查看更多学员评价</a></div>
-<div class="bottombg">
-  <div class="bottom">
-    <dl>
-        <dt>关于我们</dt>
-        <dd><a href="#">我们的优势</a></dd>
-        <dd><a href="#">资讯报道</a></dd>
-        <dd><a href="#">加入我们</a></dd>
-        <dd><a href="#">联系我们</a></dd>
-    </dl>
-    <dl>
-        <dt>产品&服务</dt>
-        <dd><a href="#">产品介绍</a></dd>
-        <dd><a href="#">校企合作</a></dd>
-        <dd><a href="#">商务合作</a></dd>
-    </dl>
-    <dl>
-        <dt>帮助中心</dt>
-        <dd><a href="#">常见问题</a></dd>
-        <dd><a href="#">联系客服</a></dd>
-        <dd><a href="#">服务协议</a></dd>
-        <dd><a href="#">隐私政策</a></dd>
-    </dl>
-    <dl>
-        <dt>优质资源</dt>
-        <dd><a href="#">优秀讲师</a></dd>
-        <dd><a href="#">全部课程</a></dd>
-        <dd><a href="#">合作平台</a></dd>
-        <dd><a href="#">证书验证</a></dd>
-    </dl>
-    <div class="bottom-code">
-        <a href="#" class="bottom-qq"><img src="${base}/resources/edu/images/qq-talk.jpg" /></a>
-    </div>
-  </div>
-</div>
-<div class="copybg">
-  <div class="copy">
-     <p>地址：昌平区平西王府公交站东尚硅谷教学楼 邮箱：info@atguigu.com  微博：weibo.com/u/3272253032</p>
-     <p>Copyright © 尚硅谷教育 2014 Edu Inc.</p>
-  </div>
-</div>
+<#include "footer.ftl">
 </body>
 </html>

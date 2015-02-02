@@ -1,5 +1,7 @@
 package com.atguigu.sys.service.impl;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,8 @@ import com.atguigu.sys.service.SysUserService;
  *
  */
 @Service("userService")
-public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysUserService {
+public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements
+		SysUserService {
 
 	@Autowired
 	private UserDao userDao;
@@ -27,5 +30,19 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	protected BaseDao<SysUser> getBaseDao() {
 		return userDao;
 	}
+
+	@Override
+	public SysUser login(SysUser user) {
+
+		return userDao.selectByLogin(user);
+
+	}
+
+	@Override
+	public int getRegisterCount(Date date) {
+		
+		return userDao.selectRegCount(date);
+	}
+	
 
 }

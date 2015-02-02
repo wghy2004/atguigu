@@ -158,7 +158,9 @@
 				id 		: 	id,
 				status  : 	$(ele).val()
 			},function(data){
-				alert(data.status);
+				if(data.status=='OK'){
+					$.Loading.success('成功更改状态!');
+				}
 			});
 		}
 		

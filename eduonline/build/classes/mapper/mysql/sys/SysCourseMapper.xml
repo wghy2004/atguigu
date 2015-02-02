@@ -164,9 +164,7 @@
 		#{address,jdbcType=VARCHAR}, #{studentNum,jdbcType=INTEGER},
 		#{hitNum,jdbcType=INTEGER},
 		#{userId,jdbcType=INTEGER},
-		#{createdTime,jdbcType=TIMESTAMP},
-		#{freeStartTime,jdbcType=TIMESTAMP},
-		#{freeEndTime,jdbcType=TIMESTAMP}, #{tags,jdbcType=LONGVARCHAR},
+		#{tags,jdbcType=LONGVARCHAR},
 		#{about,jdbcType=LONGVARCHAR},
 		#{teacherIds,jdbcType=LONGVARCHAR},
 		#{goals,jdbcType=LONGVARCHAR}, #{audiences,jdbcType=LONGVARCHAR}

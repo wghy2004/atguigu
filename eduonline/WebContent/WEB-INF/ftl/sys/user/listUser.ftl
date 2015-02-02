@@ -4,11 +4,17 @@
 <#include "/common/common.ftl">
 <@pnotify/>
 <@easyui/>
-<title>课时</title>
+<title>用户列表</title>
 </head>
 <body>
-	<#include "/common/navbar.ftl"> 
-	<@nav nav="userNav"/>
+	<#include "/common/navbar.ftl">
+	<#if query.roles=="teacher">
+		<@nav nav="teacherNav"/>
+	<#elseif query.roles=="admin">
+		<@nav nav="adminNav"/>
+	<#else>
+		<@nav nav="userNav"/>	
+	</#if>
 	<#-- 内容开始 -->
 	<div id="content">
 		<@breadcrumb crumb1="用户" crumb2="用户列表"/>
@@ -16,8 +22,7 @@
 			<!-- 工具栏 -->
 			<div class='buttonArea'>
 				<span id="searchbtn">	
-					<a href="${base}/sys/course/lesson/add" class="button blueButton" >新老师</a>
-					<a href="javascript:void(0)" class="button"  onclick="del()">删除</a>
+					<a href="${base}/sys/user/add" class="button blueButton" >新用户</a>
 				</span>
 				<span class="fr"> 
 					<input id="searchKeyword" class="input_text  mr5" type="text" value="" size="30"	placeholder="请输入模糊关键字" name="searchKeyWord">
@@ -33,12 +38,11 @@
 			                <th data-options="field:'id',width:10,align:'center'">id</th>
 			                <th data-options="field:'title',width:10,align:'center'" formatter="formatTitle">头像</th>
 			                <th data-options="field:'nickname',width:10,align:'center'">用户名</th>
-			                <th data-options="field:'roles',width:10,align:'center'">角色</th>
+			                <th data-options="field:'roles',width:10,align:'center'" formatter="formatRoles">角色</th>
 			                <th data-options="field:'locked',width:10,align:'center'" formatter="formatLocked" >是否禁止</th>
 			                <th data-options="field:'createdTime',width:15,align:'center'">注册时间</th>
 			                <th data-options="field:'detail',width:10,align:'center'" formatter="formatDetail">资料</th>
 			                <th data-options="field:'edit',width:10,align:'center'" formatter="formatEdit">编辑</th>
-			                <th data-options="field:'delete',width:10,align:'center'" formatter="formatDelete">删除</th>
 			            </tr>
 			        </thead>
 			    </table>
@@ -154,7 +158,7 @@
 		function formatTitle(value, row, index){
 			var src='${base}/resources/images/user.png';
 			if(row.title){
-				src=row.title;
+				src='${base}'+row.title;
 			}
 			return '<img src="'+src+'" style="max-width:50px;margin:5px;"/>';
 		}
@@ -165,16 +169,25 @@
 			
 			var locked = row.locked;
 			
+			var str = '<input type="checkbox"';
+			
 			if(locked == 1){
-				return '<input type="checkbox" value="1" checked>';
-			}else if(locked == 0){
-				return '<input type="checkbox" value="0" >';
+				str +=' checked ';
 			}
+			str +=' data-id="'+row.id+'" onchange="setLocked(this)">';
+			
+			return str;
 			
 		}
 		
-		function formatCourse(value, row, index){
-			return row.sysCourse?row.sysCourse.title : '未知'
+		function formatRoles(value, row, index){
+			if(row.roles=='teacher'){
+				return '老师';
+			}else if(row.roles=='member'){
+				return '学员';
+			}else if(row.roles=='admin'){
+				return '管理员';
+			}
 		}
 		
 		
@@ -187,14 +200,26 @@
 			return val;
 		}
 		
+		//设置禁止
+		function setLocked(obj){
+			var isLocked = $(obj).is(':checked'),
+					  id = $(obj).attr('data-id');
+			$.post('${base}/sys/user/edit',{
+				_method : 'put',
+				     id : id,
+				 locked : isLocked?1:0
+			},function(data){
+				$.Loading.success('成功设置用户状态!');
+			});
+		}
+		
 		$(function(){
-			var roles = ${(query.roles)!0};
+			var roles = '${(query.roles)!0}';
 			var params = {};
 			if(roles){
 				params.roles = roles;
 			}
 			
-			console.log(params);
 			$('#dg').datagrid({
 				url : '${base}/sys/user/list',
 				queryParams:params,
@@ -205,6 +230,7 @@
 					//设置分页控件 
 				    $('#pp').pagination({ 
 				    	total : data.total,
+				    	pageList :[data.pageSize],
 				    	pageSize : data.pageSize,
 				    	pageNumber : data.pageNumber+1,
 				        onSelectPage:function(pageNumber, pageSize){

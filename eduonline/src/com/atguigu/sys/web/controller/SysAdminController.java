@@ -1,5 +1,11 @@
 package com.atguigu.sys.web.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +16,7 @@ import com.atguigu.sys.service.SysUserService;
 
 /**
  * 后台首页地址
+ * 
  * @author wg
  *
  */
@@ -22,6 +29,20 @@ public class SysAdminController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView index() {
-		return new ModelAndView("sys/index");
+
+		int todayRegCount = sysUserService.getRegisterCount(new Date());
+		
+		Calendar   cal   =   Calendar.getInstance();
+		cal.add(Calendar.DATE,   -1);
+		  
+		int yesterdayRegCount = sysUserService.getRegisterCount(cal.getTime());
+		
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("todayRegCount", todayRegCount);
+		map.put("yesterdayRegCount", yesterdayRegCount);
+
+		return new ModelAndView("sys/index", "model", map);
 	}
 }

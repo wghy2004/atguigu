@@ -1,6 +1,13 @@
 $(function(){
 	
 	selectAll();//全选与子选
+	$(".contentTab>ul>li").on('click',function() {
+		var tabid = $(this).attr("tabid");
+		$(".contentTab>ul>li").removeClass("contentTabS");
+		$(this).addClass("contentTabS");
+		$(".tab-page .tab-panel").hide();
+		$(".tab-panel[tabid=" + tabid + "]").show();
+	});
 });
 
 /**

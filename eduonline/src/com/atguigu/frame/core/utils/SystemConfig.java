@@ -27,7 +27,7 @@ public class SystemConfig {
  */
 	public static SysUser getLoginUser(HttpServletRequest request) {
 
-		return (SysUser)request.getSession().getAttribute("user");
+		return (SysUser)request.getSession().getAttribute("admin");
 	}
 
 }

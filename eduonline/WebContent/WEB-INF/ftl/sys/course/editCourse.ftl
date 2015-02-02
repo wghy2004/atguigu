@@ -67,6 +67,12 @@
 													class="market_enable"> 视频</td>
 											</tr>
 											<tr>
+												<th>老师：</th>
+												<td style="text-align: left;">
+													<input class="easyui-combobox" name="teacherIds" value="${course.teacherIds}" data-options=" url:'${base}/sys/user/all?roles=teacher',method:'get',valueField:'id',textField:'nickname',multiple:true,multiline:true" style="width:260px;height:50px" >
+												</td>
+											</tr>
+											<tr>
 												<th>课时数：</th>
 												<td style="text-align: left;">
 													<input type="text"	class="nodiscount" name="lessonNum" value="${course.lessonNum}">

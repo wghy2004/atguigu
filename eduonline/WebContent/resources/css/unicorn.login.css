@@ -40,7 +40,8 @@ body {
     border-radius: 7px;
     overflow: hidden !important;
     text-align: center;
-    position: relative;   
+    position: relative;
+    margin-top: 50px;   
 }
 
 #loginbox form{

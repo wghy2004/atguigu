@@ -18,6 +18,7 @@
             <form id="loginform" class="form-vertical" action="${base}/sys/login" method="post"/>
             	<input type="hidden" name="url" value="${url}">
 				<p><#if message>${message}</#if></p>
+				<p>&nbsp;</p> 
                 <div class="control-group">
                     <div class="controls">
                         <div class="input-prepend">

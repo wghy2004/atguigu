@@ -180,4 +180,12 @@
 		where id =
 		#{id,jdbcType=INTEGER}
 	</update>
+	<!-- 通过ID更新 -->
+	<update id="updateByIdSelective" parameterType="sysCourseLesson">
+		update course_lesson
+		<set>
+			<if test="status != null">status =  #{status,jdbcType=VARCHAR},</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
 </mapper>

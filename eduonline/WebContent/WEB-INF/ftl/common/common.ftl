@@ -1,6 +1,6 @@
 <#assign base=request.contextPath />
-<#if Session.user?exists>  
-	 <#assign user = Session["user"]>
+<#if Session.admin?exists>  
+	 <#assign user = Session["admin"]>
 </#if>  
 
 

@@ -2,7 +2,7 @@
 <div class="main" style="background-color: white;">
 	<div class="easyui-panel" style="border-style: none;">
 		<form  method="post" action="${base}/sys/category/add" class="validate" id="addForm">
-			<table>
+			<table cellpadding="2">
 					<tbody><tr>
 						<th>分类名称</th>
 						<td>

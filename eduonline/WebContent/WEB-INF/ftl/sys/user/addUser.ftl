@@ -21,7 +21,7 @@
 					<div class="contentTab">
 						<ul class="tab">
 							<li tabid="1" class="contentTabS">基本信息</li>
-							<li tabid="2">视频</li>
+							<li tabid="2">头像</li>
 						</ul>
 					</div>
 					<div class="shadowBoxWhite wf100 whiteBox">
@@ -46,77 +46,50 @@
 												</td>
 											</tr>
 											<tr>
-												<th>课时状态：</th>
+												<th>邮箱：</th>
 												<td style="text-align: left;">
-													<input type="radio" name="status" checked="checked" value="unpublished"	class="market_enable"> 草稿&nbsp;&nbsp; 
-													<input type="radio" name="status" value="published"	class="market_enable"> 发布&nbsp;&nbsp;
+													<input	class="easyui-validatebox input_text  validatebox-text validatebox-invalid"	type="text" name="email" data-options="required:true"
+													datatype="string" isrequired="true" autocomplete="off"
+													title="">
 												</td>
 											</tr>
 											<tr>
-												<th>课时类型：</th>
+												<th>是否禁止：</th>
 												<td style="text-align: left;">
-													<input type="radio"	name="type" checked="checked" value="normal" class="market_enable"> 视频
+													<input type="radio" name="locked" checked="checked" value="0"	class="market_enable"> 正常&nbsp;&nbsp; 
+													<input type="radio" name="locked" value="1"	class="market_enable"> 禁止&nbsp;&nbsp;
 												</td>
 											</tr>
 											<tr>
-												<th>视频来源：</th>
+												<th>角色：</th>
 												<td style="text-align: left;">
-													<input type="radio" name="mediaSource" checked="checked" value="self"	class="market_enable"> 本站上传&nbsp;&nbsp; 
-													<input type="radio" name="mediaSource" value="youku" class="market_enable"> 优酷
-												</td>
-											</tr>
-											<tr id="mediaYoukuTr" style="display:none;">
-												<th>视频地址:</th>
-												<td style="text-align: left;">
-													<input type="text" id="mediaUri" name="mediaUri" value="" style="width:350px;">
-												</td>
-											</tr>
-											<tr>
-												<th>时长：</th>
-												<td style="text-align: left;">
-													<input type="text" id="mediaLength"	name="length" value="" class="market_enable">
-												</td>
-											</tr>
-											<tr>
-												<th>推荐：</th>
-												<td style="text-align: left;">
-													<input type="radio"	name="recommended" checked="checked" value="1"	class="market_enable"> 是&nbsp;&nbsp; 
-													<input type="radio" name="recommended" value="0" class="market_enable"> 否</td>
-											</tr>
-											<tr>
-												<th>推荐序号：</th>
-												<td style="text-align: left;">
-													<input type="text" class="nodiscount" name="recommendedSeq" value="0">
-												</td>
-											</tr>
-												<tr>
-												<th>摘要：</th>
-												<td style="text-align: left;">
-													<textarea name="summary"></textarea>
+													<select name="roles">
+														<option value="">请选择</option>
+														<option value="member">注册会员</option>
+														<option value="teacher">老师</option>
+														<option value="admin">管理员</option>
+													</select>
 												</td>
 											</tr>
 
 											<tr>
 												<td colspan="2">
 													<input type="hidden" name="chapterId" value="0">
-													<input type="hidden" name="number" value="3243">
-													<input type="hidden" name="seq" value="1">
-													<input type="hidden" name="free" value="1">
-													<input type="hidden" name="tags" value="">
-													<input type="hidden" name="content" value="">
-													<input type="hidden" name="giveCredit" value="0">
-													<input type="hidden" name="requireCredit" value="0">
-													<input type="hidden" name="mediaId" id="mediaId" value="0">
+													<input type="hidden" name="salt" value="">
+													<input type="hidden" name="uri" value="">
+													<input type="hidden" name="tags" value="1">
+													<input type="hidden" name="type" value="">
+													<input type="hidden" name="title" value="">
+													<input type="hidden" name="point" value="0">
+													<input type="hidden" name="coin" value="0">
+													<input type="hidden" name="smallAvatar" value="0">
+													<input type="hidden" name="mediumAvatar" id="mediaId" value="">
 													<input type="hidden" name="mediaName" value="">
-													<input type="hidden" name="length" value="">
-													<input type="hidden" name="materialNum" value="0">
-													<input type="hidden" name="quizNum" value="0">
-													<input type="hidden" name="learnedNum" value="0">
-													<input type="hidden" name="viewedNum" value="0">
-													<input type="hidden" name="startTime" value="">
-													<input type="hidden" name="endTime" value="">
-													<input type="hidden" name="memberNum" value="0">
-													<input type="hidden" name="replayStatus" value="ungenerated">
+													<input type="hidden" name="largeAvatar" value="">
+													
+													<input type="hidden" name="emailVerified" value="0">
+													<input type="hidden" name="setup" value="0">
+													
 												</td>
 											</tr>
 										</tbody>
@@ -130,7 +103,7 @@
 											<table>
 													<tbody>
 													<tr id="mediaSelfTr">
-														<th>视频文件：</th>
+														<th>头像：</th>
 														<td style="text-align: left;">
 															<input class="input_text" type="file" id="files" name="files" >
 														</td>
@@ -155,33 +128,7 @@
 	<@modal/>
 	<script>
 		$(function(){
-			var aboutEditor ;  
-			$(".contentTab>ul>li").on('click',function() {
-				var tabid = $(this).attr("tabid");
-				$(".contentTab>ul>li").removeClass("contentTabS");
-				$(this).addClass("contentTabS");
-				$(".tab-page .tab-panel").hide();
-				$(".tab-panel[tabid=" + tabid + "]").show();
-			});
-			KindEditor.ready(function(K) {
-				aboutEditor = K.create('textarea[name="summary"]', {
-					items :['source','bold','italic','underline','strikethrough','|','undo','redo','cut','copy','paste','selectall','plainpaste'],
-					newlineTag : 'br'
-				});
-				prettyPrint();
-			});
-			//视频来源
-			$('input[name=mediaSource]').on('change',function(){
-				var source = $(this).val();
-				if(source == 'youku'){
-					$('#mediaYoukuTr').show();
-					$('#mediaSelfTr').hide();
-				}else if(source=='self'){
-					$('#mediaSelfTr').show();
-					$('#mediaYoukuTr').hide();
-				}
-			});
-			//视频
+			//头像
 			$('#files').on('change',function(){
 				var formflag = $("#addFileForm").form('validate');
 				if (formflag) {
@@ -193,10 +140,7 @@
 						success : function(result) {
 							if (result.status == 'OK') {
 								$.Loading.success('视频上传成功!');
-								$('#addForm input[name=mediaId]').val(result.message.id);
-								$('#addForm input[name=mediaUri]').val(result.message.uri);
-								$('#addForm input[name=mediaSource]').val('self');
-								$('#addForm input[name=length]').val($('#mediaLength').val());
+								$('#addForm input[name=title]').val(result.message.uri);
 							}
 						},
 						error : function(e) {
@@ -209,20 +153,18 @@
 			
 			$("#lessonAddBtn").click(function() {
 			
-				$('#about').val(aboutEditor.html());
-				
 				var formflag = $("#addForm").form('validate');
 				if (formflag) {
 					$("#lessonAddBtn").linkbutton("disable");
 					$.Loading.show("正在保存请稍后..");
 					var options = {
-						url : '${base}/sys/course/lesson',
+						url : '${base}/sys/user',
 						type : "POST",
 						dataType : "json",
 						success : function(result) {
-							$.Loading.success('成功添加课时:'+result.message.title);
+							$.Loading.success('成功添加用户!');
 							if (result.status == 'OK') {
-								window.location.href = "${base}/sys/course/lesson";
+								window.location.href = "${base}/sys/user";
 							}else{
 								$.Loading.error("出错了,请重试");
 							}

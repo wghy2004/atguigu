@@ -1,8 +1,3 @@
-<#assign base=request.contextPath />
-<#if Session.user?exists>  
-	 <#assign user = Session["user"]>
-</#if>  
-
 <#-- 公共标签引入 -->
 
 <meta charset="utf-8">
@@ -14,4 +9,3 @@
 <link rel="stylesheet" type="text/css" href="${base}/resources/edu/css/index.css">
 
 <#-- JS脚本定义 -->
-

@@ -24,6 +24,7 @@ import com.atguigu.frame.core.web.domain.Result;
 import com.atguigu.frame.core.web.domain.Result.Status;
 import com.atguigu.sys.domain.SysCourse;
 import com.atguigu.sys.domain.SysCourseLesson;
+import com.atguigu.sys.domain.SysUser;
 import com.atguigu.sys.domain.vo.SysCourseLessonVo;
 import com.atguigu.sys.service.SysCourseLessonService;
 import com.atguigu.sys.service.SysFileService;
@@ -92,6 +93,13 @@ public class SysCourseLessonController extends
 	public Result editOne(SysCourseLesson entity) {
 		entity.setUserId(SystemConfig.getLoginUser(request).getId());
 		getBaseService().updateById(entity);
+		return new Result(Status.OK, entity);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/edit", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Result editOneByIdSelective(SysCourseLesson entity) {
+		getBaseService().updateByIdSelective(entity);
 		return new Result(Status.OK, entity);
 	}
 

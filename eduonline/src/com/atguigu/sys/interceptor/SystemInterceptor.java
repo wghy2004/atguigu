@@ -50,7 +50,7 @@ public class SystemInterceptor extends HandlerInterceptorAdapter {
 				}
 			}
 
-		SysUser user = (SysUser) request.getSession().getAttribute("user");
+		SysUser user = (SysUser) request.getSession().getAttribute("admin");
 
 		if (null == user) {
 			String url = SystemConfig.basePath + request.getServletPath();

@@ -37,14 +37,14 @@
 		<result column="createdIp" property="createdIp" jdbcType="VARCHAR" />
 		<result column="createdTime" property="createdTime" jdbcType="VARCHAR" />
 	</resultMap>
-	
+
 	<resultMap id="ProfileResultMap" type="sysUserVo" extends="BaseResultMap">
 		<!-- 关联用户详细信息 -->
 		<association property="sysUserProfile" column="id"
 			javaType="sysUserProfile" select="com.atguigu.sys.domain.SysUserProfile.selectById">
 		</association>
 	</resultMap>
-	
+
 	<sql id="Base_Column_List">
 		id, email, password, salt, uri, nickname, title, tags,
 		type, point, coin,
@@ -56,20 +56,22 @@
 		loginIp, loginSessionId, approvalTime, approvalStatus, newMessageNum,
 		newNotificationNum, createdIp, createdTime
 	</sql>
-	
+
 	<sql id="Base_Where_Clause">
 		<where>
 			<trim prefixOverrides="and">
 				<if test="id != null"> and id = #{id}</if>
+				<if test="nickname != null"> and nickname = #{nickname}</if>
+				<if test="password != null"> and password = #{password}</if>
+				<if test="roles != null"> and roles = #{roles}</if>
 			</trim>
 		</where>
 		<if test="sorting != null">order by ${sorting}</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
-
 	</sql>
-	
+
 	<!-- 查询 -->
 	<select id="select" resultMap="BaseResultMap" parameterType="java.util.Map">
 		select
@@ -77,7 +79,7 @@
 		from user
 		<include refid="Base_Where_Clause" />
 	</select>
-	
+
 	<!-- 查询总数 -->
 	<select id="selectCount" resultType="java.lang.Long"
 		parameterType="java.util.Map">
@@ -93,8 +95,96 @@
 		where id = #{id}
 	</select>
 	
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	<!-- 按日期查询注册人数-->
+	<select id="selectRegCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select count(id)
+		from user
+		<where>
+			<trim prefixOverrides="and">
+				<if test="regDate!=null and regDate!=''">
+					<![CDATA[ 
+						and DATE_FORMAT(#{regDate}, '%Y-%m-%d') =  DATE_FORMAT(createdTime, '%Y-%m-%d')
+					]]>
+				</if>
+			</trim>
+		</where>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
 		delete from user
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
+	<insert id="insert" parameterType="sysUser"  keyProperty="id">
+		insert into user(
+		id, email,
+		password, salt, uri, nickname, title, tags,
+		type, point, coin,
+		smallAvatar,
+		mediumAvatar, largeAvatar,
+		emailVerified, setup, roles,
+		promoted, promotedTime,
+		locked,
+		loginTime,
+		loginIp, loginSessionId,
+		approvalTime, approvalStatus, newMessageNum,
+		newNotificationNum,
+		createdIp
+		)
+		values (
+		#{id}, #{email}, #{password}, #{salt},
+		#{uri}, #{nickname}, #{title}, #{tags},
+		#{type}, #{point}, #{coin},
+		#{smallAvatar},
+		#{mediumAvatar}, #{largeAvatar},
+		#{emailVerified},
+		#{setup}, #{roles}, #{promoted}, #{promotedTime},
+		#{locked},
+		#{loginTime},
+		#{loginIp}, #{loginSessionId}, #{approvalTime},
+		#{approvalStatus}, #{newMessageNum},
+		#{newNotificationNum},
+		#{createdIp}
+		)
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id"> 
+			SELECT LAST_INSERT_ID() 
+		</selectKey> 
+	</insert>
+	<!-- 通过ID更新 -->
+	<update id="updateByIdSelective" parameterType="sysUser">
+		update user
+		<set>
+			<if test="email != null">email = #{email},</if>			<if test="password != null">password = #{password},</if>			<if test="salt != null">salt = #{salt},</if>			<if test="uri != null">uri = #{uri},</if>			<if test="nickname != null">nickname = #{nickname},</if>			<if test="title != null">title = #{title},</if>			<if test="tags != null">tags = #{tags},</if>
+			<if test="type != null">type = #{type},</if>			<if test="point != null">point = #{point},</if>			<if test="coin != null">coin = #{coin},</if>
+			<if test="smallAvatar != null">smallAvatar = #{smallAvatar},</if>
+			<if test="mediumAvatar != null">mediumAvatar = #{mediumAvatar},</if>			<if test="largeAvatar != null">largeAvatar = #{largeAvatar},</if>
+			<if test="emailVerified != null">emailVerified = #{emailVerified},</if>			<if test="setup != null">setup = #{setup},</if>			<if test="roles != null">roles = #{roles},</if>			<if test="promoted != null">promoted = #{promoted},</if>			<if test="promotedTime != null">promotedTime = #{promotedTime},</if>
+			<if test="locked != null">locked = #{locked},</if>
+			<if test="loginTime != null">loginTime = #{loginTime},</if>
+			<if test="loginIp != null">loginIp = #{loginIp},</if>			<if test="loginSessionId != null">loginSessionId = #{loginSessionId},</if>			<if test="approvalTime != null">approvalTime = #{approvalTime},</if>			<if test="approvalStatus != null">approvalStatus = #{approvalStatus},</if>			<if test="newMessageNum != null">newMessageNum = #{newMessageNum},</if>
+			<if test="newNotificationNum != null">newNotificationNum = #{newNotificationNum},</if>			<if test="createdIp != null">createdIp = #{createdIp},</if>			<if test="createdTime != null">createdTime = #{createdTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateById" parameterType="sysUser">
+		update user_profile
+		set
+		email = #{email}, password = #{password}, salt = #{salt}, uri =
+		#{uri}, nickname = #{nickname}, title = #{title}, tags = #{tags},
+		type = #{type}, point = #{point}, coin = #{coin},
+		smallAvatar = #{smallAvatar},
+		mediumAvatar = #{mediumAvatar}, largeAvatar = #{largeAvatar},
+		emailVerified = #{emailVerified}, setup = #{setup}, roles = #{roles}, promoted =
+		#{promoted}, promotedTime = #{promotedTime},
+		locked = #{locked},
+		loginTime = #{loginTime},
+		loginIp = #{loginIp}, loginSessionId = #{loginSessionId}, approvalTime =
+		#{approvalTime}, approvalStatus = #{approvalStatus}, newMessageNum =
+		#{newMessageNum},
+		newNotificationNum = #{newNotificationNum}, createdIp = #{createdIp}, createdTime =
+		#{createdTime}
+		where id =
+		#{id}
+	</update>
 </mapper>

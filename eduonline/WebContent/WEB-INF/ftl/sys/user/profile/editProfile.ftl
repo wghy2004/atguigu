@@ -41,7 +41,7 @@
 											<tr>
 												<th>身份证号码：</th>
 												<td style="text-align: left;">
-													<input type="text"  value="${profile.idcard}"  name="idcard"	class="easyui-validatebox ivalidatebox-text validatebox-invalid" data-options="required:true"	datatype="string" isrequired="true" autocomplete="off">
+													<input type="text"  value="${profile.idcard}"  name="idcard"	>
 												</td>
 											</tr>
 											<tr>
@@ -55,7 +55,7 @@
 											<tr>
 												<th>我是谁：</th>
 												<td style="text-align: left;">
-													<input type="text"  value="${profile.iam}"  name="iam"	class="easyui-validatebox ivalidatebox-text validatebox-invalid" data-options="required:true"	datatype="string" isrequired="true" autocomplete="off">
+													<input type="text"  value="${profile.iam}"  name="iam"	>
 												</td>
 											</tr>
 											<tr>
@@ -67,19 +67,19 @@
 											<tr>
 												<th>城市：</th>
 												<td style="text-align: left;">
-													<input type="text"  value="${profile.city}"  name="city" class="easyui-validatebox ivalidatebox-text validatebox-invalid" data-options="required:true"	datatype="string" isrequired="true" autocomplete="off">
+													<input type="text"  value="${profile.city}"  name="city" >
 												</td>
 											</tr>
 											<tr>
 												<th>手机：</th>
 												<td style="text-align: left;">
-													<input type="text"  value="${profile.mobile}"  name="mobile" class="easyui-validatebox ivalidatebox-text validatebox-invalid" data-options="required:true"	datatype="string" isrequired="true" autocomplete="off">
+													<input type="text"  value="${profile.mobile}"  name="mobile" >
 												</td>
 											</tr>
 											<tr>
 												<th>QQ：</th>
 												<td style="text-align: left;">
-													<input type="text"  value="${profile.qq}"  name="qq" class="easyui-validatebox ivalidatebox-text validatebox-invalid" data-options="required:true"	datatype="string" isrequired="true" autocomplete="off">
+													<input type="text"  value="${profile.qq}"  name="qq" >
 												</td>
 											</tr>
 											<tr>
@@ -97,43 +97,43 @@
 											<tr>
 												<th>公司：</th>
 												<td style="text-align: left;">
-													<input type="text"  value="${profile.company}"  name="company" class="easyui-validatebox ivalidatebox-text validatebox-invalid" data-options="required:true"	datatype="string" isrequired="true" autocomplete="off">
+													<input type="text"  value="${profile.company}"  name="company" >
 												</td>
 											</tr>
 											<tr>
 												<th>工作：</th>
 												<td style="text-align: left;">
-													<input type="text"  value="${profile.job}"  name="job" class="easyui-validatebox ivalidatebox-text validatebox-invalid" data-options="required:true"	datatype="string" isrequired="true" autocomplete="off">
+													<input type="text"  value="${profile.job}"  name="job" >
 												</td>
 											</tr>
 											<tr>
 												<th>学校：</th>
 												<td style="text-align: left;">
-													<input type="text"  value="${profile.school}"  name="school" class="easyui-validatebox ivalidatebox-text validatebox-invalid" data-options="required:true"	datatype="string" isrequired="true" autocomplete="off">
+													<input type="text"  value="${profile.school}"  name="school" >
 												</td>
 											</tr>
 											<tr>
 												<th>班级：</th>
 												<td style="text-align: left;">
-													<input type="text"  value="${profile.clazz}"  name="clazz" class="easyui-validatebox ivalidatebox-text validatebox-invalid" data-options="required:true"	datatype="string" isrequired="true" autocomplete="off">
+													<input type="text"  value="${profile.clazz}"  name="clazz" >
 												</td>
 											</tr>
 											<tr>
 												<th>微博：</th>
 												<td style="text-align: left;">
-													<input type="text"  value="${profile.weibo}"  name="weibo" class="easyui-validatebox ivalidatebox-text validatebox-invalid" data-options="required:true"	datatype="string" isrequired="true" autocomplete="off">
+													<input type="text"  value="${profile.weibo}"  name="weibo" >
 												</td>
 											</tr>
 											<tr>
 												<th>微信：</th>
 												<td style="text-align: left;">
-													<input type="text"  value="${profile.weixin}"  name="weixin" class="easyui-validatebox ivalidatebox-text validatebox-invalid" data-options="required:true"	datatype="string" isrequired="true" autocomplete="off">
+													<input type="text"  value="${profile.weixin}"  name="weixin" >
 												</td>
 											</tr>
 											<tr>
 												<th>网站：</th>
 												<td style="text-align: left;">
-													<input type="text"  value="${profile.site}"  name="site" class="easyui-validatebox ivalidatebox-text validatebox-invalid" data-options="required:true"	datatype="string" isrequired="true" autocomplete="off">
+													<input type="text"  value="${profile.site}"  name="site" >
 												</td>
 											</tr>
 										</tbody>

@@ -64,9 +64,6 @@ public class SysCourseController extends
 	public Result addOne(SysCourse entity) {
 
 		entity.setUserId(SystemConfig.getLoginUser(request).getId());
-		entity.setCreatedTime(new Timestamp(System.currentTimeMillis()));
-		entity.setFreeStartTime(new Timestamp(System.currentTimeMillis()));
-		entity.setFreeEndTime(new Timestamp(System.currentTimeMillis()));
 
 		sysCourseService.insert(entity);
 

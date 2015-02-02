@@ -33,7 +33,7 @@
 			            <tr>
 			                <th data-options="field:'id',width:10,align:'center'">id</th>
 			                <th data-options="field:'title',width:30">标题</th>
-			                <th data-options="field:'status',width:10" formatter="formatStatus">状态</th>
+			                <th data-options="field:'status',width:20" formatter="formatStatus">状态</th>
 			                <th data-options="field:'sysCourse.title',width:15" formatter="formatCourse">所属课程</th>
 			                <th data-options="field:'createdTime',width:15" formatter="formatTime">创建时间</th>
 			                <th data-options="field:'edit',width:10,align:'center'" formatter="formatEdit">编辑</th>
@@ -149,17 +149,36 @@
 					$.Loading.success('删除成功!');
 			  });
 		}		
+		//更改状态
+		function setStatus(id,ele){
+			$.post('${base}/sys/course/lesson/edit',{
+				_method :   'put',
+				id 		: 	id,
+				status  : 	$(ele).val()
+			},function(data){
+				if(data.status=='OK'){
+					$.Loading.success('成功更改状态!');
+				}
+			});
+		}
 		
 		function formatStatus(value, row, index){
 			
-			var status = row.status;
-			if(status == 'unpublished'){
-				status = '未发布';
-			}else if(status == 'published'){
-				status = '已发布';
-			}
+			var status_list = [['unpublished','未发布'],['published','已发布']];
 			
-			return status;
+			var str = ['<select onchange="setStatus('+row.id+',this)">'];
+			for(var i=0; i< status_list.length; i++){
+				str.push('<option value="'+status_list[i][0]+'"');
+				if(status_list[i][0]==row.status){
+					str.push(' selected ');
+				}
+				str.push('>'+status_list[i][1]+'</option>');
+			}	
+			
+			str.push('</select>');
+			
+			return str.join('');
+			
 		}
 		
 		function formatCourse(value, row, index){
